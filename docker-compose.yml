@@ -4,7 +4,7 @@ services:
     build:
       context: ./charon
       args:
-        UPSTREAM_VERSION: v0.17.0
+        UPSTREAM_VERSION: v0.17.1
     image: "charon.obol-distributed-validator-goerli.dnp.dappnode.eth:0.1.1"
     restart: unless-stopped
     volumes:
