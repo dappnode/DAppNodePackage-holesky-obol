@@ -1,6 +1,6 @@
 {
-  "name": "obol-distributed-validator-goerli.dnp.dappnode.eth",
-  "version": "0.1.1",
+  "name": "holesky-obol.dnp.dappnode.eth",
+  "version": "0.1.0",
   "upstreamVersion": "v0.17.0",
   "upstreamRepo": "ObolNetwork/charon",
   "shortDescription": "Obol Node for Distributed validation + teku validator",
@@ -21,16 +21,16 @@
   ],
   "globalEnvs": [
     {
-      "envs": ["CONSENSUS_CLIENT_PRATER", "DOMAIN", "PUBLIC_IP"],
+      "envs": ["DOMAIN", "PUBLIC_IP"],
       "services": ["charon"]
     }
   ],
   "license": "GPL-3.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dappnode/DAppNodePackage-obol-distributed-validator-goerli.git"
+    "url": "git+https://github.com/dappnode/DAppNodePackage-holesky-obol.git"
   },
   "bugs": {
-    "url": "https://github.com/dappnode/DAppNodePackage-obol-distributed-validator-goerli/issues"
+    "url": "https://github.com/dappnode/DAppNodePackage-holesky-obol/issues"
   }
 }

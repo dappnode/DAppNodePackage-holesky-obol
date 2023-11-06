@@ -4,7 +4,7 @@ FROM consensys/teku:${TEKU_VERSION}
 USER root 
 RUN apt update && apt install curl jq ca-certificates --yes
 
-ENV JAVA_OPTS="-Xmx5g"
+ENV JAVA_OPTS="-Xmx6g"
 
 COPY /security/validator-api-bearer /opt/teku/data/validator/key-manager/validator-api-bearer 
 COPY /security/cert /cert

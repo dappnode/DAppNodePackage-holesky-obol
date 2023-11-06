@@ -15,8 +15,8 @@ ENR_FILE=${CHARON_ROOT_DIR}/enr
 CURRENT_DEFINITION=${CHARON_ROOT_DIR}/definition_file_hash.txt
 
 CHARON_P2P_EXTERNAL_HOSTNAME=${_DAPPNODE_GLOBAL_DOMAIN}
-ETH2_CLIENT_DNS="https://teku.obol-distributed-validator-goerli.dappnode:3500"
-GENESIS_VALIDATORS_ROOT=0x043db0d9a83813551ee2f33450d23797757d430911a9320530ad8a0eabc43efb
+ETH2_CLIENT_DNS="https://teku.holesky-obol.dappnode:3500"
+GENESIS_VALIDATORS_ROOT=0x9143aa7c615a7f7115e2b6aac319c03529df8242ae705fba9df39b79c59fa8b1
 KEY_IMPORT_HEADER="{ \"keystores\": [], \"passwords\": [], \"slashing_protection\": {\"metadata\":{\"interchange_format_version\":\"5\",\"genesis_validators_root\":\"$GENESIS_VALIDATORS_ROOT\"},\"data\":[]}}"
 
 TEKU_SECURITY_DIR=/opt/charon/teku/security
@@ -53,27 +53,31 @@ fi
 #############
 
 # Get the current beacon chain in use
-# Assign proper value to _DAPPNODE_GLOBAL_CONSENSUS_CLIENT_PRATER.
+# Assign proper value to _DAPPNODE_GLOBAL_CONSENSUS_CLIENT_HOLESKY.
 function get_beacon_node_endpoint() {
-  case "$_DAPPNODE_GLOBAL_CONSENSUS_CLIENT_PRATER" in
-  "prysm-prater.dnp.dappnode.eth")
-    export CHARON_BEACON_NODE_ENDPOINTS="http://beacon-chain.prysm-prater.dappnode:3500"
+  case "$_DAPPNODE_GLOBAL_CONSENSUS_CLIENT_HOLESKY" in
+  "prysm-holesky.dnp.dappnode.eth")
+    export CHARON_BEACON_NODE_ENDPOINTS="http://beacon-chain.prysm-holesky.dappnode:3500"
     ;;
-  "teku-prater.dnp.dappnode.eth")
-    export CHARON_BEACON_NODE_ENDPOINTS="http://beacon-chain.teku-prater.dappnode:3500"
+  "teku-holesky.dnp.dappnode.eth")
+    export CHARON_BEACON_NODE_ENDPOINTS="http://beacon-chain.teku-holesky.dappnode:3500"
     ;;
-  "lighthouse-prater.dnp.dappnode.eth")
-    export CHARON_BEACON_NODE_ENDPOINTS="http://beacon-chain.lighthouse-prater.dappnode:3500"
+  "lighthouse-holesky.dnp.dappnode.eth")
+    export CHARON_BEACON_NODE_ENDPOINTS="http://beacon-chain.lighthouse-holesky.dappnode:3500"
     ;;
-  "nimbus-prater.dnp.dappnode.eth")
-    export CHARON_BEACON_NODE_ENDPOINTS="http://beacon-validator.nimbus-prater.dappnode:4500"
+  "nimbus-holesky.dnp.dappnode.eth")
+    export CHARON_BEACON_NODE_ENDPOINTS="http://beacon-validator.nimbus-holesky.dappnode:4500"
     ;;
-  "lodestar-prater.dnp.dappnode.eth")
-    export CHARON_BEACON_NODE_ENDPOINTS="http://beacon-chain.lodestar-prater.dappnode:3500"
+  "lodestar-holesky.dnp.dappnode.eth")
+    export CHARON_BEACON_NODE_ENDPOINTS="http://beacon-chain.lodestar-holesky.dappnode:3500"
     ;;
   *)
-    echo "_DAPPNODE_GLOBAL_CONSENSUS_CLIENT_PRATER env is not set propertly"
-    sleep 300 # Wait 5 minutes to avoid restarting the container
+    # echo "_DAPPNODE_GLOBAL_CONSENSUS_CLIENT_HOLESKY env is not set propertly"
+    #sleep 300 # Wait 5 minutes to avoid restarting the container
+
+    # TODO: Remove this when global env for Holesky is available
+    export CHARON_BEACON_NODE_ENDPOINTS=$EXTERNAL_BEACON_NODE_ENDPOINT
+    echo "Using external beacon node endpoint: $CHARON_BEACON_NODE_ENDPOINTS"
     ;;
   esac
 }

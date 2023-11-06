@@ -2,10 +2,9 @@ version: "3.5"
 services:
   charon:
     build:
-      context: ./charon
+      context: charon
       args:
-        UPSTREAM_VERSION: v0.17.0
-    image: "charon.obol-distributed-validator-goerli.dnp.dappnode.eth:0.1.1"
+        UPSTREAM_VERSION: v0.17.1
     restart: unless-stopped
     volumes:
       - "charon-data:/opt/charon/.charon"
@@ -18,6 +17,7 @@ services:
       - "CHARON_MONITORING_ADDRESS=0.0.0.0:3620"
       - "CHARON_LOKI_ADDRESSES=http://loki.dms.dappnode:3100/loki/api/v1/push"
       - CHARON_LOKI_SERVICE=charon
+      - EXTERNAL_BEACON_NODE_ENDPOINT
     ports:
       - "3611:3611/tcp"
       - "3631:3631/udp"
@@ -25,22 +25,21 @@ services:
       test: "wget -qO- http://localhost:3620/readyz"
   teku:
     build:
-      context: ./teku
+      context: teku
       args:
-        TEKU_VERSION: 23.8.0
+        TEKU_VERSION: 23.10.0
     restart: unless-stopped
     volumes:
-      - "teku-prater-data:/opt/teku/data"
+      - "teku-holesky-data:/opt/teku/data"
     environment:
-      TEKU_NETWORK: prater
+      TEKU_NETWORK: holesky
       LOG_TYPE: INFO
       TEKU_BEACON_NODE_API_ENDPOINT: "http://charon:3600"
       TEKU_VALIDATORS_PROPOSER_DEFAULT_FEE_RECIPIENT: "0x0000000000000000000000000000000000000000"
       VALIDATORS_GRAFFITI: validating_from_DAppNode
       EXTRA_OPTS: ""
-    image: "teku.obol-distributed-validator-goerli.dnp.dappnode.eth:0.1.1"
     security_opt:
       - "seccomp:unconfined"
 volumes:
   charon-data: {}
-  teku-prater-data: {}
+  teku-holesky-data: {}

@@ -1,20 +1,16 @@
 [
-    {
-        "labels": {
-            "package": "obol-distributed-validator-goerli.dnp.dappnode.eth",
-            "service": "charon.obol-distributed-validator-goerli.dappnode"
-        },
-        "targets": [
-            "charon.obol-distributed-validator-goerli.dappnode:3620"
-        ]
+  {
+    "labels": {
+      "package": "holesky-obol.dnp.dappnode.eth",
+      "service": "charon.holesky-obol.dappnode"
     },
-    {
-        "labels": {
-            "package": "obol-distributed-validator-goerli.dnp.dappnode.eth",
-            "service": "teku.obol-distributed-validator-goerli.dappnode"
-        },
-        "targets": [
-            "teku.obol-distributed-validator-goerli.dappnode:8008"
-        ]
-    }
+    "targets": ["charon.holesky-obol.dappnode:3620"]
+  },
+  {
+    "labels": {
+      "package": "holesky-obol.dnp.dappnode.eth",
+      "service": "teku.holesky-obol.dappnode"
+    },
+    "targets": ["teku.holesky-obol.dappnode:8008"]
+  }
 ]
