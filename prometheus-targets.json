@@ -1,0 +1,20 @@
+[
+    {
+        "labels": {
+            "package": "obol-distributed-validator-goerli.dnp.dappnode.eth",
+            "service": "charon.obol-distributed-validator-goerli.dappnode"
+        },
+        "targets": [
+            "charon.obol-distributed-validator-goerli.dappnode:3620"
+        ]
+    },
+    {
+        "labels": {
+            "package": "obol-distributed-validator-goerli.dnp.dappnode.eth",
+            "service": "teku.obol-distributed-validator-goerli.dappnode"
+        },
+        "targets": [
+            "teku.obol-distributed-validator-goerli.dappnode:8008"
+        ]
+    }
+]

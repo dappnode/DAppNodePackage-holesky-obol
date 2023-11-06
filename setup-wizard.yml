@@ -1,0 +1,31 @@
+version: "2"
+fields:
+  - id: definition-file
+    target:
+      type: environment
+      name: DEFINITION_FILE
+      service: charon
+    title: Definition File for the Distributed Key Generation (DKG) ceremony
+    description: |
+      ## 🚦🟢 If this is the first time installing this package
+
+      Please go ahead and **install leaving the field below blank**. 
+
+      You will **automatically get** the **ENR of your node** in the [Info tab](http://my.dappnode/#/packages/obol-distributed-validator-goerli.dnp.dappnode.eth/info) of the package **after installation**. It is needed to register it as an operator for a cluster before running the DKG ceremony.
+
+      ## 🚦🟠 If you are recovering an existing Obol setup
+
+      Please input your `definition-file`, which you should have noted down after registering all the operators, performing the DKG ceremony and running a command similar to: 
+
+      ```
+      docker run --rm -v "$(pwd)/:/opt/charon" obolnetwork/charon:v0.12.0 dkg --definition-file="https://api.obol.tech/dv/0xf9632c4333e4d67373b777da56dfb764df47268881d3412a1eef1a0247dc7367/"
+      ```
+
+      Input here the field `definition-file` for your cluster. The format expected is: 
+
+      ```
+      https://api.obol.tech/dv/0xf9632c4333e4d67373b383da56dfb764df47268881d3412a1eef1a0247dc7367
+      ```
+    required: false
+    pattern: "(https?:\/\/(?:www\\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|www\\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|https?:\/\/(?:www\\.|(?!www))[a-zA-Z0-9]+\\.[^\\s]{2,}|www\\.[a-zA-Z0-9]+\\.[^\\s]{2,})"
+    patternErrorMessage: Must be a valid URL (https://api.obol.tech/dv/0xf...)

@@ -1,0 +1,36 @@
+{
+  "name": "obol-distributed-validator-goerli.dnp.dappnode.eth",
+  "version": "0.1.1",
+  "upstreamVersion": "v0.17.0",
+  "upstreamRepo": "ObolNetwork/charon",
+  "shortDescription": "Obol Node for Distributed validation + teku validator",
+  "description": "Charon is a GoLang-based, HTTP middleware built by Obol to enable any existing Ethereum validator clients to operate together as part of a distributed validator.\nCharon sits as a middleware between a normal validating client and its connected beacon node, intercepting and proxying API traffic. Multiple Charon clients are configured to communicate together to come to consensus on validator duties and behave as a single unified proof-of-stake validator together. The nodes form a cluster that is byzantine-fault tolerant and continues to progress assuming a supermajority of working/honest nodes is met.",
+  "type": "service",
+  "author": "DAppNode Association <admin@dappnode.io> (https://github.com/dappnode)",
+  "categories": ["ETH2.0"],
+  "links": {
+    "homepage": "https://obol.tech/"
+  },
+  "architectures": ["linux/amd64"],
+  "backup": [
+    {
+      "name": "keystore",
+      "path": "/opt/charon/.charon",
+      "service": "charon"
+    }
+  ],
+  "globalEnvs": [
+    {
+      "envs": ["CONSENSUS_CLIENT_PRATER", "DOMAIN", "PUBLIC_IP"],
+      "services": ["charon"]
+    }
+  ],
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dappnode/DAppNodePackage-obol-distributed-validator-goerli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dappnode/DAppNodePackage-obol-distributed-validator-goerli/issues"
+  }
+}
