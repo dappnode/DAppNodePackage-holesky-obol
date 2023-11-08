@@ -4,7 +4,7 @@ services:
     build:
       context: charon
       args:
-        UPSTREAM_VERSION: v0.17.1
+        UPSTREAM_VERSION: v0.17.2
     restart: unless-stopped
     volumes:
       - "charon-data:/opt/charon/.charon"
