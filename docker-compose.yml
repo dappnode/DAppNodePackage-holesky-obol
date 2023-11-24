@@ -12,15 +12,15 @@ services:
       - DEFINITION_FILE
       - CHARON_LOG_LEVEL=info
       - CHARON_LOG_FORMAT=console
-      - "CHARON_P2P_TCP_ADDRESS=0.0.0.0:3611"
+      - "CHARON_P2P_TCP_ADDRESS=0.0.0.0:3711"
       - "CHARON_VALIDATOR_API_ADDRESS=0.0.0.0:3600"
       - "CHARON_MONITORING_ADDRESS=0.0.0.0:3620"
       - "CHARON_LOKI_ADDRESSES=http://loki.dms.dappnode:3100/loki/api/v1/push"
       - CHARON_LOKI_SERVICE=charon
       - EXTERNAL_BEACON_NODE_ENDPOINT
     ports:
-      - "3611:3611/tcp"
-      - "3631:3631/udp"
+      - "3711:3711/tcp"
+      - "3731:3731/udp"
     healthcheck:
       test: "wget -qO- http://localhost:3620/readyz"
   teku:
