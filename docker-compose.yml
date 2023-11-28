@@ -12,9 +12,11 @@ services:
       - DEFINITION_FILE
       - CHARON_LOG_LEVEL=info
       - CHARON_LOG_FORMAT=console
+      - "CHARON_P2P_RELAYS=https://0.relay.obol.tech,https://1.relay.obol.tech/"
       - "CHARON_P2P_TCP_ADDRESS=0.0.0.0:3711"
       - "CHARON_VALIDATOR_API_ADDRESS=0.0.0.0:3600"
       - "CHARON_MONITORING_ADDRESS=0.0.0.0:3620"
+      - CHARON_BUILDER_API=false
       - "CHARON_LOKI_ADDRESSES=http://loki.dms.dappnode:3100/loki/api/v1/push"
       - CHARON_LOKI_SERVICE=charon
       - EXTERNAL_BEACON_NODE_ENDPOINT
@@ -23,6 +25,7 @@ services:
       - "3731:3731/udp"
     healthcheck:
       test: "wget -qO- http://localhost:3620/readyz"
+    image: "charon.holesky-obol.dnp.dappnode.eth:0.1.0"
   teku:
     build:
       context: teku
@@ -40,6 +43,17 @@ services:
       EXTRA_OPTS: ""
     security_opt:
       - "seccomp:unconfined"
+    image: "teku.holesky-obol.dnp.dappnode.eth:0.1.0"
+  prometheus:
+    build:
+      context: prometheus
+      args:
+        PROMETHEUS_VERSION: v2.46.0
+    volumes:
+      - "prometheus-data:/prometheus"
+    restart: unless-stopped
+    image: "prometheus.holesky-obol.dnp.dappnode.eth:0.1.0"
 volumes:
   charon-data: {}
   teku-holesky-data: {}
+  prometheus-data: {}
