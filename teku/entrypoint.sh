@@ -16,4 +16,5 @@ exec /opt/teku/bin/teku --log-destination=CONSOLE \
   --validator-api-keystore-password-file=/cert/teku_keystore_password.txt \
   --logging=${LOG_TYPE} \
   --validators-keystore-locking-enabled=false \
+  --network=holesky \
   ${EXTRA_OPTS}

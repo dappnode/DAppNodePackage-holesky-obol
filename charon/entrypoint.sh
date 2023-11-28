@@ -14,7 +14,6 @@ ENR_PRIVATE_KEY_FILE=${CHARON_ROOT_DIR}/charon-enr-private-key
 ENR_FILE=${CHARON_ROOT_DIR}/enr
 CURRENT_DEFINITION=${CHARON_ROOT_DIR}/definition_file_hash.txt
 
-CHARON_P2P_EXTERNAL_HOSTNAME=${_DAPPNODE_GLOBAL_DOMAIN}
 ETH2_CLIENT_DNS="https://teku.holesky-obol.dappnode:3500"
 GENESIS_VALIDATORS_ROOT=0x9143aa7c615a7f7115e2b6aac319c03529df8242ae705fba9df39b79c59fa8b1
 KEY_IMPORT_HEADER="{ \"keystores\": [], \"passwords\": [], \"slashing_protection\": {\"metadata\":{\"interchange_format_version\":\"5\",\"genesis_validators_root\":\"$GENESIS_VALIDATORS_ROOT\"},\"data\":[]}}"
@@ -23,6 +22,8 @@ TEKU_SECURITY_DIR=/opt/charon/teku/security
 TEKU_CERT_FILE=$TEKU_SECURITY_DIR/cert/teku_client_keystore.p12
 TEKU_CERT_PASS=$(cat $TEKU_SECURITY_DIR/cert/teku_keystore_password.txt)
 TEKU_API_TOKEN=$(cat $TEKU_SECURITY_DIR/validator-api-bearer)
+
+export CHARON_P2P_EXTERNAL_HOSTNAME=${_DAPPNODE_GLOBAL_DOMAIN}
 
 if [ ! -z "$DEFINITION_FILE" ]; then
   #Get the definition file from the environment variable and the hash
