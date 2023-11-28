@@ -21,7 +21,7 @@
   ],
   "globalEnvs": [
     {
-      "envs": ["DOMAIN", "PUBLIC_IP"],
+      "envs": ["DOMAIN", "PUBLIC_IP", "CONSENSUS_CLIENT_HOLESKY"],
       "services": ["charon"]
     }
   ],
