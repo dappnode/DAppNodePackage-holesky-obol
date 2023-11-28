@@ -1,45 +1,183 @@
 version: "3.5"
 services:
-  charon:
+  charon-teku-1:
     build:
-      context: charon
+      context: charon-teku
       args:
         UPSTREAM_VERSION: v0.17.2
-    restart: unless-stopped
+        TEKU_VERSION: 23.11.0
+        CLUSTER_ID: 1
+    restart: on-failure
     volumes:
-      - "charon-data:/opt/charon/.charon"
+      - "charon-1-data:/opt/charon/.charon"
+      - "teku-1-data:/opt/teku/data"
     environment:
-      - DEFINITION_FILE
+      - DEFINITION_FILE_URL
       - CHARON_LOG_LEVEL=info
-      - CHARON_LOG_FORMAT=console
       - "CHARON_P2P_TCP_ADDRESS=0.0.0.0:3711"
+      - "CHARON_P2P_UDP_ADDRESS=0.0.0.0:3731"
       - "CHARON_VALIDATOR_API_ADDRESS=0.0.0.0:3600"
       - "CHARON_MONITORING_ADDRESS=0.0.0.0:3620"
       - "CHARON_LOKI_ADDRESSES=http://loki.dms.dappnode:3100/loki/api/v1/push"
-      - CHARON_LOKI_SERVICE=charon
-      - EXTERNAL_BEACON_NODE_ENDPOINT
+      - CHARON_LOKI_SERVICE=charon-teku-1
+      - TEKU_LOGGING=INFO
+      - >-
+        TEKU_VALIDATORS_PROPOSER_DEFAULT_FEE_RECIPIENT=0x0000000000000000000000000000000000000000
+      - TEKU_VALIDATORS_GRAFFITI=validating_from_DAppNode
+      - JAVA_OPTS=-Xmx5g
+      - TEKU_EXTRA_OPTS
     ports:
       - "3711:3711/tcp"
       - "3731:3731/udp"
     healthcheck:
       test: "wget -qO- http://localhost:3620/readyz"
-  teku:
-    build:
-      context: teku
-      args:
-        TEKU_VERSION: 23.10.0
-    restart: unless-stopped
-    volumes:
-      - "teku-holesky-data:/opt/teku/data"
-    environment:
-      TEKU_NETWORK: holesky
-      LOG_TYPE: INFO
-      TEKU_BEACON_NODE_API_ENDPOINT: "http://charon:3600"
-      TEKU_VALIDATORS_PROPOSER_DEFAULT_FEE_RECIPIENT: "0x0000000000000000000000000000000000000000"
-      VALIDATORS_GRAFFITI: validating_from_DAppNode
-      EXTRA_OPTS: ""
     security_opt:
       - "seccomp:unconfined"
+    image: "charon-teku-1.holesky-obol.dnp.dappnode.eth:0.1.1"
+  charon-teku-2:
+    build:
+      context: charon-teku
+      args:
+        UPSTREAM_VERSION: v0.17.2
+        TEKU_VERSION: 23.11.0
+        CLUSTER_ID: 2
+    restart: on-failure
+    volumes:
+      - "charon-2-data:/opt/charon/.charon"
+      - "teku-2-data:/opt/teku/data"
+    environment:
+      - DEFINITION_FILE_URL
+      - CHARON_LOG_LEVEL=info
+      - "CHARON_P2P_TCP_ADDRESS=0.0.0.0:3712"
+      - "CHARON_P2P_UDP_ADDRESS=0.0.0.0:3732"
+      - "CHARON_VALIDATOR_API_ADDRESS=0.0.0.0:3600"
+      - "CHARON_MONITORING_ADDRESS=0.0.0.0:3620"
+      - "CHARON_LOKI_ADDRESSES=http://loki.dms.dappnode:3100/loki/api/v1/push"
+      - CHARON_LOKI_SERVICE=charon-teku-2
+      - TEKU_LOGGING=INFO
+      - >-
+        TEKU_VALIDATORS_PROPOSER_DEFAULT_FEE_RECIPIENT=0x0000000000000000000000000000000000000000
+      - TEKU_VALIDATORS_GRAFFITI=validating_from_DAppNode
+      - JAVA_OPTS=-Xmx5g
+      - TEKU_EXTRA_OPTS
+    ports:
+      - "3712:3712/tcp"
+      - "3732:3732/udp"
+    healthcheck:
+      test: "wget -qO- http://localhost:3620/readyz"
+    security_opt:
+      - "seccomp:unconfined"
+    image: "charon-teku-2.holesky-obol.dnp.dappnode.eth:0.1.1"
+  charon-teku-3:
+    build:
+      context: charon-teku
+      args:
+        UPSTREAM_VERSION: v0.17.2
+        TEKU_VERSION: 23.11.0
+        CLUSTER_ID: 3
+    restart: on-failure
+    volumes:
+      - "charon-3-data:/opt/charon/.charon"
+      - "teku-3-data:/opt/teku/data"
+    environment:
+      - DEFINITION_FILE_URL
+      - CHARON_LOG_LEVEL=info
+      - "CHARON_P2P_TCP_ADDRESS=0.0.0.0:3713"
+      - "CHARON_P2P_UDP_ADDRESS=0.0.0.0:3733"
+      - "CHARON_VALIDATOR_API_ADDRESS=0.0.0.0:3600"
+      - "CHARON_MONITORING_ADDRESS=0.0.0.0:3620"
+      - "CHARON_LOKI_ADDRESSES=http://loki.dms.dappnode:3100/loki/api/v1/push"
+      - CHARON_LOKI_SERVICE=charon-teku-3
+      - TEKU_LOGGING=INFO
+      - >-
+        TEKU_VALIDATORS_PROPOSER_DEFAULT_FEE_RECIPIENT=0x0000000000000000000000000000000000000000
+      - TEKU_VALIDATORS_GRAFFITI=validating_from_DAppNode
+      - JAVA_OPTS=-Xmx5g
+      - TEKU_EXTRA_OPTS
+    ports:
+      - "3713:3713/tcp"
+      - "3733:3733/udp"
+    healthcheck:
+      test: "wget -qO- http://localhost:3620/readyz"
+    security_opt:
+      - "seccomp:unconfined"
+    image: "charon-teku-3.holesky-obol.dnp.dappnode.eth:0.1.1"
+  charon-teku-4:
+    build:
+      context: charon-teku
+      args:
+        UPSTREAM_VERSION: v0.17.2
+        TEKU_VERSION: 23.11.0
+        CLUSTER_ID: 4
+    restart: on-failure
+    volumes:
+      - "charon-4-data:/opt/charon/.charon"
+      - "teku-4-data:/opt/teku/data"
+    environment:
+      - DEFINITION_FILE_URL
+      - CHARON_LOG_LEVEL=info
+      - "CHARON_P2P_TCP_ADDRESS=0.0.0.0:3714"
+      - "CHARON_P2P_UDP_ADDRESS=0.0.0.0:3734"
+      - "CHARON_VALIDATOR_API_ADDRESS=0.0.0.0:3600"
+      - "CHARON_MONITORING_ADDRESS=0.0.0.0:3620"
+      - "CHARON_LOKI_ADDRESSES=http://loki.dms.dappnode:3100/loki/api/v1/push"
+      - CHARON_LOKI_SERVICE=charon-teku-4
+      - TEKU_LOGGING=INFO
+      - >-
+        TEKU_VALIDATORS_PROPOSER_DEFAULT_FEE_RECIPIENT=0x0000000000000000000000000000000000000000
+      - TEKU_VALIDATORS_GRAFFITI=validating_from_DAppNode
+      - JAVA_OPTS=-Xmx5g
+      - TEKU_EXTRA_OPTS
+    ports:
+      - "3714:3714/tcp"
+      - "3734:3734/udp"
+    healthcheck:
+      test: "wget -qO- http://localhost:3620/readyz"
+    security_opt:
+      - "seccomp:unconfined"
+    image: "charon-teku-4.holesky-obol.dnp.dappnode.eth:0.1.1"
+  charon-teku-5:
+    build:
+      context: charon-teku
+      args:
+        UPSTREAM_VERSION: v0.17.2
+        TEKU_VERSION: 23.11.0
+        CLUSTER_ID: 5
+    restart: on-failure
+    volumes:
+      - "charon-5-data:/opt/charon/.charon"
+      - "teku-5-data:/opt/teku/data"
+    environment:
+      - DEFINITION_FILE_URL
+      - CHARON_LOG_LEVEL=info
+      - "CHARON_P2P_TCP_ADDRESS=0.0.0.0:3715"
+      - "CHARON_P2P_UDP_ADDRESS=0.0.0.0:3735"
+      - "CHARON_VALIDATOR_API_ADDRESS=0.0.0.0:3600"
+      - "CHARON_MONITORING_ADDRESS=0.0.0.0:3620"
+      - "CHARON_LOKI_ADDRESSES=http://loki.dms.dappnode:3100/loki/api/v1/push"
+      - CHARON_LOKI_SERVICE=charon-teku-5
+      - TEKU_LOGGING=INFO
+      - >-
+        TEKU_VALIDATORS_PROPOSER_DEFAULT_FEE_RECIPIENT=0x0000000000000000000000000000000000000000
+      - TEKU_VALIDATORS_GRAFFITI=validating_from_DAppNode
+      - JAVA_OPTS=-Xmx5g
+      - TEKU_EXTRA_OPTS
+    ports:
+      - "3715:3715/tcp"
+      - "3735:3735/udp"
+    healthcheck:
+      test: "wget -qO- http://localhost:3620/readyz"
+    security_opt:
+      - "seccomp:unconfined"
+    image: "charon-teku-5.holesky-obol.dnp.dappnode.eth:0.1.1"
 volumes:
-  charon-data: {}
-  teku-holesky-data: {}
+  charon-1-data: {}
+  charon-2-data: {}
+  charon-3-data: {}
+  charon-4-data: {}
+  charon-5-data: {}
+  teku-1-data: {}
+  teku-2-data: {}
+  teku-3-data: {}
+  teku-4-data: {}
+  teku-5-data: {}

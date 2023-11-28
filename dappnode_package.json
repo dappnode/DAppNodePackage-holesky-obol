@@ -1,6 +1,6 @@
 {
   "name": "holesky-obol.dnp.dappnode.eth",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "upstreamVersion": "v0.17.2",
   "upstreamRepo": "ObolNetwork/charon",
   "shortDescription": "Obol Node for Distributed validation + teku validator",
@@ -14,15 +14,41 @@
   "architectures": ["linux/amd64"],
   "backup": [
     {
-      "name": "keystore",
+      "name": "charon1",
       "path": "/opt/charon/.charon",
-      "service": "charon"
+      "service": "charon-teku-1"
+    },
+    {
+      "name": "charon2",
+      "path": "/opt/charon/.charon",
+      "service": "charon-teku-2"
+    },
+    {
+      "name": "charon3",
+      "path": "/opt/charon/.charon",
+      "service": "charon-teku-3"
+    },
+    {
+      "name": "charon4",
+      "path": "/opt/charon/.charon",
+      "service": "charon-teku-4"
+    },
+    {
+      "name": "charon5",
+      "path": "/opt/charon/.charon",
+      "service": "charon-teku-5"
     }
   ],
   "globalEnvs": [
     {
-      "envs": ["DOMAIN", "PUBLIC_IP", "CONSENSUS_CLIENT_HOLESKY"],
-      "services": ["charon"]
+      "envs": ["CONSENSUS_CLIENT_HOLESKY", "DOMAIN"],
+      "services": [
+        "charon-teku-1",
+        "charon-teku-2",
+        "charon-teku-3",
+        "charon-teku-4",
+        "charon-teku-5"
+      ]
     }
   ],
   "license": "GPL-3.0",
