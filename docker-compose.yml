@@ -19,7 +19,9 @@ services:
       - "CHARON_VALIDATOR_API_ADDRESS=0.0.0.0:3600"
       - "CHARON_MONITORING_ADDRESS=0.0.0.0:3620"
       - "CHARON_LOKI_ADDRESSES=http://loki.dms.dappnode:3100/loki/api/v1/push"
+      - "CHARON_P2P_RELAYS=https://0.relay.obol.tech,https://1.relay.obol.tech/"
       - CHARON_LOKI_SERVICE=charon-validator-1
+      - CHARON_BUILDER_API=true
       - TEKU_LOGGING=INFO
       - >-
         TEKU_VALIDATORS_PROPOSER_DEFAULT_FEE_RECIPIENT=0x0000000000000000000000000000000000000000
