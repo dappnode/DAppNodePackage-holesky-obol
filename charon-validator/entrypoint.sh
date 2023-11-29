@@ -15,11 +15,6 @@ ENR_PRIVATE_KEY_FILE=${CHARON_ROOT_DIR}/charon-enr-private-key
 ENR_FILE=${CHARON_ROOT_DIR}/enr
 DEFINITION_FILE_URL_FILE=${CHARON_ROOT_DIR}/definition_file_url.txt
 
-TEKU_SECURITY_DIR=/opt/charon/security
-TEKU_CERT_FILE=$TEKU_SECURITY_DIR/certs/teku_${CLUSTER_ID}_certificate.p12
-TEKU_CERT_PASS_FILE=$TEKU_SECURITY_DIR/certs/teku_certificate_pass.txt
-TEKU_CERT_PASS=$(cat $TEKU_CERT_PASS_FILE)
-
 CHARON_LOCK_FILE=${CHARON_ROOT_DIR}/cluster-lock.json
 REQUEST_BODY_FILE=${CHARON_ROOT_DIR}/request-body.json
 VALIDATOR_KEYS_DIR=${CHARON_ROOT_DIR}/validator_keys
@@ -108,6 +103,7 @@ function check_DKG() {
   # If the definition file URL is not set and the lock file does not exist, wait for the definition file URL to be set
   elif [ -z "${DEFINITION_FILE_URL}" ] && [ ! -f "${CHARON_LOCK_FILE}" ]; then
     echo "${INFO} Set the definition file URL in the Charon config to start DKG ceremony..."
+    sleep 120 # To allow restoring the backup
     exit 0
 
   else
@@ -123,10 +119,8 @@ function run_charon() {
 }
 
 function run_teku_validator() {
-
   exec /opt/teku/bin/teku --log-destination=CONSOLE \
     validator-client \
-    --network=prater \
     --beacon-node-api-endpoint=http://localhost:3600 \
     --data-base-path=/opt/teku/data \
     --metrics-enabled=true \

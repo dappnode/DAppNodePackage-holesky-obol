@@ -4,7 +4,7 @@ fields:
     target:
       type: environment
       name: DEFINITION_FILE_URL
-      service: charon-teku-1
+      service: charon-validator-1
     title: Definition File for the Distributed Key Generation (DKG) ceremony
     description: |
       Fill this input if you already registered charon 1 as an operator for the DKG ceremony and you are willing to setup your 1st Obol cluster.
@@ -15,7 +15,7 @@ fields:
     target:
       type: environment
       name: DEFINITION_FILE_URL
-      service: charon-teku-2
+      service: charon-validator-2
     title: Definition File for the Distributed Key Generation (DKG) ceremony
     description: |
       Fill this input if you already registered charon 2 as an operator for the DKG ceremony and you are willing to setup your 2nd Obol cluster.
@@ -26,7 +26,7 @@ fields:
     target:
       type: environment
       name: DEFINITION_FILE_URL
-      service: charon-teku-3
+      service: charon-validator-3
     title: Definition File for the Distributed Key Generation (DKG) ceremony
     description: |
       Fill this input if you already registered charon 3 as an operator for the DKG ceremony and you are willing to setup your 3rd Obol cluster.
@@ -37,7 +37,7 @@ fields:
     target:
       type: environment
       name: DEFINITION_FILE_URL
-      service: charon-teku-4
+      service: charon-validator-4
     title: Definition File for the Distributed Key Generation (DKG) ceremony
     description: |
       Fill this input if you already registered charon 4 as an operator for the DKG ceremony and you are willing to setup your 4th Obol cluster.
@@ -48,7 +48,7 @@ fields:
     target:
       type: environment
       name: DEFINITION_FILE_URL
-      service: charon-teku-5
+      service: charon-validator-5
     title: Definition File for the Distributed Key Generation (DKG) ceremony
     description: |
       Fill this input if you already registered charon 5 as an operator for the DKG ceremony and you are willing to setup your 5th Obol cluster.

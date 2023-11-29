@@ -2,51 +2,51 @@
   {
     "labels": {
       "package": "holesky-obol.dnp.dappnode.eth",
-      "service": "charon-teku-1.holesky-obol.dappnode"
+      "service": "charon-validator-1.holesky-obol.dappnode"
     },
     "targets": [
-      "charon-teku-1.holesky-obol.dappnode:3620",
-      "charon-teku-1.holesky-obol.dappnode:8008"
+      "charon-validator-1.holesky-obol.dappnode:3620",
+      "charon-validator-1.holesky-obol.dappnode:8008"
     ]
   },
   {
     "labels": {
       "package": "holesky-obol.dnp.dappnode.eth",
-      "service": "charon-teku-2.holesky-obol.dappnode"
+      "service": "charon-validator-2.holesky-obol.dappnode"
     },
     "targets": [
-      "charon-teku-2.holesky-obol.dappnode:3620",
-      "charon-teku-2.holesky-obol.dappnode:8008"
+      "charon-validator-2.holesky-obol.dappnode:3620",
+      "charon-validator-2.holesky-obol.dappnode:8008"
     ]
   },
   {
     "labels": {
       "package": "holesky-obol.dnp.dappnode.eth",
-      "service": "charon-teku-3.holesky-obol.dappnode"
+      "service": "charon-validator-3.holesky-obol.dappnode"
     },
     "targets": [
-      "charon-teku-3.holesky-obol.dappnode:3620",
-      "charon-teku-3.holesky-obol.dappnode:8008"
+      "charon-validator-3.holesky-obol.dappnode:3620",
+      "charon-validator-3.holesky-obol.dappnode:8008"
     ]
   },
   {
     "labels": {
       "package": "holesky-obol.dnp.dappnode.eth",
-      "service": "charon-teku-4.holesky-obol.dappnode"
+      "service": "charon-validator-4.holesky-obol.dappnode"
     },
     "targets": [
-      "charon-teku-4.holesky-obol.dappnode:3620",
-      "charon-teku-4.holesky-obol.dappnode:8008"
+      "charon-validator-4.holesky-obol.dappnode:3620",
+      "charon-validator-4.holesky-obol.dappnode:8008"
     ]
   },
   {
     "labels": {
       "package": "holesky-obol.dnp.dappnode.eth",
-      "service": "charon-teku-5.holesky-obol.dappnode"
+      "service": "charon-validator-5.holesky-obol.dappnode"
     },
     "targets": [
-      "charon-teku-5.holesky-obol.dappnode:3620",
-      "charon-teku-5.holesky-obol.dappnode:8008"
+      "charon-validator-5.holesky-obol.dappnode:3620",
+      "charon-validator-5.holesky-obol.dappnode:8008"
     ]
   }
 ]

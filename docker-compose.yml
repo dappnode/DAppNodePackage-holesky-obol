@@ -1,8 +1,8 @@
 version: "3.5"
 services:
-  charon-teku-1:
+  charon-validator-1:
     build:
-      context: charon-teku
+      context: charon-validator
       args:
         UPSTREAM_VERSION: v0.17.2
         TEKU_VERSION: 23.11.0
@@ -19,7 +19,7 @@ services:
       - "CHARON_VALIDATOR_API_ADDRESS=0.0.0.0:3600"
       - "CHARON_MONITORING_ADDRESS=0.0.0.0:3620"
       - "CHARON_LOKI_ADDRESSES=http://loki.dms.dappnode:3100/loki/api/v1/push"
-      - CHARON_LOKI_SERVICE=charon-teku-1
+      - CHARON_LOKI_SERVICE=charon-validator-1
       - TEKU_LOGGING=INFO
       - >-
         TEKU_VALIDATORS_PROPOSER_DEFAULT_FEE_RECIPIENT=0x0000000000000000000000000000000000000000
@@ -33,10 +33,10 @@ services:
       test: "wget -qO- http://localhost:3620/readyz"
     security_opt:
       - "seccomp:unconfined"
-    image: "charon-teku-1.holesky-obol.dnp.dappnode.eth:0.1.1"
-  charon-teku-2:
+    image: "charon-validator-1.holesky-obol.dnp.dappnode.eth:0.1.1"
+  charon-validator-2:
     build:
-      context: charon-teku
+      context: charon-validator
       args:
         UPSTREAM_VERSION: v0.17.2
         TEKU_VERSION: 23.11.0
@@ -53,7 +53,7 @@ services:
       - "CHARON_VALIDATOR_API_ADDRESS=0.0.0.0:3600"
       - "CHARON_MONITORING_ADDRESS=0.0.0.0:3620"
       - "CHARON_LOKI_ADDRESSES=http://loki.dms.dappnode:3100/loki/api/v1/push"
-      - CHARON_LOKI_SERVICE=charon-teku-2
+      - CHARON_LOKI_SERVICE=charon-validator-2
       - TEKU_LOGGING=INFO
       - >-
         TEKU_VALIDATORS_PROPOSER_DEFAULT_FEE_RECIPIENT=0x0000000000000000000000000000000000000000
@@ -67,10 +67,10 @@ services:
       test: "wget -qO- http://localhost:3620/readyz"
     security_opt:
       - "seccomp:unconfined"
-    image: "charon-teku-2.holesky-obol.dnp.dappnode.eth:0.1.1"
-  charon-teku-3:
+    image: "charon-validator-2.holesky-obol.dnp.dappnode.eth:0.1.1"
+  charon-validator-3:
     build:
-      context: charon-teku
+      context: charon-validator
       args:
         UPSTREAM_VERSION: v0.17.2
         TEKU_VERSION: 23.11.0
@@ -87,7 +87,7 @@ services:
       - "CHARON_VALIDATOR_API_ADDRESS=0.0.0.0:3600"
       - "CHARON_MONITORING_ADDRESS=0.0.0.0:3620"
       - "CHARON_LOKI_ADDRESSES=http://loki.dms.dappnode:3100/loki/api/v1/push"
-      - CHARON_LOKI_SERVICE=charon-teku-3
+      - CHARON_LOKI_SERVICE=charon-validator-3
       - TEKU_LOGGING=INFO
       - >-
         TEKU_VALIDATORS_PROPOSER_DEFAULT_FEE_RECIPIENT=0x0000000000000000000000000000000000000000
@@ -101,10 +101,10 @@ services:
       test: "wget -qO- http://localhost:3620/readyz"
     security_opt:
       - "seccomp:unconfined"
-    image: "charon-teku-3.holesky-obol.dnp.dappnode.eth:0.1.1"
-  charon-teku-4:
+    image: "charon-validator-3.holesky-obol.dnp.dappnode.eth:0.1.1"
+  charon-validator-4:
     build:
-      context: charon-teku
+      context: charon-validator
       args:
         UPSTREAM_VERSION: v0.17.2
         TEKU_VERSION: 23.11.0
@@ -121,7 +121,7 @@ services:
       - "CHARON_VALIDATOR_API_ADDRESS=0.0.0.0:3600"
       - "CHARON_MONITORING_ADDRESS=0.0.0.0:3620"
       - "CHARON_LOKI_ADDRESSES=http://loki.dms.dappnode:3100/loki/api/v1/push"
-      - CHARON_LOKI_SERVICE=charon-teku-4
+      - CHARON_LOKI_SERVICE=charon-validator-4
       - TEKU_LOGGING=INFO
       - >-
         TEKU_VALIDATORS_PROPOSER_DEFAULT_FEE_RECIPIENT=0x0000000000000000000000000000000000000000
@@ -135,10 +135,10 @@ services:
       test: "wget -qO- http://localhost:3620/readyz"
     security_opt:
       - "seccomp:unconfined"
-    image: "charon-teku-4.holesky-obol.dnp.dappnode.eth:0.1.1"
-  charon-teku-5:
+    image: "charon-validator-4.holesky-obol.dnp.dappnode.eth:0.1.1"
+  charon-validator-5:
     build:
-      context: charon-teku
+      context: charon-validator
       args:
         UPSTREAM_VERSION: v0.17.2
         TEKU_VERSION: 23.11.0
@@ -155,7 +155,7 @@ services:
       - "CHARON_VALIDATOR_API_ADDRESS=0.0.0.0:3600"
       - "CHARON_MONITORING_ADDRESS=0.0.0.0:3620"
       - "CHARON_LOKI_ADDRESSES=http://loki.dms.dappnode:3100/loki/api/v1/push"
-      - CHARON_LOKI_SERVICE=charon-teku-5
+      - CHARON_LOKI_SERVICE=charon-validator-5
       - TEKU_LOGGING=INFO
       - >-
         TEKU_VALIDATORS_PROPOSER_DEFAULT_FEE_RECIPIENT=0x0000000000000000000000000000000000000000
@@ -169,7 +169,7 @@ services:
       test: "wget -qO- http://localhost:3620/readyz"
     security_opt:
       - "seccomp:unconfined"
-    image: "charon-teku-5.holesky-obol.dnp.dappnode.eth:0.1.1"
+    image: "charon-validator-5.holesky-obol.dnp.dappnode.eth:0.1.1"
 volumes:
   charon-1-data: {}
   charon-2-data: {}
