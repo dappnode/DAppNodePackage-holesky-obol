@@ -6,7 +6,7 @@ The Obol Dappnode Package is designed to help users run a distributed validator 
 
 1. **Maximum Clusters**: The package supports a maximum of 5 clusters.
 
-2. **Services**: Each cluster requires two dedicated services: Charon and Teku validator.
+2. **Services**: Each cluster requires two dedicated services: Charon and validator service.
 
 ## Getting the ENR
 
