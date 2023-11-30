@@ -5,173 +5,148 @@ services:
       context: charon-validator
       args:
         UPSTREAM_VERSION: v0.17.2
-        TEKU_VERSION: 23.11.0
+        LODESTAR_VERSION: v1.12.0
         CLUSTER_ID: 1
     restart: on-failure
     volumes:
       - "charon-1-data:/opt/charon/.charon"
-      - "teku-1-data:/opt/teku/data"
+      - "validator-1-data:/opt/validator/data"
     environment:
       - DEFINITION_FILE_URL
       - CHARON_LOG_LEVEL=info
-      - "CHARON_P2P_TCP_ADDRESS=0.0.0.0:3711"
-      - "CHARON_P2P_UDP_ADDRESS=0.0.0.0:3731"
+      - "CHARON_P2P_TCP_ADDRESS=0.0.0.0:3811"
+      - "CHARON_P2P_UDP_ADDRESS=0.0.0.0:3831"
       - "CHARON_VALIDATOR_API_ADDRESS=0.0.0.0:3600"
       - "CHARON_MONITORING_ADDRESS=0.0.0.0:3620"
       - "CHARON_LOKI_ADDRESSES=http://loki.dms.dappnode:3100/loki/api/v1/push"
       - "CHARON_P2P_RELAYS=https://0.relay.obol.tech,https://1.relay.obol.tech/"
       - CHARON_LOKI_SERVICE=charon-validator-1
       - CHARON_BUILDER_API=true
-      - TEKU_LOGGING=INFO
-      - >-
-        TEKU_VALIDATORS_PROPOSER_DEFAULT_FEE_RECIPIENT=0x0000000000000000000000000000000000000000
-      - TEKU_VALIDATORS_GRAFFITI=validating_from_DAppNode
-      - JAVA_OPTS=-Xmx5g
-      - TEKU_EXTRA_OPTS
+      - LODESTAR_EXTRA_OPTS
     ports:
-      - "3711:3711/tcp"
-      - "3731:3731/udp"
+      - "3811:3811/tcp"
+      - "3831:3831/udp"
     healthcheck:
       test: "wget -qO- http://localhost:3620/readyz"
     security_opt:
       - "seccomp:unconfined"
-    image: "charon-validator-1.holesky-obol.dnp.dappnode.eth:0.1.1"
+    image: "charon-validator-1.holesky-obol-lodestar.dnp.dappnode.eth:0.1.1"
   charon-validator-2:
     build:
       context: charon-validator
       args:
         UPSTREAM_VERSION: v0.17.2
-        TEKU_VERSION: 23.11.0
+        LODESTAR_VERSION: v1.12.0
         CLUSTER_ID: 2
     restart: on-failure
     volumes:
       - "charon-2-data:/opt/charon/.charon"
-      - "teku-2-data:/opt/teku/data"
+      - "validator-2-data:/opt/validator/data"
     environment:
       - DEFINITION_FILE_URL
       - CHARON_LOG_LEVEL=info
-      - "CHARON_P2P_TCP_ADDRESS=0.0.0.0:3712"
-      - "CHARON_P2P_UDP_ADDRESS=0.0.0.0:3732"
+      - "CHARON_P2P_TCP_ADDRESS=0.0.0.0:3812"
+      - "CHARON_P2P_UDP_ADDRESS=0.0.0.0:3832"
       - "CHARON_VALIDATOR_API_ADDRESS=0.0.0.0:3600"
       - "CHARON_MONITORING_ADDRESS=0.0.0.0:3620"
       - "CHARON_LOKI_ADDRESSES=http://loki.dms.dappnode:3100/loki/api/v1/push"
       - CHARON_LOKI_SERVICE=charon-validator-2
-      - TEKU_LOGGING=INFO
-      - >-
-        TEKU_VALIDATORS_PROPOSER_DEFAULT_FEE_RECIPIENT=0x0000000000000000000000000000000000000000
-      - TEKU_VALIDATORS_GRAFFITI=validating_from_DAppNode
-      - JAVA_OPTS=-Xmx5g
-      - TEKU_EXTRA_OPTS
+      - LODESTAR_EXTRA_OPTS
     ports:
-      - "3712:3712/tcp"
-      - "3732:3732/udp"
+      - "3812:3812/tcp"
+      - "3832:3832/udp"
     healthcheck:
       test: "wget -qO- http://localhost:3620/readyz"
     security_opt:
       - "seccomp:unconfined"
-    image: "charon-validator-2.holesky-obol.dnp.dappnode.eth:0.1.1"
+    image: "charon-validator-2.holesky-obol-lodestar.dnp.dappnode.eth:0.1.1"
   charon-validator-3:
     build:
       context: charon-validator
       args:
         UPSTREAM_VERSION: v0.17.2
-        TEKU_VERSION: 23.11.0
+        LODESTAR_VERSION: v1.12.0
         CLUSTER_ID: 3
     restart: on-failure
     volumes:
       - "charon-3-data:/opt/charon/.charon"
-      - "teku-3-data:/opt/teku/data"
+      - "validator-3-data:/opt/validator/data"
     environment:
       - DEFINITION_FILE_URL
       - CHARON_LOG_LEVEL=info
-      - "CHARON_P2P_TCP_ADDRESS=0.0.0.0:3713"
-      - "CHARON_P2P_UDP_ADDRESS=0.0.0.0:3733"
+      - "CHARON_P2P_TCP_ADDRESS=0.0.0.0:3813"
+      - "CHARON_P2P_UDP_ADDRESS=0.0.0.0:3833"
       - "CHARON_VALIDATOR_API_ADDRESS=0.0.0.0:3600"
       - "CHARON_MONITORING_ADDRESS=0.0.0.0:3620"
       - "CHARON_LOKI_ADDRESSES=http://loki.dms.dappnode:3100/loki/api/v1/push"
       - CHARON_LOKI_SERVICE=charon-validator-3
-      - TEKU_LOGGING=INFO
-      - >-
-        TEKU_VALIDATORS_PROPOSER_DEFAULT_FEE_RECIPIENT=0x0000000000000000000000000000000000000000
-      - TEKU_VALIDATORS_GRAFFITI=validating_from_DAppNode
-      - JAVA_OPTS=-Xmx5g
-      - TEKU_EXTRA_OPTS
+      - LODESTAR_EXTRA_OPTS
     ports:
-      - "3713:3713/tcp"
-      - "3733:3733/udp"
+      - "3813:3813/tcp"
+      - "3833:3833/udp"
     healthcheck:
       test: "wget -qO- http://localhost:3620/readyz"
     security_opt:
       - "seccomp:unconfined"
-    image: "charon-validator-3.holesky-obol.dnp.dappnode.eth:0.1.1"
+    image: "charon-validator-3.holesky-obol-lodestar.dnp.dappnode.eth:0.1.1"
   charon-validator-4:
     build:
       context: charon-validator
       args:
         UPSTREAM_VERSION: v0.17.2
-        TEKU_VERSION: 23.11.0
+        LODESTAR_VERSION: v1.12.0
         CLUSTER_ID: 4
     restart: on-failure
     volumes:
       - "charon-4-data:/opt/charon/.charon"
-      - "teku-4-data:/opt/teku/data"
+      - "validator-4-data:/opt/validator/data"
     environment:
       - DEFINITION_FILE_URL
       - CHARON_LOG_LEVEL=info
-      - "CHARON_P2P_TCP_ADDRESS=0.0.0.0:3714"
-      - "CHARON_P2P_UDP_ADDRESS=0.0.0.0:3734"
+      - "CHARON_P2P_TCP_ADDRESS=0.0.0.0:3814"
+      - "CHARON_P2P_UDP_ADDRESS=0.0.0.0:3834"
       - "CHARON_VALIDATOR_API_ADDRESS=0.0.0.0:3600"
       - "CHARON_MONITORING_ADDRESS=0.0.0.0:3620"
       - "CHARON_LOKI_ADDRESSES=http://loki.dms.dappnode:3100/loki/api/v1/push"
       - CHARON_LOKI_SERVICE=charon-validator-4
-      - TEKU_LOGGING=INFO
-      - >-
-        TEKU_VALIDATORS_PROPOSER_DEFAULT_FEE_RECIPIENT=0x0000000000000000000000000000000000000000
-      - TEKU_VALIDATORS_GRAFFITI=validating_from_DAppNode
-      - JAVA_OPTS=-Xmx5g
-      - TEKU_EXTRA_OPTS
+      - LODESTAR_EXTRA_OPTS
     ports:
-      - "3714:3714/tcp"
-      - "3734:3734/udp"
+      - "3814:3814/tcp"
+      - "3834:3834/udp"
     healthcheck:
       test: "wget -qO- http://localhost:3620/readyz"
     security_opt:
       - "seccomp:unconfined"
-    image: "charon-validator-4.holesky-obol.dnp.dappnode.eth:0.1.1"
+    image: "charon-validator-4.holesky-obol-lodestar.dnp.dappnode.eth:0.1.1"
   charon-validator-5:
     build:
       context: charon-validator
       args:
         UPSTREAM_VERSION: v0.17.2
-        TEKU_VERSION: 23.11.0
+        LODESTAR_VERSION: v1.12.0
         CLUSTER_ID: 5
     restart: on-failure
     volumes:
       - "charon-5-data:/opt/charon/.charon"
-      - "teku-5-data:/opt/teku/data"
+      - "validator-5-data:/opt/validator/data"
     environment:
       - DEFINITION_FILE_URL
       - CHARON_LOG_LEVEL=info
-      - "CHARON_P2P_TCP_ADDRESS=0.0.0.0:3715"
-      - "CHARON_P2P_UDP_ADDRESS=0.0.0.0:3735"
+      - "CHARON_P2P_TCP_ADDRESS=0.0.0.0:3815"
+      - "CHARON_P2P_UDP_ADDRESS=0.0.0.0:3835"
       - "CHARON_VALIDATOR_API_ADDRESS=0.0.0.0:3600"
       - "CHARON_MONITORING_ADDRESS=0.0.0.0:3620"
       - "CHARON_LOKI_ADDRESSES=http://loki.dms.dappnode:3100/loki/api/v1/push"
       - CHARON_LOKI_SERVICE=charon-validator-5
-      - TEKU_LOGGING=INFO
-      - >-
-        TEKU_VALIDATORS_PROPOSER_DEFAULT_FEE_RECIPIENT=0x0000000000000000000000000000000000000000
-      - TEKU_VALIDATORS_GRAFFITI=validating_from_DAppNode
-      - JAVA_OPTS=-Xmx5g
-      - TEKU_EXTRA_OPTS
+      - LODESTAR_EXTRA_OPTS
     ports:
-      - "3715:3715/tcp"
-      - "3735:3735/udp"
+      - "3815:3815/tcp"
+      - "3835:3835/udp"
     healthcheck:
       test: "wget -qO- http://localhost:3620/readyz"
     security_opt:
       - "seccomp:unconfined"
-    image: "charon-validator-5.holesky-obol.dnp.dappnode.eth:0.1.1"
+    image: "charon-validator-5.holesky-obol-lodestar.dnp.dappnode.eth:0.1.1"
   prometheus:
     build:
       context: prometheus
@@ -180,16 +155,16 @@ services:
     volumes:
       - "prometheus-data:/prometheus"
     restart: unless-stopped
-    image: "prometheus.holesky-obol.dnp.dappnode.eth:0.1.1"
+    image: "prometheus.holesky-obol-lodestar.dnp.dappnode.eth:0.1.1"
 volumes:
   charon-1-data: {}
   charon-2-data: {}
   charon-3-data: {}
   charon-4-data: {}
   charon-5-data: {}
-  teku-1-data: {}
-  teku-2-data: {}
-  teku-3-data: {}
-  teku-4-data: {}
-  teku-5-data: {}
+  validator-1-data: {}
+  validator-2-data: {}
+  validator-3-data: {}
+  validator-4-data: {}
+  validator-5-data: {}
   prometheus-data: {}
