@@ -1,10 +1,10 @@
 ARG UPSTREAM_VERSION
 
-FROM node:20-alpine as lodestar-build
+FROM node:20-bullseye-slim as lodestar-build
 
 WORKDIR /usr/app
 
-RUN apk update && apk add --no-cache git g++ make python3 && rm -rf /var/cache/apk/*
+RUN apt update && apt install -y git g++ make python3
 
 RUN git clone https://github.com/ChainSafe/lodestar
 
@@ -34,13 +34,13 @@ RUN curl -SLO https://deb.nodesource.com/nsolid_setup_deb.sh && \
 
 COPY --from=lodestar-build /usr/app/lodestar /opt/validator
 
-RUN mkdir -p /opt/charon/.charon && chown -R charon:charon /opt/charon
-
 COPY entrypoint.sh /entrypoint.sh
 
 # To prevent the user from editing the CLUSTER_ID, we set it as an ARG
 ARG CLUSTER_ID
 ENV CLUSTER_ID=${CLUSTER_ID} CHARON_LOG_FORMAT=console NETWORK=holesky \ 
-    VALIDATOR_SERVICE_BIN=/opt/validator/packages/cli/bin/lodestar VALIDATOR_METRICS_PORT=8008
+    VALIDATOR_SERVICE_BIN=/opt/validator/packages/cli/bin/lodestar VALIDATOR_DATA_DIR=/opt/validator/data VALIDATOR_METRICS_PORT=8008
+
+RUN mkdir -p /opt/charon/.charon ${VALIDATOR_DATA_DIR} && chown -R charon:charon /opt/charon
 
 ENTRYPOINT ["/entrypoint.sh"]

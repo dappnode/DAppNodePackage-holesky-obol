@@ -123,7 +123,9 @@ function import_keystores_to_validator_service() {
     echo "Importing key ${f}"
 
     # Import keystore with password.
-    node ${VALIDATOR_SERVICE_BIN} validator import \
+    node ${VALIDATOR_SERVICE_BIN} \
+      --dataDir="${VALIDATOR_DATA_DIR}" \
+      validator import \
       --network="${NETWORK}" \
       --importKeystores="${f}" \
       --importKeystoresPassword="${f//json/txt}"
@@ -131,8 +133,9 @@ function import_keystores_to_validator_service() {
 }
 
 function run_validator_service() {
-  exec node ${VALIDATOR_SERVICE_BIN}
-  --network="${NETWORK}" \
+  exec node ${VALIDATOR_SERVICE_BIN} \
+    --network="${NETWORK}" \
+    --dataDir="${VALIDATOR_DATA_DIR}" \
     validator \
     --beaconNodes="http://localhost:3600" \
     --builder="true" \
