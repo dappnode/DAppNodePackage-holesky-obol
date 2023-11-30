@@ -5,12 +5,12 @@ services:
       context: charon-validator
       args:
         UPSTREAM_VERSION: v0.17.2
-        TEKU_VERSION: 23.11.0
+        VALIDATOR_CLIENT_VERSION: 23.11.0
         CLUSTER_ID: 1
     restart: on-failure
     volumes:
       - "charon-1-data:/opt/charon/.charon"
-      - "teku-1-data:/opt/teku/data"
+      - "validator-1-data:/opt/validator/data"
     environment:
       - DEFINITION_FILE_URL
       - CHARON_LOG_LEVEL=info
@@ -22,12 +22,10 @@ services:
       - "CHARON_P2P_RELAYS=https://0.relay.obol.tech,https://1.relay.obol.tech/"
       - CHARON_LOKI_SERVICE=charon-validator-1
       - CHARON_BUILDER_API=true
-      - TEKU_LOGGING=INFO
-      - >-
-        TEKU_VALIDATORS_PROPOSER_DEFAULT_FEE_RECIPIENT=0x0000000000000000000000000000000000000000
-      - TEKU_VALIDATORS_GRAFFITI=validating_from_DAppNode
+      - DEFAULT_FEE_RECIPIENT=0x0000000000000000000000000000000000000000
+      - GRAFFITI=validating_from_DAppNode
       - JAVA_OPTS=-Xmx5g
-      - TEKU_EXTRA_OPTS
+      - VALIDATOR_EXTRA_OPTS
     ports:
       - "3711:3711/tcp"
       - "3731:3731/udp"
@@ -41,12 +39,12 @@ services:
       context: charon-validator
       args:
         UPSTREAM_VERSION: v0.17.2
-        TEKU_VERSION: 23.11.0
+        VALIDATOR_CLIENT_VERSION: 23.11.0
         CLUSTER_ID: 2
     restart: on-failure
     volumes:
       - "charon-2-data:/opt/charon/.charon"
-      - "teku-2-data:/opt/teku/data"
+      - "validator-2-data:/opt/validator/data"
     environment:
       - DEFINITION_FILE_URL
       - CHARON_LOG_LEVEL=info
@@ -56,12 +54,10 @@ services:
       - "CHARON_MONITORING_ADDRESS=0.0.0.0:3620"
       - "CHARON_LOKI_ADDRESSES=http://loki.dms.dappnode:3100/loki/api/v1/push"
       - CHARON_LOKI_SERVICE=charon-validator-2
-      - TEKU_LOGGING=INFO
-      - >-
-        TEKU_VALIDATORS_PROPOSER_DEFAULT_FEE_RECIPIENT=0x0000000000000000000000000000000000000000
-      - TEKU_VALIDATORS_GRAFFITI=validating_from_DAppNode
+      - DEFAULT_FEE_RECIPIENT=0x0000000000000000000000000000000000000000
+      - GRAFFITI=validating_from_DAppNode
       - JAVA_OPTS=-Xmx5g
-      - TEKU_EXTRA_OPTS
+      - VALIDATOR_EXTRA_OPTS
     ports:
       - "3712:3712/tcp"
       - "3732:3732/udp"
@@ -75,12 +71,12 @@ services:
       context: charon-validator
       args:
         UPSTREAM_VERSION: v0.17.2
-        TEKU_VERSION: 23.11.0
+        VALIDATOR_CLIENT_VERSION: 23.11.0
         CLUSTER_ID: 3
     restart: on-failure
     volumes:
       - "charon-3-data:/opt/charon/.charon"
-      - "teku-3-data:/opt/teku/data"
+      - "validator-3-data:/opt/validator/data"
     environment:
       - DEFINITION_FILE_URL
       - CHARON_LOG_LEVEL=info
@@ -90,12 +86,10 @@ services:
       - "CHARON_MONITORING_ADDRESS=0.0.0.0:3620"
       - "CHARON_LOKI_ADDRESSES=http://loki.dms.dappnode:3100/loki/api/v1/push"
       - CHARON_LOKI_SERVICE=charon-validator-3
-      - TEKU_LOGGING=INFO
-      - >-
-        TEKU_VALIDATORS_PROPOSER_DEFAULT_FEE_RECIPIENT=0x0000000000000000000000000000000000000000
-      - TEKU_VALIDATORS_GRAFFITI=validating_from_DAppNode
+      - DEFAULT_FEE_RECIPIENT=0x0000000000000000000000000000000000000000
+      - GRAFFITI=validating_from_DAppNode
       - JAVA_OPTS=-Xmx5g
-      - TEKU_EXTRA_OPTS
+      - VALIDATOR_EXTRA_OPTS
     ports:
       - "3713:3713/tcp"
       - "3733:3733/udp"
@@ -109,12 +103,12 @@ services:
       context: charon-validator
       args:
         UPSTREAM_VERSION: v0.17.2
-        TEKU_VERSION: 23.11.0
+        VALIDATOR_CLIENT_VERSION: 23.11.0
         CLUSTER_ID: 4
     restart: on-failure
     volumes:
       - "charon-4-data:/opt/charon/.charon"
-      - "teku-4-data:/opt/teku/data"
+      - "validator-4-data:/opt/validator/data"
     environment:
       - DEFINITION_FILE_URL
       - CHARON_LOG_LEVEL=info
@@ -124,12 +118,10 @@ services:
       - "CHARON_MONITORING_ADDRESS=0.0.0.0:3620"
       - "CHARON_LOKI_ADDRESSES=http://loki.dms.dappnode:3100/loki/api/v1/push"
       - CHARON_LOKI_SERVICE=charon-validator-4
-      - TEKU_LOGGING=INFO
-      - >-
-        TEKU_VALIDATORS_PROPOSER_DEFAULT_FEE_RECIPIENT=0x0000000000000000000000000000000000000000
-      - TEKU_VALIDATORS_GRAFFITI=validating_from_DAppNode
+      - DEFAULT_FEE_RECIPIENT=0x0000000000000000000000000000000000000000
+      - GRAFFITI=validating_from_DAppNode
       - JAVA_OPTS=-Xmx5g
-      - TEKU_EXTRA_OPTS
+      - VALIDATOR_EXTRA_OPTS
     ports:
       - "3714:3714/tcp"
       - "3734:3734/udp"
@@ -143,12 +135,12 @@ services:
       context: charon-validator
       args:
         UPSTREAM_VERSION: v0.17.2
-        TEKU_VERSION: 23.11.0
+        VALIDATOR_CLIENT_VERSION: 23.11.0
         CLUSTER_ID: 5
     restart: on-failure
     volumes:
       - "charon-5-data:/opt/charon/.charon"
-      - "teku-5-data:/opt/teku/data"
+      - "validator-5-data:/opt/validator/data"
     environment:
       - DEFINITION_FILE_URL
       - CHARON_LOG_LEVEL=info
@@ -158,12 +150,10 @@ services:
       - "CHARON_MONITORING_ADDRESS=0.0.0.0:3620"
       - "CHARON_LOKI_ADDRESSES=http://loki.dms.dappnode:3100/loki/api/v1/push"
       - CHARON_LOKI_SERVICE=charon-validator-5
-      - TEKU_LOGGING=INFO
-      - >-
-        TEKU_VALIDATORS_PROPOSER_DEFAULT_FEE_RECIPIENT=0x0000000000000000000000000000000000000000
-      - TEKU_VALIDATORS_GRAFFITI=validating_from_DAppNode
+      - DEFAULT_FEE_RECIPIENT=0x0000000000000000000000000000000000000000
+      - GRAFFITI=validating_from_DAppNode
       - JAVA_OPTS=-Xmx5g
-      - TEKU_EXTRA_OPTS
+      - VALIDATOR_EXTRA_OPTS
     ports:
       - "3715:3715/tcp"
       - "3735:3735/udp"
@@ -187,9 +177,9 @@ volumes:
   charon-3-data: {}
   charon-4-data: {}
   charon-5-data: {}
-  teku-1-data: {}
-  teku-2-data: {}
-  teku-3-data: {}
-  teku-4-data: {}
-  teku-5-data: {}
+  validator-1-data: {}
+  validator-2-data: {}
+  validator-3-data: {}
+  validator-4-data: {}
+  validator-5-data: {}
   prometheus-data: {}

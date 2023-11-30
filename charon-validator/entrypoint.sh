@@ -118,11 +118,11 @@ function run_charon() {
   ) &
 }
 
-function run_teku_validator() {
-  exec /opt/teku/bin/teku --log-destination=CONSOLE \
+function run_validator_client() {
+  exec ${VALIDATOR_SERVICE_BIN} --log-destination=CONSOLE \
     validator-client \
     --beacon-node-api-endpoint=http://localhost:3600 \
-    --data-base-path=/opt/teku/data \
+    --data-base-path=${VALIDATOR_DATA_DIR} \
     --metrics-enabled=true \
     --metrics-interface 0.0.0.0 \
     --metrics-port 8008 \
@@ -133,7 +133,9 @@ function run_teku_validator() {
     --validators-proposer-blinded-blocks-enabled=true \
     --validators-builder-registration-default-enabled=true \
     --network=${NETWORK} \
-    ${TEKU_EXTRA_OPTS}
+    --validators-proposer-default-fee-recipient=${DEFAULT_FEE_RECIPIENT} \
+    --validators-graffiti=${GRAFFITI} \
+    ${VALIDATOR_EXTRA_OPTS}
 }
 
 ########
@@ -152,5 +154,5 @@ check_DKG
 echo "${INFO} starting charon..."
 run_charon
 
-echo "${INFO} starting teku validator..."
-run_teku_validator
+echo "${INFO} starting validator client..."
+run_validator_client
