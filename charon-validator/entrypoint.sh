@@ -118,22 +118,27 @@ function run_charon() {
   ) &
 }
 
-function run_teku_validator() {
-  exec /opt/teku/bin/teku --log-destination=CONSOLE \
-    validator-client \
-    --beacon-node-api-endpoint=http://localhost:3600 \
-    --data-base-path=/opt/teku/data \
-    --metrics-enabled=true \
-    --metrics-interface 0.0.0.0 \
-    --metrics-port 8008 \
-    --metrics-host-allowlist=* \
-    --validator-api-enabled=false \
-    --validators-keystore-locking-enabled=false \
-    --validator-keys=${VALIDATOR_KEYS_DIR}:${VALIDATOR_KEYS_DIR} \
-    --validators-proposer-blinded-blocks-enabled=true \
-    --validators-builder-registration-default-enabled=true \
-    --network=${NETWORK} \
-    ${TEKU_EXTRA_OPTS}
+function import_keystores_to_validator_service() {
+  for f in ${VALIDATOR_KEYS_DIR}/keystore-*.json; do
+    echo "Importing key ${f}"
+
+    # Import keystore with password.
+    node ${VALIDATOR_SERVICE_BIN} validator import \
+      --network="${NETWORK}" \
+      --importKeystores="${f}" \
+      --importKeystoresPassword="${f//json/txt}"
+  done
+}
+
+function run_validator_service() {
+  exec node ${VALIDATOR_SERVICE_BIN}
+  --network="${NETWORK}" \
+    validator \
+    --beaconNodes="http://localhost:3600" \
+    --builder="true" \
+    --builder.selection="builderonly" \
+    --metrics="true" \
+    --metrics.port="${VALIDATOR_METRICS_PORT}"
 }
 
 ########
@@ -152,5 +157,8 @@ check_DKG
 echo "${INFO} starting charon..."
 run_charon
 
-echo "${INFO} starting teku validator..."
-run_teku_validator
+echo "${INFO} importing keystores to validator service..."
+import_keystores_to_validator_service
+
+echo "${INFO} starting validator service..."
+run_validator_service
