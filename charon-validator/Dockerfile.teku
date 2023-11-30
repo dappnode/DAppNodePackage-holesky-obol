@@ -19,7 +19,7 @@ RUN curl -L https://artifacts.consensys.net/public/teku/raw/names/teku.tar.gz/ve
 
 RUN mkdir -p /opt/charon/.charon && chown -R charon:charon /opt/charon
 
-COPY entrypoint.sh /entrypoint.sh
+COPY entrypoint.teku.sh /entrypoint.sh
 
 # To prevent the user from editing the CLUSTER_ID, we set it as an ARG
 ARG CLUSTER_ID
