@@ -3,6 +3,7 @@ services:
   charon-validator-1:
     build:
       context: charon-validator
+      dockerfile: Dockerfile.teku
       args:
         UPSTREAM_VERSION: v0.17.2
         VALIDATOR_CLIENT_VERSION: 23.11.0
@@ -37,6 +38,7 @@ services:
   charon-validator-2:
     build:
       context: charon-validator
+      dockerfile: Dockerfile.teku
       args:
         UPSTREAM_VERSION: v0.17.2
         VALIDATOR_CLIENT_VERSION: 23.11.0
@@ -69,6 +71,7 @@ services:
   charon-validator-3:
     build:
       context: charon-validator
+      dockerfile: Dockerfile.teku
       args:
         UPSTREAM_VERSION: v0.17.2
         VALIDATOR_CLIENT_VERSION: 23.11.0
@@ -101,6 +104,7 @@ services:
   charon-validator-4:
     build:
       context: charon-validator
+      dockerfile: Dockerfile.teku
       args:
         UPSTREAM_VERSION: v0.17.2
         VALIDATOR_CLIENT_VERSION: 23.11.0
@@ -133,6 +137,7 @@ services:
   charon-validator-5:
     build:
       context: charon-validator
+      dockerfile: Dockerfile.teku
       args:
         UPSTREAM_VERSION: v0.17.2
         VALIDATOR_CLIENT_VERSION: 23.11.0

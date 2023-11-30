@@ -132,7 +132,7 @@ function import_keystores_to_validator_service() {
     done
 }
 
-function run_validator_service() {
+function run_validator_client() {
     exec node ${VALIDATOR_SERVICE_BIN} \
         --network="${NETWORK}" \
         --dataDir="${VALIDATOR_DATA_DIR}" \
@@ -166,4 +166,4 @@ echo "${INFO} importing keystores to validator service..."
 import_keystores_to_validator_service
 
 echo "${INFO} starting validator service..."
-run_validator_service
+run_validator_client
