@@ -1,6 +1,6 @@
 {
   "name": "holesky-obol.dnp.dappnode.eth",
-  "version": "0.1.1",
+  "version": "0.1.0",
   "upstreamVersion": "v0.17.2",
   "upstreamRepo": "ObolNetwork/charon",
   "shortDescription": "Obol Node for Distributed validation + validator client",
