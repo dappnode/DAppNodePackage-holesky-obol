@@ -23,6 +23,11 @@ if [ -n "$DEFINITION_FILE_URL" ]; then
     echo $DEFINITION_FILE_URL >$DEFINITION_FILE_URL_FILE
 fi
 
+if [ "$ENABLE_MEV_BOOST" = true ]; then
+    CHARON_EXTRA_OPTS="--builder-api $CHARON_EXTRA_OPTS"
+    VALIDATOR_EXTRA_OPTS="--builder=true --builder.selection=builderonly $VALIDATOR_EXTRA_OPTS"
+fi
+
 export CHARON_P2P_EXTERNAL_HOSTNAME=${_DAPPNODE_GLOBAL_DOMAIN}
 
 #############
@@ -138,12 +143,11 @@ function run_validator_client() {
         --dataDir="${VALIDATOR_DATA_DIR}" \
         validator \
         --beaconNodes="http://localhost:3600" \
-        --builder="true" \
-        --builder.selection="builderonly" \
         --metrics="true" \
         --metrics.port="${VALIDATOR_METRICS_PORT}" \
         --graffiti="${GRAFFITI}" \
-        --suggestedFeeRecipient="${DEFAULT_FEE_RECIPIENT}"
+        --suggestedFeeRecipient="${DEFAULT_FEE_RECIPIENT}" \
+        ${VALIDATOR_EXTRA_OPTS}
 }
 
 ########

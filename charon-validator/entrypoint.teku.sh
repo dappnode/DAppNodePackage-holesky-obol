@@ -23,6 +23,11 @@ if [ -n "$DEFINITION_FILE_URL" ]; then
   echo $DEFINITION_FILE_URL >$DEFINITION_FILE_URL_FILE
 fi
 
+if [ "$ENABLE_MEV_BOOST" = true ]; then
+  CHARON_EXTRA_OPTS="--builder-api $CHARON_EXTRA_OPTS"
+  VALIDATOR_EXTRA_OPTS="--validators-proposer-blinded-blocks-enabled=true --validators-builder-registration-default-enabled=true $VALIDATOR_EXTRA_OPTS"
+fi
+
 export CHARON_P2P_EXTERNAL_HOSTNAME=${_DAPPNODE_GLOBAL_DOMAIN}
 
 #############
@@ -114,7 +119,7 @@ function check_DKG() {
 function run_charon() {
   # Start charon in a subshell in the background
   (
-    exec charon run --private-key-file=$ENR_PRIVATE_KEY_FILE --lock-file=$CHARON_LOCK_FILE --builder-api
+    exec charon run --private-key-file=$ENR_PRIVATE_KEY_FILE --lock-file=$CHARON_LOCK_FILE ${CHARON_EXTRA_OPTS}
   ) &
 }
 
@@ -130,8 +135,6 @@ function run_validator_client() {
     --validator-api-enabled=false \
     --validators-keystore-locking-enabled=false \
     --validator-keys=${VALIDATOR_KEYS_DIR}:${VALIDATOR_KEYS_DIR} \
-    --validators-proposer-blinded-blocks-enabled=true \
-    --validators-builder-registration-default-enabled=true \
     --network=${NETWORK} \
     --validators-proposer-default-fee-recipient=${DEFAULT_FEE_RECIPIENT} \
     --validators-graffiti=${GRAFFITI} \

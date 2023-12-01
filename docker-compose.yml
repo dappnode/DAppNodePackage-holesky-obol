@@ -22,7 +22,8 @@ services:
       - "CHARON_LOKI_ADDRESSES=http://loki.dms.dappnode:3100/loki/api/v1/push"
       - "CHARON_P2P_RELAYS=https://0.relay.obol.tech,https://1.relay.obol.tech/"
       - CHARON_LOKI_SERVICE=charon-validator-1
-      - CHARON_BUILDER_API=true
+      - ENABLE_MEV_BOOST=false
+      - CHARON_EXTRA_OPTS
       - DEFAULT_FEE_RECIPIENT=0x0000000000000000000000000000000000000000
       - GRAFFITI=validating_from_DAppNode
       - JAVA_OPTS=-Xmx5g
@@ -56,6 +57,8 @@ services:
       - "CHARON_MONITORING_ADDRESS=0.0.0.0:3620"
       - "CHARON_LOKI_ADDRESSES=http://loki.dms.dappnode:3100/loki/api/v1/push"
       - CHARON_LOKI_SERVICE=charon-validator-2
+      - ENABLE_MEV_BOOST=false
+      - CHARON_EXTRA_OPTS
       - DEFAULT_FEE_RECIPIENT=0x0000000000000000000000000000000000000000
       - GRAFFITI=validating_from_DAppNode
       - JAVA_OPTS=-Xmx5g
@@ -89,6 +92,8 @@ services:
       - "CHARON_MONITORING_ADDRESS=0.0.0.0:3620"
       - "CHARON_LOKI_ADDRESSES=http://loki.dms.dappnode:3100/loki/api/v1/push"
       - CHARON_LOKI_SERVICE=charon-validator-3
+      - ENABLE_MEV_BOOST=false
+      - CHARON_EXTRA_OPTS
       - DEFAULT_FEE_RECIPIENT=0x0000000000000000000000000000000000000000
       - GRAFFITI=validating_from_DAppNode
       - JAVA_OPTS=-Xmx5g
@@ -122,6 +127,8 @@ services:
       - "CHARON_MONITORING_ADDRESS=0.0.0.0:3620"
       - "CHARON_LOKI_ADDRESSES=http://loki.dms.dappnode:3100/loki/api/v1/push"
       - CHARON_LOKI_SERVICE=charon-validator-4
+      - ENABLE_MEV_BOOST=false
+      - CHARON_EXTRA_OPTS
       - DEFAULT_FEE_RECIPIENT=0x0000000000000000000000000000000000000000
       - GRAFFITI=validating_from_DAppNode
       - JAVA_OPTS=-Xmx5g
@@ -155,6 +162,8 @@ services:
       - "CHARON_MONITORING_ADDRESS=0.0.0.0:3620"
       - "CHARON_LOKI_ADDRESSES=http://loki.dms.dappnode:3100/loki/api/v1/push"
       - CHARON_LOKI_SERVICE=charon-validator-5
+      - ENABLE_MEV_BOOST=false
+      - CHARON_EXTRA_OPTS
       - DEFAULT_FEE_RECIPIENT=0x0000000000000000000000000000000000000000
       - GRAFFITI=validating_from_DAppNode
       - JAVA_OPTS=-Xmx5g
