@@ -64,19 +64,24 @@ function get_ENR() {
     # Check if ENR file exists and create it if it does not
     if [[ ! -f "$ENR_PRIVATE_KEY_FILE" ]]; then
         echo "${INFO} ENR does not exist, creating it..."
-        charon create enr --data-dir=${CHARON_ROOT_DIR} | tee ${CREATE_ENR_FILE}
+        if ! charon create enr --data-dir=${CHARON_ROOT_DIR} | tee ${CREATE_ENR_FILE}; then
+            echo "${ERROR} Failed to create ENR."
+            exit 1
+        fi
     fi
-    # Get ENR from file
-    if [[ ! -f "$ENR" ]]; then
+
+    # If CREATE_ENR_FILE exists but ENR_FILE does not, create ENR_FILE
+    if [[ -f "$CREATE_ENR_FILE" ]] && [[ ! -f "$ENR_FILE" ]]; then
+        echo "${INFO} ENR file does not exist, creating it..."
         grep "enr:" ${CREATE_ENR_FILE} | cut -d " " -f 2 >$ENR_FILE
+    fi
+
+    # If ENR_FILE exists, get ENR from it and publish it to dappmanager
+    if [[ -f "$ENR_FILE" ]]; then
         ENR=$(cat $ENR_FILE)
         echo "${INFO} ENR: ${ENR}"
         echo "${INFO} Publishing ENR to dappmanager..."
         post_ENR_to_dappmanager
-    else
-        echo "${ERROR} it was not possible to get the ENR file"
-        sleep 300 # Wait 5 minutes to avoid restarting the container
-        exit 1
     fi
 }
 
