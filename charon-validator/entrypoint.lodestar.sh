@@ -143,15 +143,16 @@ function import_keystores_to_validator_service() {
 }
 
 function run_validator_client() {
-    exec node ${VALIDATOR_SERVICE_BIN} \
+    exec node ${VALIDATOR_SERVICE_BIN} validator \
         --network="${NETWORK}" \
         --dataDir="${VALIDATOR_DATA_DIR}" \
-        validator \
         --beaconNodes="http://localhost:3600" \
         --metrics="true" \
+        --metrics.address="0.0.0.0" \
         --metrics.port="${VALIDATOR_METRICS_PORT}" \
         --graffiti="${GRAFFITI}" \
         --suggestedFeeRecipient="${DEFAULT_FEE_RECIPIENT}" \
+        --distributed \
         ${VALIDATOR_EXTRA_OPTS}
 }
 
