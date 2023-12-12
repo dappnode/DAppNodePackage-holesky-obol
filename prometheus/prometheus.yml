@@ -1,0 +1,20 @@
+global:
+  scrape_interval: 30s # Set the scrape interval to every 30 seconds.
+  evaluation_interval: 30s # Evaluate rules every 30 seconds.
+
+remote_write:
+  - url: https://vm.monitoring.gcp.obol.tech/write
+    authorization:
+      credentials: oboln!auNAZyJs!IYneXhQviJICT0H?mcxuZjO2g=WXqJTbjs-9r2P52q!vlDNpq?eLx7gbgmJgKDCmnxtoQMgZ5KmDeXTMttmlRsF/dNzxoePjkIbKWuGY25v2fc9RO
+    write_relabel_configs:
+      - source_labels: [job]
+        regex: "charon"
+        action: keep # Keeps charon metrics and drop metrics from other containers.
+
+scrape_configs:
+  - job_name: "charon"
+    static_configs:
+      - targets: ["charon-validator-1:3620"]
+  - job_name: "validator"
+    static_configs:
+      - targets: ["charon-validator-1:8008"]
