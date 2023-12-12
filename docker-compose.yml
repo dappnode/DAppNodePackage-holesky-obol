@@ -5,7 +5,7 @@ services:
       context: charon-validator
       dockerfile: Dockerfile.teku
       args:
-        UPSTREAM_VERSION: v0.17.2
+        UPSTREAM_VERSION: v0.18.0
         VALIDATOR_CLIENT_VERSION: 23.11.0
         CLUSTER_ID: 1
     restart: on-failure
