@@ -3,10 +3,10 @@ services:
   charon-validator-1:
     build:
       context: charon-validator
-      dockerfile: Dockerfile.teku
+      dockerfile: Dockerfile.lodestar
       args:
         UPSTREAM_VERSION: v0.18.0
-        VALIDATOR_CLIENT_VERSION: 23.11.0
+        VALIDATOR_CLIENT_VERSION: v1.12.1
         CLUSTER_ID: 1
     restart: on-failure
     volumes:
@@ -37,10 +37,10 @@ services:
   charon-validator-2:
     build:
       context: charon-validator
-      dockerfile: Dockerfile.teku
+      dockerfile: Dockerfile.lodestar
       args:
         UPSTREAM_VERSION: v0.18.0
-        VALIDATOR_CLIENT_VERSION: 23.11.0
+        VALIDATOR_CLIENT_VERSION: v1.12.1
         CLUSTER_ID: 2
     restart: on-failure
     volumes:
@@ -70,10 +70,10 @@ services:
   charon-validator-3:
     build:
       context: charon-validator
-      dockerfile: Dockerfile.teku
+      dockerfile: Dockerfile.lodestar
       args:
         UPSTREAM_VERSION: v0.18.0
-        VALIDATOR_CLIENT_VERSION: 23.11.0
+        VALIDATOR_CLIENT_VERSION: v1.12.1
         CLUSTER_ID: 3
     restart: on-failure
     volumes:
@@ -103,10 +103,10 @@ services:
   charon-validator-4:
     build:
       context: charon-validator
-      dockerfile: Dockerfile.teku
+      dockerfile: Dockerfile.lodestar
       args:
         UPSTREAM_VERSION: v0.18.0
-        VALIDATOR_CLIENT_VERSION: 23.11.0
+        VALIDATOR_CLIENT_VERSION: v1.12.1
         CLUSTER_ID: 4
     restart: on-failure
     volumes:
@@ -136,10 +136,10 @@ services:
   charon-validator-5:
     build:
       context: charon-validator
-      dockerfile: Dockerfile.teku
+      dockerfile: Dockerfile.lodestar
       args:
         UPSTREAM_VERSION: v0.18.0
-        VALIDATOR_CLIENT_VERSION: 23.11.0
+        VALIDATOR_CLIENT_VERSION: v1.12.1
         CLUSTER_ID: 5
     restart: on-failure
     volumes:
