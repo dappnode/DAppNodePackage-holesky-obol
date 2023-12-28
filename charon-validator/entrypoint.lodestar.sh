@@ -129,16 +129,32 @@ function run_charon() {
 }
 
 function import_keystores_to_validator_service() {
-    for f in ${VALIDATOR_KEYS_DIR}/keystore-*.json; do
-        echo "Importing key ${f}"
 
-        # Import keystore with password.
-        node ${VALIDATOR_SERVICE_BIN} \
-            --dataDir="${VALIDATOR_DATA_DIR}" \
-            validator import \
-            --network="${NETWORK}" \
-            --importKeystores="${f}" \
-            --importKeystoresPassword="${f//json/txt}"
+    VALIDATOR_CLIENT_KEYS_DIR=${VALIDATOR_DATA_DIR}/keystores
+
+    for f in ${VALIDATOR_KEYS_DIR}/keystore-*.json; do
+
+        # Read the JSON and get the pubkey field
+        pubkey=$(jq -r '.pubkey' ${f})
+
+        # Check if the keystore is already imported
+        if [[ -d "${VALIDATOR_CLIENT_KEYS_DIR}/0x${pubkey}" ]]; then
+            echo "Keystore for pubkey ${pubkey} already imported"
+
+            echo "Removing lock file..."
+            rm -f ${VALIDATOR_CLIENT_KEYS_DIR}/0x${pubkey}/voting-keystore.json.lock
+
+        else
+            echo "Importing key ${f}"
+
+            # Import keystore with password.
+            node ${VALIDATOR_SERVICE_BIN} \
+                --dataDir="${VALIDATOR_DATA_DIR}" \
+                validator import \
+                --network="${NETWORK}" \
+                --importKeystores="${f}" \
+                --importKeystoresPassword="${f//json/txt}"
+        fi
     done
 }
 
