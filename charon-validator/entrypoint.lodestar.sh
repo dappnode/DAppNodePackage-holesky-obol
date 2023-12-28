@@ -30,6 +30,9 @@ fi
 
 export CHARON_P2P_EXTERNAL_HOSTNAME=${_DAPPNODE_GLOBAL_DOMAIN}
 
+CHARON_PID=0
+VALIDATOR_CLIENT_PID=0
+
 #############
 # FUNCTIONS #
 #############
@@ -126,6 +129,7 @@ function run_charon() {
     (
         exec charon run --private-key-file=$ENR_PRIVATE_KEY_FILE --lock-file=$CHARON_LOCK_FILE --builder-api
     ) &
+    CHARON_PID=$!
 }
 
 function import_keystores_to_validator_service() {
@@ -140,9 +144,6 @@ function import_keystores_to_validator_service() {
         # Check if the keystore is already imported
         if [[ -d "${VALIDATOR_CLIENT_KEYS_DIR}/0x${pubkey}" ]]; then
             echo "Keystore for pubkey ${pubkey} already imported"
-
-            echo "Removing lock file..."
-            rm -f ${VALIDATOR_CLIENT_KEYS_DIR}/0x${pubkey}/voting-keystore.json.lock
 
         else
             echo "Importing key ${f}"
@@ -159,17 +160,20 @@ function import_keystores_to_validator_service() {
 }
 
 function run_validator_client() {
-    exec node ${VALIDATOR_SERVICE_BIN} validator \
-        --network="${NETWORK}" \
-        --dataDir="${VALIDATOR_DATA_DIR}" \
-        --beaconNodes="http://localhost:3600" \
-        --metrics="true" \
-        --metrics.address="0.0.0.0" \
-        --metrics.port="${VALIDATOR_METRICS_PORT}" \
-        --graffiti="${GRAFFITI}" \
-        --suggestedFeeRecipient="${DEFAULT_FEE_RECIPIENT}" \
-        --distributed \
-        ${VALIDATOR_EXTRA_OPTS}
+    (
+        exec node ${VALIDATOR_SERVICE_BIN} validator \
+            --network="${NETWORK}" \
+            --dataDir="${VALIDATOR_DATA_DIR}" \
+            --beaconNodes="http://localhost:3600" \
+            --metrics="true" \
+            --metrics.address="0.0.0.0" \
+            --metrics.port="${VALIDATOR_METRICS_PORT}" \
+            --graffiti="${GRAFFITI}" \
+            --suggestedFeeRecipient="${DEFAULT_FEE_RECIPIENT}" \
+            --distributed \
+            ${VALIDATOR_EXTRA_OPTS}
+    ) &
+    VALIDATOR_CLIENT_PID=$!
 }
 
 ########
@@ -193,3 +197,17 @@ import_keystores_to_validator_service
 
 echo "${INFO} starting validator service..."
 run_validator_client
+
+# This wait will exit as soon as any of the background processes exits
+wait -n
+
+# Check which process has exited and exit the other one
+if ! kill -0 $CHARON_PID 2>/dev/null; then
+    echo "${INFO} Charon process has exited. Exiting validator client..."
+    kill -SIGTERM $VALIDATOR_CLIENT_PID 2>/dev/null
+elif ! kill -0 $VALIDATOR_CLIENT_PID 2>/dev/null; then
+    echo "${INFO} Validator client process has exited. Exiting charon..."
+    kill -SIGTERM $CHARON_PID 2>/dev/null
+fi
+
+echo "${INFO} All processes stopped. Exiting..."
