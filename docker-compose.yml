@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile.lodestar
       args:
         UPSTREAM_VERSION: v0.18.0
-        VALIDATOR_CLIENT_VERSION: v1.12.1
+        VALIDATOR_CLIENT_VERSION: v1.13.0
         CLUSTER_ID: 1
     restart: on-failure
     volumes:
@@ -40,7 +40,7 @@ services:
       dockerfile: Dockerfile.lodestar
       args:
         UPSTREAM_VERSION: v0.18.0
-        VALIDATOR_CLIENT_VERSION: v1.12.1
+        VALIDATOR_CLIENT_VERSION: v1.13.0
         CLUSTER_ID: 2
     restart: on-failure
     volumes:
@@ -73,7 +73,7 @@ services:
       dockerfile: Dockerfile.lodestar
       args:
         UPSTREAM_VERSION: v0.18.0
-        VALIDATOR_CLIENT_VERSION: v1.12.1
+        VALIDATOR_CLIENT_VERSION: v1.13.0
         CLUSTER_ID: 3
     restart: on-failure
     volumes:
@@ -106,7 +106,7 @@ services:
       dockerfile: Dockerfile.lodestar
       args:
         UPSTREAM_VERSION: v0.18.0
-        VALIDATOR_CLIENT_VERSION: v1.12.1
+        VALIDATOR_CLIENT_VERSION: v1.13.0
         CLUSTER_ID: 4
     restart: on-failure
     volumes:
@@ -139,7 +139,7 @@ services:
       dockerfile: Dockerfile.lodestar
       args:
         UPSTREAM_VERSION: v0.18.0
-        VALIDATOR_CLIENT_VERSION: v1.12.1
+        VALIDATOR_CLIENT_VERSION: v1.13.0
         CLUSTER_ID: 5
     restart: on-failure
     volumes:
