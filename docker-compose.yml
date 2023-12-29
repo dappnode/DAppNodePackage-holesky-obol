@@ -33,7 +33,7 @@ services:
       test: "wget -qO- http://localhost:3620/readyz"
     security_opt:
       - "seccomp:unconfined"
-    image: "charon-validator-1.holesky-obol.dnp.dappnode.eth:0.1.1"
+    image: "charon-validator-1.holesky-obol.dnp.dappnode.eth:0.1.0"
   charon-validator-2:
     build:
       context: charon-validator
@@ -52,6 +52,7 @@ services:
       - "CHARON_P2P_TCP_ADDRESS=0.0.0.0:3712"
       - "CHARON_P2P_UDP_ADDRESS=0.0.0.0:3732"
       - "CHARON_LOKI_ADDRESSES=http://loki.dms.dappnode:3100/loki/api/v1/push"
+      - "CHARON_P2P_RELAYS=https://0.relay.obol.tech,https://1.relay.obol.tech/"
       - CHARON_LOKI_SERVICE=charon-validator-2
       - ENABLE_MEV_BOOST=false
       - CHARON_EXTRA_OPTS
@@ -66,7 +67,7 @@ services:
       test: "wget -qO- http://localhost:3620/readyz"
     security_opt:
       - "seccomp:unconfined"
-    image: "charon-validator-2.holesky-obol.dnp.dappnode.eth:0.1.1"
+    image: "charon-validator-2.holesky-obol.dnp.dappnode.eth:0.1.0"
   charon-validator-3:
     build:
       context: charon-validator
@@ -85,6 +86,7 @@ services:
       - "CHARON_P2P_TCP_ADDRESS=0.0.0.0:3713"
       - "CHARON_P2P_UDP_ADDRESS=0.0.0.0:3733"
       - "CHARON_LOKI_ADDRESSES=http://loki.dms.dappnode:3100/loki/api/v1/push"
+      - "CHARON_P2P_RELAYS=https://0.relay.obol.tech,https://1.relay.obol.tech/"
       - CHARON_LOKI_SERVICE=charon-validator-3
       - ENABLE_MEV_BOOST=false
       - CHARON_EXTRA_OPTS
@@ -99,7 +101,7 @@ services:
       test: "wget -qO- http://localhost:3620/readyz"
     security_opt:
       - "seccomp:unconfined"
-    image: "charon-validator-3.holesky-obol.dnp.dappnode.eth:0.1.1"
+    image: "charon-validator-3.holesky-obol.dnp.dappnode.eth:0.1.0"
   charon-validator-4:
     build:
       context: charon-validator
@@ -118,6 +120,7 @@ services:
       - "CHARON_P2P_TCP_ADDRESS=0.0.0.0:3714"
       - "CHARON_P2P_UDP_ADDRESS=0.0.0.0:3734"
       - "CHARON_LOKI_ADDRESSES=http://loki.dms.dappnode:3100/loki/api/v1/push"
+      - "CHARON_P2P_RELAYS=https://0.relay.obol.tech,https://1.relay.obol.tech/"
       - CHARON_LOKI_SERVICE=charon-validator-4
       - ENABLE_MEV_BOOST=false
       - CHARON_EXTRA_OPTS
@@ -132,7 +135,7 @@ services:
       test: "wget -qO- http://localhost:3620/readyz"
     security_opt:
       - "seccomp:unconfined"
-    image: "charon-validator-4.holesky-obol.dnp.dappnode.eth:0.1.1"
+    image: "charon-validator-4.holesky-obol.dnp.dappnode.eth:0.1.0"
   charon-validator-5:
     build:
       context: charon-validator
@@ -151,6 +154,7 @@ services:
       - "CHARON_P2P_TCP_ADDRESS=0.0.0.0:3715"
       - "CHARON_P2P_UDP_ADDRESS=0.0.0.0:3735"
       - "CHARON_LOKI_ADDRESSES=http://loki.dms.dappnode:3100/loki/api/v1/push"
+      - "CHARON_P2P_RELAYS=https://0.relay.obol.tech,https://1.relay.obol.tech/"
       - CHARON_LOKI_SERVICE=charon-validator-5
       - ENABLE_MEV_BOOST=false
       - CHARON_EXTRA_OPTS
@@ -165,16 +169,16 @@ services:
       test: "wget -qO- http://localhost:3620/readyz"
     security_opt:
       - "seccomp:unconfined"
-    image: "charon-validator-5.holesky-obol.dnp.dappnode.eth:0.1.1"
-  prometheus:
-    build:
-      context: prometheus
-      args:
-        PROMETHEUS_VERSION: v2.46.0
-    volumes:
-      - "prometheus-data:/prometheus"
-    restart: unless-stopped
-    image: "prometheus.holesky-obol.dnp.dappnode.eth:0.1.1"
+    image: "charon-validator-5.holesky-obol.dnp.dappnode.eth:0.1.0"
+# prometheus:
+#   build:
+#     context: prometheus
+#     args:
+#       PROMETHEUS_VERSION: v2.46.0
+#   volumes:
+#     - "prometheus-data:/prometheus"
+#   restart: unless-stopped
+#   image: "prometheus.holesky-obol.dnp.dappnode.eth:0.1.0"
 volumes:
   charon-1-data: {}
   charon-2-data: {}
@@ -186,4 +190,4 @@ volumes:
   validator-3-data: {}
   validator-4-data: {}
   validator-5-data: {}
-  prometheus-data: {}
+# prometheus-data: {}
