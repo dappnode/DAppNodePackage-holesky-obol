@@ -127,7 +127,7 @@ function check_DKG() {
 function run_charon() {
     # Start charon in a subshell in the background
     (
-        exec charon run --private-key-file=$ENR_PRIVATE_KEY_FILE --lock-file=$CHARON_LOCK_FILE --builder-api
+        exec charon run --private-key-file=$ENR_PRIVATE_KEY_FILE --lock-file=$CHARON_LOCK_FILE ${CHARON_EXTRA_OPTS}
     ) &
     CHARON_PID=$!
 }
