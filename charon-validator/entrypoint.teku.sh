@@ -30,6 +30,9 @@ fi
 
 export CHARON_P2P_EXTERNAL_HOSTNAME=${_DAPPNODE_GLOBAL_DOMAIN}
 
+CHARON_PID=0
+VALIDATOR_CLIENT_PID=0
+
 #############
 # FUNCTIONS #
 #############
@@ -126,24 +129,28 @@ function run_charon() {
   (
     exec charon run --private-key-file=$ENR_PRIVATE_KEY_FILE --lock-file=$CHARON_LOCK_FILE ${CHARON_EXTRA_OPTS}
   ) &
+  CHARON_PID=$!
 }
 
 function run_validator_client() {
-  exec ${VALIDATOR_SERVICE_BIN} --log-destination=CONSOLE \
-    validator-client \
-    --beacon-node-api-endpoint=http://localhost:3600 \
-    --data-base-path=${VALIDATOR_DATA_DIR} \
-    --metrics-enabled=true \
-    --metrics-interface 0.0.0.0 \
-    --metrics-port 8008 \
-    --metrics-host-allowlist=* \
-    --validator-api-enabled=false \
-    --validators-keystore-locking-enabled=false \
-    --validator-keys=${VALIDATOR_KEYS_DIR}:${VALIDATOR_KEYS_DIR} \
-    --network=${NETWORK} \
-    --validators-proposer-default-fee-recipient=${DEFAULT_FEE_RECIPIENT} \
-    --validators-graffiti=${GRAFFITI} \
-    ${VALIDATOR_EXTRA_OPTS}
+  (
+    exec ${VALIDATOR_SERVICE_BIN} --log-destination=CONSOLE \
+      validator-client \
+      --beacon-node-api-endpoint=http://localhost:3600 \
+      --data-base-path=${VALIDATOR_DATA_DIR} \
+      --metrics-enabled=true \
+      --metrics-interface 0.0.0.0 \
+      --metrics-port 8008 \
+      --metrics-host-allowlist=* \
+      --validator-api-enabled=false \
+      --validators-keystore-locking-enabled=false \
+      --validator-keys=${VALIDATOR_KEYS_DIR}:${VALIDATOR_KEYS_DIR} \
+      --network=${NETWORK} \
+      --validators-proposer-default-fee-recipient=${DEFAULT_FEE_RECIPIENT} \
+      --validators-graffiti=${GRAFFITI} \
+      ${VALIDATOR_EXTRA_OPTS}
+  ) &
+  VALIDATOR_CLIENT_PID=$!
 }
 
 ########
@@ -164,3 +171,17 @@ run_charon
 
 echo "${INFO} starting validator client..."
 run_validator_client
+
+# This wait will exit as soon as any of the background processes exits
+wait -n
+
+# Check which process has exited and exit the other one
+if ! kill -0 $CHARON_PID 2>/dev/null; then
+  echo "${INFO} Charon process has exited. Exiting validator client..."
+  kill -SIGTERM $VALIDATOR_CLIENT_PID 2>/dev/null
+elif ! kill -0 $VALIDATOR_CLIENT_PID 2>/dev/null; then
+  echo "${INFO} Validator client process has exited. Exiting charon..."
+  kill -SIGTERM $CHARON_PID 2>/dev/null
+fi
+
+echo "${INFO} All processes stopped. Exiting..."
