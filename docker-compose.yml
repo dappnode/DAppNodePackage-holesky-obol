@@ -5,7 +5,7 @@ services:
       context: charon-validator
       dockerfile: Dockerfile.lodestar
       args:
-        UPSTREAM_VERSION: v0.18.0
+        UPSTREAM_VERSION: v0.19.0
         VALIDATOR_CLIENT_VERSION: v1.13.0
         CLUSTER_ID: 1
     restart: on-failure
@@ -39,7 +39,7 @@ services:
       context: charon-validator
       dockerfile: Dockerfile.lodestar
       args:
-        UPSTREAM_VERSION: v0.18.0
+        UPSTREAM_VERSION: v0.19.0
         VALIDATOR_CLIENT_VERSION: v1.13.0
         CLUSTER_ID: 2
     restart: on-failure
@@ -73,7 +73,7 @@ services:
       context: charon-validator
       dockerfile: Dockerfile.lodestar
       args:
-        UPSTREAM_VERSION: v0.18.0
+        UPSTREAM_VERSION: v0.19.0
         VALIDATOR_CLIENT_VERSION: v1.13.0
         CLUSTER_ID: 3
     restart: on-failure
@@ -107,7 +107,7 @@ services:
       context: charon-validator
       dockerfile: Dockerfile.lodestar
       args:
-        UPSTREAM_VERSION: v0.18.0
+        UPSTREAM_VERSION: v0.19.0
         VALIDATOR_CLIENT_VERSION: v1.13.0
         CLUSTER_ID: 4
     restart: on-failure
@@ -141,7 +141,7 @@ services:
       context: charon-validator
       dockerfile: Dockerfile.lodestar
       args:
-        UPSTREAM_VERSION: v0.18.0
+        UPSTREAM_VERSION: v0.19.0
         VALIDATOR_CLIENT_VERSION: v1.13.0
         CLUSTER_ID: 5
     restart: on-failure
@@ -170,15 +170,6 @@ services:
     security_opt:
       - "seccomp:unconfined"
     image: "charon-validator-5.holesky-obol.dnp.dappnode.eth:0.1.0"
-# prometheus:
-#   build:
-#     context: prometheus
-#     args:
-#       PROMETHEUS_VERSION: v2.46.0
-#   volumes:
-#     - "prometheus-data:/prometheus"
-#   restart: unless-stopped
-#   image: "prometheus.holesky-obol.dnp.dappnode.eth:0.1.0"
 volumes:
   charon-1-data: {}
   charon-2-data: {}
@@ -190,4 +181,3 @@ volumes:
   validator-3-data: {}
   validator-4-data: {}
   validator-5-data: {}
-# prometheus-data: {}
