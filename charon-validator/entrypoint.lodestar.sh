@@ -171,6 +171,7 @@ function run_validator_client() {
             --graffiti="${GRAFFITI}" \
             --suggestedFeeRecipient="${DEFAULT_FEE_RECIPIENT}" \
             --distributed \
+            --useProduceBlockV3=false \
             ${VALIDATOR_EXTRA_OPTS}
     ) &
     VALIDATOR_CLIENT_PID=$!

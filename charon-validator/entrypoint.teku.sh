@@ -148,6 +148,7 @@ function run_validator_client() {
       --network=${NETWORK} \
       --validators-proposer-default-fee-recipient=${DEFAULT_FEE_RECIPIENT} \
       --validators-graffiti=${GRAFFITI} \
+      --Xblock-v3-enabled=false \
       ${VALIDATOR_EXTRA_OPTS}
   ) &
   VALIDATOR_CLIENT_PID=$!
