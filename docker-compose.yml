@@ -5,8 +5,8 @@ services:
       context: charon-validator
       dockerfile: Dockerfile.lodestar
       args:
-        UPSTREAM_VERSION: v0.19.1
-        VALIDATOR_CLIENT_VERSION: v1.15.1
+        UPSTREAM_VERSION: v0.19.2
+        VALIDATOR_CLIENT_VERSION: v1.17.0
         CLUSTER_ID: 1
     restart: on-failure
     volumes:
@@ -39,8 +39,8 @@ services:
       context: charon-validator
       dockerfile: Dockerfile.lodestar
       args:
-        UPSTREAM_VERSION: v0.19.1
-        VALIDATOR_CLIENT_VERSION: v1.15.1
+        UPSTREAM_VERSION: v0.19.2
+        VALIDATOR_CLIENT_VERSION: v1.17.0
         CLUSTER_ID: 2
     restart: on-failure
     volumes:
@@ -73,8 +73,8 @@ services:
       context: charon-validator
       dockerfile: Dockerfile.lodestar
       args:
-        UPSTREAM_VERSION: v0.19.1
-        VALIDATOR_CLIENT_VERSION: v1.15.1
+        UPSTREAM_VERSION: v0.19.2
+        VALIDATOR_CLIENT_VERSION: v1.17.0
         CLUSTER_ID: 3
     restart: on-failure
     volumes:
@@ -107,8 +107,8 @@ services:
       context: charon-validator
       dockerfile: Dockerfile.lodestar
       args:
-        UPSTREAM_VERSION: v0.19.1
-        VALIDATOR_CLIENT_VERSION: v1.15.1
+        UPSTREAM_VERSION: v0.19.2
+        VALIDATOR_CLIENT_VERSION: v1.17.0
         CLUSTER_ID: 4
     restart: on-failure
     volumes:
@@ -141,8 +141,8 @@ services:
       context: charon-validator
       dockerfile: Dockerfile.lodestar
       args:
-        UPSTREAM_VERSION: v0.19.1
-        VALIDATOR_CLIENT_VERSION: v1.15.1
+        UPSTREAM_VERSION: v0.19.2
+        VALIDATOR_CLIENT_VERSION: v1.17.0
         CLUSTER_ID: 5
     restart: on-failure
     volumes:
