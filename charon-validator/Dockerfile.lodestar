@@ -23,7 +23,7 @@ USER root
 
 # Install NodeJS to run Lodestar
 RUN apt-get update && \
-    apt-get install -y curl jq && \
+    apt-get install -y curl jq zip xz-utils && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
@@ -39,10 +39,16 @@ COPY entrypoint.lodestar.sh /entrypoint.sh
 
 # To prevent the user from editing the CLUSTER_ID, we set it as an ARG
 ARG CLUSTER_ID
-ENV CLUSTER_ID=${CLUSTER_ID} CHARON_LOG_FORMAT=console NETWORK=holesky \ 
-    VALIDATOR_SERVICE_BIN=/opt/validator/packages/cli/bin/lodestar VALIDATOR_DATA_DIR=/opt/validator/data \
-    VALIDATOR_METRICS_PORT=8008 CHARON_VALIDATOR_API_ADDRESS="0.0.0.0:3600" CHARON_MONITORING_ADDRESS="0.0.0.0:3620"
+ENV CLUSTER_ID=${CLUSTER_ID} \
+    CHARON_LOG_FORMAT=console \
+    NETWORK=holesky \ 
+    VALIDATOR_SERVICE_BIN=/opt/validator/packages/cli/bin/lodestar \
+    VALIDATOR_DATA_DIR=/opt/validator/data \
+    VALIDATOR_METRICS_PORT=8008 \
+    CHARON_VALIDATOR_API_ADDRESS="0.0.0.0:3600" \
+    CHARON_MONITORING_ADDRESS="0.0.0.0:3620" \
+    IMPORT_DIR=/import/
 
-RUN mkdir -p /opt/charon/.charon ${VALIDATOR_DATA_DIR} && chown -R charon:charon /opt/charon
+RUN mkdir -p /opt/charon/.charon ${VALIDATOR_DATA_DIR} ${IMPORT_DIR} && chown -R charon:charon /opt/charon
 
 ENTRYPOINT ["/entrypoint.sh"]

@@ -37,6 +37,67 @@ VALIDATOR_CLIENT_PID=0
 # FUNCTIONS #
 #############
 
+# Finds the first .tar.gz or .zip file in the IMPORT_DIR
+function find_import_file() {
+    find "${IMPORT_DIR}" -type f \( -name "*.tar.gz" -o -name "*.zip" -o -name "*.tar.xz" \) | head -1
+}
+
+# Moves existing files in the .charon directory to a timestamped old-charon directory
+function move_old_charon() {
+    if [ -d "${CHARON_ROOT_DIR}" ] && [ "$(ls -A ${CHARON_ROOT_DIR})" ]; then
+        TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
+        OLD_CHARON_DIR="/opt/charon/old-charons/${TIMESTAMP}"
+        echo "${INFO} Moving existing files in ${CHARON_ROOT_DIR} to ${OLD_CHARON_DIR}..."
+        mkdir -p "${OLD_CHARON_DIR}"
+        mv ${CHARON_ROOT_DIR}/* "${OLD_CHARON_DIR}"
+    else
+        echo "${INFO} No existing files found in ${CHARON_ROOT_DIR} to move."
+    fi
+}
+
+# Extracts the import file into the .charon directory
+function extract_file_into_charon_dir() {
+    echo "${INFO} Starting extraction of ${1} into ${CHARON_ROOT_DIR}"
+    if [[ "${1}" == *.tar.gz ]]; then
+        tar -xzf "${1}" -C ${CHARON_ROOT_DIR} && echo "${INFO} Extraction complete."
+    elif [[ "${1}" == *.tar.xz ]]; then
+        tar -xJf "${1}" -C ${CHARON_ROOT_DIR} && echo "${INFO} Extraction complete."
+    elif [[ "${1}" == *.zip ]]; then
+        unzip -o "${1}" -d ${CHARON_ROOT_DIR} && echo "${INFO} Extraction complete."
+    fi
+}
+
+# Remove all keys from the validator service
+function empty_validator_service_keys() {
+    echo "${INFO} Emptying validator service keys..."
+    rm -rf ${VALIDATOR_KEYS_DIR}/cache/*
+    rm -rf ${VALIDATOR_KEYS_DIR}/keystores/*
+    rm -rf ${VALIDATOR_KEYS_DIR}/secrets/*
+}
+
+# Main function to handle Charon file import
+function handle_charon_file_import() {
+    echo "${INFO} Starting Charon file import process in ${IMPORT_DIR}"
+    if [ -n "${IMPORT_DIR}" ] && [ -d "${IMPORT_DIR}" ]; then
+
+        echo "${INFO} Searching for .tar.gz, .tar.xz or .zip files in ${IMPORT_DIR}"
+        IMPORT_FILE=$(find_import_file)
+
+        if [ -n "${IMPORT_FILE}" ]; then
+            echo "${INFO} Found file to import: ${IMPORT_FILE}"
+            move_old_charon
+            extract_file_into_charon_dir "${IMPORT_FILE}"
+            rm -f "${IMPORT_FILE}"
+            empty_validator_service_keys
+            echo "${INFO} Import file processing complete."
+        else
+            echo "${INFO} No files to import."
+        fi
+    else
+        echo "${INFO} IMPORT_DIR is not set or does not exist. No import process to be performed."
+    fi
+}
+
 function get_beacon_node_endpoint() {
     case "$_DAPPNODE_GLOBAL_CONSENSUS_CLIENT_HOLESKY" in
     "prysm-holesky.dnp.dappnode.eth")
@@ -116,7 +177,7 @@ function check_DKG() {
     # If the definition file URL is not set and the lock file does not exist, wait for the definition file URL to be set
     elif [ -z "${DEFINITION_FILE_URL}" ] && [ ! -f "${CHARON_LOCK_FILE}" ]; then
         echo "${INFO} Set the definition file URL in the Charon config to start DKG ceremony..."
-        sleep 180 # To let the user restore a backup
+        sleep 300 # To let the user restore a backup
         exit 0
 
     else
@@ -180,6 +241,9 @@ function run_validator_client() {
 ########
 # MAIN #
 ########
+
+echo "${INFO} checking if there are charon settings to import..."
+handle_charon_file_import
 
 echo "${INFO} get the current beacon chain in use"
 get_beacon_node_endpoint
