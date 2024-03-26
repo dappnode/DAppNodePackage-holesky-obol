@@ -23,8 +23,16 @@ COPY entrypoint.teku.sh /entrypoint.sh
 
 # To prevent the user from editing the CLUSTER_ID, we set it as an ARG
 ARG CLUSTER_ID
-ENV CLUSTER_ID=${CLUSTER_ID} CHARON_LOG_FORMAT=console NETWORK=holesky \
-    VALIDATOR_SERVICE_BIN=/opt/validator/bin/teku VALIDATOR_DATA_DIR=/opt/validator/data \ 
-    VALIDATOR_METRICS_PORT=8008 CHARON_VALIDATOR_API_ADDRESS="0.0.0.0:3600" CHARON_MONITORING_ADDRESS="0.0.0.0:3620"
+ENV CLUSTER_ID=${CLUSTER_ID} \
+    CHARON_LOG_FORMAT=console \
+    NETWORK=holesky \
+    VALIDATOR_SERVICE_BIN=/opt/validator/bin/teku \
+    VALIDATOR_DATA_DIR=/opt/validator/data \ 
+    VALIDATOR_METRICS_PORT=8008 \
+    CHARON_VALIDATOR_API_ADDRESS="0.0.0.0:3600" \
+    CHARON_MONITORING_ADDRESS="0.0.0.0:3620" \
+    IMPORT_DIR=/import/
+
+RUN mkdir -p ${IMPORT_DIR}
 
 ENTRYPOINT ["/entrypoint.sh"]
