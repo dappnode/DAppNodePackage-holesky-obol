@@ -25,7 +25,14 @@ fi
 
 if [ "$ENABLE_MEV_BOOST" = true ]; then
     CHARON_EXTRA_OPTS="--builder-api $CHARON_EXTRA_OPTS"
-    VALIDATOR_EXTRA_OPTS="--builder=true --builder.selection=builderonly $VALIDATOR_EXTRA_OPTS"
+
+    # Teku
+    if [ "$VALIDATOR_CLIENT" = "teku" ]; then
+        VALIDATOR_EXTRA_OPTS="--validators-proposer-blinded-blocks-enabled=true --validators-builder-registration-default-enabled=true $VALIDATOR_EXTRA_OPTS"
+    # Lodestar (by default)
+    else
+        VALIDATOR_EXTRA_OPTS="--builder=true --builder.selection=builderonly $VALIDATOR_EXTRA_OPTS"
+    fi
 fi
 
 export CHARON_P2P_EXTERNAL_HOSTNAME=${_DAPPNODE_GLOBAL_DOMAIN}
@@ -68,7 +75,7 @@ function extract_file_into_charon_dir() {
 }
 
 # Remove all keys from the validator service
-function empty_validator_service_keys() {
+function empty_lodestar_keys() {
     echo "${INFO} Emptying validator service keys..."
     rm -rf ${VALIDATOR_KEYS_DIR}/cache/*
     rm -rf ${VALIDATOR_KEYS_DIR}/keystores/*
@@ -88,7 +95,7 @@ function handle_charon_file_import() {
             move_old_charon
             extract_file_into_charon_dir "${IMPORT_FILE}"
             rm -f "${IMPORT_FILE}"
-            empty_validator_service_keys
+            empty_lodestar_keys
             echo "${INFO} Import file processing complete."
         else
             echo "${INFO} No files to import."
@@ -193,7 +200,7 @@ function run_charon() {
     CHARON_PID=$!
 }
 
-function import_keystores_to_validator_service() {
+function import_keystores_to_lodestar() {
 
     VALIDATOR_CLIENT_KEYS_DIR=${VALIDATOR_DATA_DIR}/keystores
 
@@ -220,7 +227,7 @@ function import_keystores_to_validator_service() {
     done
 }
 
-function run_validator_client() {
+function run_lodestar() {
     (
         exec node ${VALIDATOR_SERVICE_BIN} validator \
             --network="${NETWORK}" \
@@ -238,30 +245,56 @@ function run_validator_client() {
     VALIDATOR_CLIENT_PID=$!
 }
 
+function run_teku() {
+    (
+        exec ${VALIDATOR_SERVICE_BIN} --log-destination=CONSOLE \
+            validator-client \
+            --beacon-node-api-endpoint=http://localhost:3600 \
+            --data-base-path=${VALIDATOR_DATA_DIR} \
+            --metrics-enabled=true \
+            --metrics-interface 0.0.0.0 \
+            --metrics-port 8008 \
+            --metrics-host-allowlist=* \
+            --validator-api-enabled=false \
+            --validators-keystore-locking-enabled=false \
+            --validator-keys=${VALIDATOR_KEYS_DIR}:${VALIDATOR_KEYS_DIR} \
+            --network=${NETWORK} \
+            --validators-proposer-default-fee-recipient=${DEFAULT_FEE_RECIPIENT} \
+            --validators-graffiti=${GRAFFITI} \
+            --Xblock-v3-enabled=false \
+            ${VALIDATOR_EXTRA_OPTS}
+    ) &
+    VALIDATOR_CLIENT_PID=$!
+}
+
 ########
 # MAIN #
 ########
 
-echo "${INFO} checking if there are charon settings to import..."
+echo "${INFO} Checking if there are charon settings to import..."
 handle_charon_file_import
 
-echo "${INFO} get the current beacon chain in use"
+echo "${INFO} Getting the current beacon chain in use..."
 get_beacon_node_endpoint
 
-echo "${INFO} getting the ENR..."
+echo "${INFO} Getting the ENR..."
 get_ENR
 
-echo "${INFO} checking for DKG ceremony..."
+echo "${INFO} Checking for DKG ceremony..."
 check_DKG
 
-echo "${INFO} starting charon..."
+echo "${INFO} Starting charon..."
 run_charon
 
-echo "${INFO} importing keystores to validator service..."
-import_keystores_to_validator_service
-
-echo "${INFO} starting validator service..."
-run_validator_client
+if [ "$VALIDATOR_CLIENT" = "teku" ]; then
+    echo "${INFO} Starting teku validator service..."
+    run_teku
+else
+    echo "${INFO} Importing keystores to lodestar validator service..."
+    import_keystores_to_lodestar
+    echo "${INFO} Starting lodestar validator service..."
+    run_lodestar
+fi
 
 # This wait will exit as soon as any of the background processes exits
 wait -n
