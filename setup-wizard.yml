@@ -1,57 +1,133 @@
 version: "2"
 fields:
+  - id: config_mode
+    title: Config mode
+    description: |
+      If you haven't created the cluster yet continue with the installation process, leaving the input as 'New cluster'. Otherwise, choose between 'URL' or 'File' depending on your configuration format.
+    enum:
+      - "New cluster"
+      - "URL"
+      - "File"
+    target:
+      type: environment
+      name: CONFIG_MODE
+    required: true
   - id: definition-file-url-1
     target:
       type: environment
       name: DEFINITION_FILE_URL
       service: charon-validator-1
-    title: Definition File for the Distributed Key Generation (DKG) ceremony
+    title: Definition File URL for the Distributed Key Generation (DKG) ceremony
     description: |
       Leave this field blank if you are creating a new setup. Fill this input if you already registered charon 1 as an operator for the DKG ceremony and you are willing to setup your 1st Obol cluster.
-    required: false
+    required: true
     pattern: "(https?:\/\/(?:www\\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|www\\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|https?:\/\/(?:www\\.|(?!www))[a-zA-Z0-9]+\\.[^\\s]{2,}|www\\.[a-zA-Z0-9]+\\.[^\\s]{2,})"
     patternErrorMessage: Must be a valid URL (https://api.obol.tech/dv/0xf...)
+    if: { "config_mode": { "enum": ["URL"] } }
+  - id: definition-file-compressed-1
+    target:
+      type: fileUpload
+      path: /import
+      service: charon-validator-1
+    title: Definition File for the Distributed Key Generation (DKG) ceremony
+    description: |
+      Provide here the definition file provided by Ether.fi in _.tar.xz_ , _.tar.gz_ or _.zip_ format.
+
+    pattern: "(\\.tar.xz|\\.tar.gz|\\.zip)"
+    required: true
+    if: { "config_mode": { "enum": ["File"] } }
   - id: definition-file-url-2
     target:
       type: environment
       name: DEFINITION_FILE_URL
       service: charon-validator-2
-    title: Definition File for the Distributed Key Generation (DKG) ceremony
+    title: Definition File URL for the Distributed Key Generation (DKG) ceremony
     description: |
       Leave this field blank if you are creating a new setup. Fill this input if you already registered charon 2 as an operator for the DKG ceremony and you are willing to setup your 2nd Obol cluster.
     required: false
     pattern: "(https?:\/\/(?:www\\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|www\\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|https?:\/\/(?:www\\.|(?!www))[a-zA-Z0-9]+\\.[^\\s]{2,}|www\\.[a-zA-Z0-9]+\\.[^\\s]{2,})"
     patternErrorMessage: Must be a valid URL (https://api.obol.tech/dv/0xf...)
+    if: { "config_mode": { "enum": ["URL"] } }
+  - id: definition-file-compressed-2
+    target:
+      type: fileUpload
+      path: /import
+      service: charon-validator-2
+    title: Definition File for the Distributed Key Generation (DKG) ceremony
+    description: |
+      Provide here the definition file provided by Ether.fi in _.tar.xz_ , _.tar.gz_ or _.zip_ format.
+
+    pattern: "(\\.tar.xz|\\.tar.gz|\\.zip)"
+    required: false
+    if: { "config_mode": { "enum": ["File"] } }
   - id: definition-file-url-3
     target:
       type: environment
       name: DEFINITION_FILE_URL
       service: charon-validator-3
-    title: Definition File for the Distributed Key Generation (DKG) ceremony
+    title: Definition File URL for the Distributed Key Generation (DKG) ceremony
     description: |
       Leave this field blank if you are creating a new setup. Fill this input if you already registered charon 3 as an operator for the DKG ceremony and you are willing to setup your 3rd Obol cluster.
     required: false
     pattern: "(https?:\/\/(?:www\\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|www\\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|https?:\/\/(?:www\\.|(?!www))[a-zA-Z0-9]+\\.[^\\s]{2,}|www\\.[a-zA-Z0-9]+\\.[^\\s]{2,})"
     patternErrorMessage: Must be a valid URL (https://api.obol.tech/dv/0xf...)
+    if: { "config_mode": { "enum": ["URL"] } }
+  - id: definition-file-compressed-3
+    target:
+      type: fileUpload
+      path: /import
+      service: charon-validator-3
+    title: Definition File for the Distributed Key Generation (DKG) ceremony
+    description: |
+      Provide here the definition file provided by Ether.fi in _.tar.xz_ , _.tar.gz_ or _.zip_ format.
+
+    pattern: "(\\.tar.xz|\\.tar.gz|\\.zip)"
+    required: false
+    if: { "config_mode": { "enum": ["File"] } }
   - id: definition-file-url-4
     target:
       type: environment
       name: DEFINITION_FILE_URL
       service: charon-validator-4
-    title: Definition File for the Distributed Key Generation (DKG) ceremony
+    title: Definition File URL for the Distributed Key Generation (DKG) ceremony
     description: |
       Leave this field blank if you are creating a new setup. Fill this input if you already registered charon 4 as an operator for the DKG ceremony and you are willing to setup your 4th Obol cluster.
     required: false
     pattern: "(https?:\/\/(?:www\\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|www\\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|https?:\/\/(?:www\\.|(?!www))[a-zA-Z0-9]+\\.[^\\s]{2,}|www\\.[a-zA-Z0-9]+\\.[^\\s]{2,})"
     patternErrorMessage: Must be a valid URL (https://api.obol.tech/dv/0xf...)
+    if: { "config_mode": { "enum": ["URL"] } }
+  - id: definition-file-compressed-4
+    target:
+      type: fileUpload
+      path: /import
+      service: charon-validator-4
+    title: Definition File for the Distributed Key Generation (DKG) ceremony
+    description: |
+      Provide here the definition file provided by Ether.fi in _.tar.xz_ , _.tar.gz_ or _.zip_ format.
+
+    pattern: "(\\.tar.xz|\\.tar.gz|\\.zip)"
+    required: false
+    if: { "config_mode": { "enum": ["File"] } }
   - id: definition-file-url-5
     target:
       type: environment
       name: DEFINITION_FILE_URL
       service: charon-validator-5
-    title: Definition File for the Distributed Key Generation (DKG) ceremony
+    title: Definition File URL for the Distributed Key Generation (DKG) ceremony
     description: |
       Leave this field blank if you are creating a new setup. Fill this input if you already registered charon 5 as an operator for the DKG ceremony and you are willing to setup your 5th Obol cluster.
     required: false
     pattern: "(https?:\/\/(?:www\\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|www\\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|https?:\/\/(?:www\\.|(?!www))[a-zA-Z0-9]+\\.[^\\s]{2,}|www\\.[a-zA-Z0-9]+\\.[^\\s]{2,})"
     patternErrorMessage: Must be a valid URL (https://api.obol.tech/dv/0xf...)
+    if: { "config_mode": { "enum": ["URL"] } }
+  - id: definition-file-compressed-5
+    target:
+      type: fileUpload
+      path: /import
+      service: charon-validator-5
+    title: Definition File for the Distributed Key Generation (DKG) ceremony
+    description: |
+      Provide here the definition file provided by Ether.fi in _.tar.xz_ , _.tar.gz_ or _.zip_ format.
+    pattern: "(\\.tar.xz|\\.tar.gz|\\.zip)"
+    required: false
+    if: { "config_mode": { "enum": ["File"] } }
