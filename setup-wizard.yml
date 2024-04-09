@@ -3,7 +3,7 @@ fields:
   - id: config_mode
     title: Config mode
     description: |
-      Select 'New cluster' if this is your initial setup. For existing configurations, choose 'URL' to specify definition file URLs or 'File' to upload a compressed file containing operator configuration.
+      Select 'New cluster' if this is your initial setup. For existing configurations, choose 'URL' to specify definition file URLs or 'File' to upload a compressed file containing operator configuration. File upload is only available on install.
     enum:
       - "New cluster"
       - "URL"
