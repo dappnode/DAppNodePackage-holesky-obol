@@ -12,7 +12,7 @@ fields:
       type: environment
       name: CONFIG_MODE
       service: charon-validator-1
-    required: true
+    required: false
 
   - id: definition-file-url-1
     target:
