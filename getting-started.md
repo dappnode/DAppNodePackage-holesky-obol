@@ -29,3 +29,7 @@ _Note: The `definition-file-url` in the setup wizard with your cluster's specifi
 ```markdown
 https://api.obol.tech/dv/0xf9632c4333e4d67373b383da56dfb764df47268881d3412a1eef1a0247dc7367
 ```
+
+## Upload a Node Artifact
+
+If you have been given a Node Artifact (e.g. `node0.zip`) you can either import it on install (by choosing "File upload" mode) or import it later in the [File Manager tab](http://my.dappnode/packages/my/holesky-obol.dnp.dappnode.eth/file-manager) by choosing the service you want to import it to (`charon-validator-<number>`) and setting `/import/` as the destination path before clicking "Upload".

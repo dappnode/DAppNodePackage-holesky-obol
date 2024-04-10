@@ -3,16 +3,20 @@ fields:
   - id: config_mode
     title: Config mode
     description: |
-      Select 'New cluster' if this is your initial setup. For existing configurations, choose 'URL' to specify definition file URLs or 'File' to upload a compressed file containing operator configuration.
+      Select 'New cluster / Simple update' if this is your initial setup or if you are updating an existing setup.
+
+      For importing configurations, choose 'URL' to specify definition file URLs or 'File' to upload a compressed file containing a node artifact. 
+
+      Note file upload will not be available on config tab after install, but in the file manager tab.
     enum:
-      - "New cluster"
+      - "New cluster / Simple update"
       - "URL"
       - "File"
     target:
       type: environment
       name: CONFIG_MODE
       service: charon-validator-1
-    required: true
+    required: false
 
   - id: definition-file-url-1
     target:

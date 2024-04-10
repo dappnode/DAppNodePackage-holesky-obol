@@ -12,5 +12,47 @@
       "service": "charon-validator-1.holesky-obol.dappnode"
     },
     "targets": ["charon-validator-1.holesky-obol.dappnode:8008"]
+  },
+  {
+    "labels": {
+      "package": "holesky-obol.dnp.dappnode.eth",
+      "service": "charon-validator-2.holesky-obol.dappnode"
+    },
+    "targets": ["charon-validator-2.holesky-obol.dappnode:3620"]
+  },
+  {
+    "labels": {
+      "package": "holesky-obol.dnp.dappnode.eth",
+      "service": "charon-validator-2.holesky-obol.dappnode"
+    },
+    "targets": ["charon-validator-2.holesky-obol.dappnode:8008"]
+  },
+  {
+    "labels": {
+      "package": "holesky-obol.dnp.dappnode.eth",
+      "service": "charon-validator-3.holesky-obol.dappnode"
+    },
+    "targets": ["charon-validator-3.holesky-obol.dappnode:3620"]
+  },
+  {
+    "labels": {
+      "package": "holesky-obol.dnp.dappnode.eth",
+      "service": "charon-validator-3.holesky-obol.dappnode"
+    },
+    "targets": ["charon-validator-3.holesky-obol.dappnode:8008"]
+  },
+  {
+    "labels": {
+      "package": "holesky-obol.dnp.dappnode.eth",
+      "service": "charon-validator-4.holesky-obol.dappnode"
+    },
+    "targets": ["charon-validator-4.holesky-obol.dappnode:3620"]
+  },
+  {
+    "labels": {
+      "package": "holesky-obol.dnp.dappnode.eth",
+      "service": "charon-validator-5.holesky-obol.dappnode"
+    },
+    "targets": ["charon-validator-5.holesky-obol.dappnode:8008"]
   }
 ]
