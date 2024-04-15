@@ -107,7 +107,6 @@ function handle_charon_file_import() {
 
 function enable_restart_on_artifact_upload() {
     echo "${INFO} Enabling restart on artifact upload in ${IMPORT_DIR}"
-    local charon_pid=$(pidof charon)
 
     # Monitor the IMPORT_DIR for new files and restart the charon process if a new file is detected
     (inotifywait -m -q -e close_write --format '%f' "${IMPORT_DIR}" | while read -r filename; do
@@ -117,7 +116,7 @@ function enable_restart_on_artifact_upload() {
         if [[ "${filename}" =~ \.zip$|\.tar\.gz$|\.tar\.xz$ ]]; then
             echo "${INFO} Artifact ${filename} uploaded, triggering container restart..."
             # Forcefully terminate the charon process to trigger a container restart
-            kill -s SIGKILL $charon_pid
+            kill -s SIGKILL $(pidof charon)
         fi
     done) &
 }
