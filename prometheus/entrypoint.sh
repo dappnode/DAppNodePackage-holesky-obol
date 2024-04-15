@@ -14,7 +14,7 @@ if ! [ "$ACTIVE_CHARONS_NUMBER" -eq "$ACTIVE_CHARONS_NUMBER" ] 2>/dev/null || [ 
 fi
 
 # Generate charon and validator targets based on the number of active charons
-# Example: If ACTIVE_CHARONS_NUMBER=3, then <CHARON_TARGETS> will be replaced by ["charon-validator-1:3620", "charon-validator-2:3620", "charon-validator-3:3620"]
+# Example: If ACTIVE_CHARONS_NUMBER=3, then <CHARON_TARGETS> will be replaced by ["cluster-1:3620", "cluster-2:3620", "cluster-3:3620"]
 charon_targets=""
 validator_targets=""
 for i in $(seq 1 $ACTIVE_CHARONS_NUMBER); do
@@ -22,8 +22,8 @@ for i in $(seq 1 $ACTIVE_CHARONS_NUMBER); do
         charon_targets="$charon_targets, "
         validator_targets="$validator_targets, "
     fi
-    charon_targets="${charon_targets}\"charon-validator-$i:3620\""
-    validator_targets="${validator_targets}\"charon-validator-$i:8008\""
+    charon_targets="${charon_targets}\"cluster-$i:3620\""
+    validator_targets="${validator_targets}\"cluster-$i:8008\""
 done
 
 # Wrap the generated strings in brackets (arrays)

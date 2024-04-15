@@ -14,7 +14,7 @@ remote_write:
 scrape_configs:
   - job_name: "charon"
     static_configs:
-      - targets: <CHARON_TARGETS> # ["charon-validator-1:3620"]
+      - targets: <CHARON_TARGETS> # ["cluster-1:3620"]
   - job_name: "validator"
     static_configs:
-      - targets: <VALIDATOR_TARGETS> # ["charon-validator-1:8008"]
+      - targets: <VALIDATOR_TARGETS> # ["cluster-1:8008"]
