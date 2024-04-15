@@ -194,3 +194,4 @@ volumes:
   validator-3-data: {}
   validator-4-data: {}
   validator-5-data: {}
+  prometheus-data: {}
