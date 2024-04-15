@@ -180,9 +180,9 @@ services:
       MONITORING_CREDENTIALS: ""
       ACTIVE_CHARONS_NUMBER: 1
     volumes:
-      - "prometheus-data:/prometheus"
-    restart: on-failure
-    image: "prometheus.holesky-obol.dnp.dappnode.eth:0.1.0"
+      - prometheus-data:/prometheus
+    restart: unless-stopped
+    image: prometheus.holesky-obol.dnp.dappnode.eth:0.1.0
 volumes:
   charon-1-data: {}
   charon-2-data: {}

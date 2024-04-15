@@ -36,4 +36,6 @@ ENV CLUSTER_ID=${CLUSTER_ID} \
 
 RUN mkdir -p ${IMPORT_DIR}
 
+WORKDIR /import
+
 ENTRYPOINT ["/entrypoint.sh"]
