@@ -117,7 +117,7 @@ function enable_restart_on_artifact_upload() {
         if [[ "${filename}" =~ \.zip$|\.tar\.gz$|\.tar\.xz$ ]]; then
             echo "${INFO} Artifact ${filename} uploaded, triggering container restart..."
             # Forcefully terminate the charon process to trigger a container restart
-            kill -SIGKILL $charon_pid
+            kill -s SIGKILL $charon_pid
         fi
     done) &
 }
