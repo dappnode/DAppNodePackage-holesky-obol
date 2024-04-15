@@ -165,7 +165,7 @@ function post_ENR_to_dappmanager() {
         --retry 5 \
         --retry-delay 0 \
         --retry-max-time 40 \
-        -X POST "http://my.dappnode/data-send?key=ENR-Cluster-${CLUSTER_ID}&data=${ENR}" ||
+        -X POST "http://my.dappnode/data-send?key=ENR%20Cluster%20${CLUSTER_ID}&data=${ENR}" ||
         {
             echo "[ERROR] failed to post ENR to dappmanager"
             exit 1
