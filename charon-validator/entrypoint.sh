@@ -165,7 +165,7 @@ function post_ENR_to_dappmanager() {
         --retry 5 \
         --retry-delay 0 \
         --retry-max-time 40 \
-        -X POST "http://my.dappnode/data-send?key=ENR-Cluster-${CLUSTER_ID}&data=${ENR}" ||
+        -X POST "http://my.dappnode/data-send?key=ENR%20Cluster%20${CLUSTER_ID}&data=${ENR}" ||
         {
             echo "[ERROR] failed to post ENR to dappmanager"
             exit 1
@@ -184,7 +184,7 @@ function check_DKG() {
     # If the definition file URL is not set and the lock file does not exist, wait for the definition file URL to be set
     elif [ -z "${DEFINITION_FILE_URL}" ] && [ ! -f "${CHARON_LOCK_FILE}" ]; then
         echo "${INFO} Set the definition file URL in the Charon config to start DKG ceremony..."
-        sleep 300 # To let the user restore a backup
+        sleep 1h # To let the user restore a backup
         exit 0
 
     else

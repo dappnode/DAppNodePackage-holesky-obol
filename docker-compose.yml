@@ -1,6 +1,6 @@
 version: "3.5"
 services:
-  charon-validator-1:
+  cluster-1:
     build:
       context: charon-validator
       dockerfile: Dockerfile.lodestar
@@ -19,7 +19,7 @@ services:
       - CHARON_P2P_UDP_ADDRESS=0.0.0.0:3731
       - CHARON_LOKI_ADDRESSES=http://loki.dms.dappnode:3100/loki/api/v1/push
       - CHARON_P2P_RELAYS=https://0.relay.obol.tech,https://1.relay.obol.tech/
-      - CHARON_LOKI_SERVICE=charon-validator-1
+      - CHARON_LOKI_SERVICE=cluster-1
       - ENABLE_MEV_BOOST=false
       - CHARON_EXTRA_OPTS
       - DEFAULT_FEE_RECIPIENT=0x0000000000000000000000000000000000000000
@@ -33,8 +33,8 @@ services:
       test: wget -qO- http://localhost:3620/readyz
     security_opt:
       - seccomp:unconfined
-    image: charon-validator-1.holesky-obol.dnp.dappnode.eth:0.1.0
-  charon-validator-2:
+    image: cluster-1.holesky-obol.dnp.dappnode.eth:0.1.0
+  cluster-2:
     build:
       context: charon-validator
       dockerfile: Dockerfile.lodestar
@@ -53,7 +53,7 @@ services:
       - CHARON_P2P_UDP_ADDRESS=0.0.0.0:3732
       - CHARON_LOKI_ADDRESSES=http://loki.dms.dappnode:3100/loki/api/v1/push
       - CHARON_P2P_RELAYS=https://0.relay.obol.tech,https://1.relay.obol.tech/
-      - CHARON_LOKI_SERVICE=charon-validator-2
+      - CHARON_LOKI_SERVICE=cluster-2
       - ENABLE_MEV_BOOST=false
       - CHARON_EXTRA_OPTS
       - DEFAULT_FEE_RECIPIENT=0x0000000000000000000000000000000000000000
@@ -67,8 +67,8 @@ services:
       test: wget -qO- http://localhost:3620/readyz
     security_opt:
       - seccomp:unconfined
-    image: charon-validator-2.holesky-obol.dnp.dappnode.eth:0.1.0
-  charon-validator-3:
+    image: cluster-2.holesky-obol.dnp.dappnode.eth:0.1.0
+  cluster-3:
     build:
       context: charon-validator
       dockerfile: Dockerfile.lodestar
@@ -87,7 +87,7 @@ services:
       - CHARON_P2P_UDP_ADDRESS=0.0.0.0:3733
       - CHARON_LOKI_ADDRESSES=http://loki.dms.dappnode:3100/loki/api/v1/push
       - CHARON_P2P_RELAYS=https://0.relay.obol.tech,https://1.relay.obol.tech/
-      - CHARON_LOKI_SERVICE=charon-validator-3
+      - CHARON_LOKI_SERVICE=cluster-3
       - ENABLE_MEV_BOOST=false
       - CHARON_EXTRA_OPTS
       - DEFAULT_FEE_RECIPIENT=0x0000000000000000000000000000000000000000
@@ -101,8 +101,8 @@ services:
       test: wget -qO- http://localhost:3620/readyz
     security_opt:
       - seccomp:unconfined
-    image: charon-validator-3.holesky-obol.dnp.dappnode.eth:0.1.0
-  charon-validator-4:
+    image: cluster-3.holesky-obol.dnp.dappnode.eth:0.1.0
+  cluster-4:
     build:
       context: charon-validator
       dockerfile: Dockerfile.lodestar
@@ -121,7 +121,7 @@ services:
       - CHARON_P2P_UDP_ADDRESS=0.0.0.0:3734
       - CHARON_LOKI_ADDRESSES=http://loki.dms.dappnode:3100/loki/api/v1/push
       - CHARON_P2P_RELAYS=https://0.relay.obol.tech,https://1.relay.obol.tech/
-      - CHARON_LOKI_SERVICE=charon-validator-4
+      - CHARON_LOKI_SERVICE=cluster-4
       - ENABLE_MEV_BOOST=false
       - CHARON_EXTRA_OPTS
       - DEFAULT_FEE_RECIPIENT=0x0000000000000000000000000000000000000000
@@ -135,8 +135,8 @@ services:
       test: wget -qO- http://localhost:3620/readyz
     security_opt:
       - seccomp:unconfined
-    image: charon-validator-4.holesky-obol.dnp.dappnode.eth:0.1.0
-  charon-validator-5:
+    image: cluster-4.holesky-obol.dnp.dappnode.eth:0.1.0
+  cluster-5:
     build:
       context: charon-validator
       dockerfile: Dockerfile.lodestar
@@ -155,7 +155,7 @@ services:
       - CHARON_P2P_UDP_ADDRESS=0.0.0.0:3735
       - CHARON_LOKI_ADDRESSES=http://loki.dms.dappnode:3100/loki/api/v1/push
       - CHARON_P2P_RELAYS=https://0.relay.obol.tech,https://1.relay.obol.tech/
-      - CHARON_LOKI_SERVICE=charon-validator-5
+      - CHARON_LOKI_SERVICE=cluster-5
       - ENABLE_MEV_BOOST=false
       - CHARON_EXTRA_OPTS
       - DEFAULT_FEE_RECIPIENT=0x0000000000000000000000000000000000000000
@@ -169,7 +169,7 @@ services:
       test: wget -qO- http://localhost:3620/readyz
     security_opt:
       - seccomp:unconfined
-    image: charon-validator-5.holesky-obol.dnp.dappnode.eth:0.1.0
+    image: cluster-5.holesky-obol.dnp.dappnode.eth:0.1.0
   prometheus:
     build:
       context: prometheus

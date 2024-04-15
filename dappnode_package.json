@@ -17,38 +17,38 @@
     {
       "name": "charon1",
       "path": "/opt/charon/.charon",
-      "service": "charon-validator-1"
+      "service": "cluster-1"
     },
     {
       "name": "charon2",
       "path": "/opt/charon/.charon",
-      "service": "charon-validator-2"
+      "service": "cluster-2"
     },
     {
       "name": "charon3",
       "path": "/opt/charon/.charon",
-      "service": "charon-validator-3"
+      "service": "cluster-3"
     },
     {
       "name": "charon4",
       "path": "/opt/charon/.charon",
-      "service": "charon-validator-4"
+      "service": "cluster-4"
     },
     {
       "name": "charon5",
       "path": "/opt/charon/.charon",
-      "service": "charon-validator-5"
+      "service": "cluster-5"
     }
   ],
   "globalEnvs": [
     {
       "envs": ["CONSENSUS_CLIENT_HOLESKY", "DOMAIN"],
       "services": [
-        "charon-validator-1",
-        "charon-validator-2",
-        "charon-validator-3",
-        "charon-validator-4",
-        "charon-validator-5"
+        "cluster-1",
+        "cluster-2",
+        "cluster-3",
+        "cluster-4",
+        "cluster-5"
       ]
     }
   ],
