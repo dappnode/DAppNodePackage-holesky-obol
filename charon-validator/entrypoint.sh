@@ -105,6 +105,23 @@ function handle_charon_file_import() {
     fi
 }
 
+function enable_restart_on_artifact_upload() {
+    echo "${INFO} Enabling restart on artifact upload in ${IMPORT_DIR}"
+    local charon_pid=$(pidof charon)
+
+    # Monitor the IMPORT_DIR for new files and restart the charon process if a new file is detected
+    (inotifywait -m -q -e close_write --format '%f' "${IMPORT_DIR}" | while read -r filename; do
+        echo "${INFO} Detected new file: ${filename}"
+
+        # Check if the new file matches the expected patterns
+        if [[ "${filename}" =~ \.zip$|\.tar\.gz$|\.tar\.xz$ ]]; then
+            echo "${INFO} Artifact ${filename} uploaded, triggering container restart..."
+            # Forcefully terminate the charon process to trigger a container restart
+            kill -SIGKILL $charon_pid
+        fi
+    done) &
+}
+
 function get_beacon_node_endpoint() {
     case "$_DAPPNODE_GLOBAL_CONSENSUS_CLIENT_HOLESKY" in
     "prysm-holesky.dnp.dappnode.eth")
@@ -273,6 +290,9 @@ function run_teku() {
 
 echo "${INFO} Checking if there are charon settings to import..."
 handle_charon_file_import
+
+echo "${INFO} Enabling restart on artifact upload..."
+enable_restart_on_artifact_upload
 
 echo "${INFO} Getting the current beacon chain in use..."
 get_beacon_node_endpoint
