@@ -77,9 +77,9 @@ function extract_file_into_charon_dir() {
 # Remove all keys from the validator service
 function empty_lodestar_keys() {
     echo "${INFO} Emptying validator service keys..."
-    rm -rf ${VALIDATOR_KEYS_DIR}/cache/*
-    rm -rf ${VALIDATOR_KEYS_DIR}/keystores/*
-    rm -rf ${VALIDATOR_KEYS_DIR}/secrets/*
+    rm -rf ${VALIDATOR_DATA_DIR}/cache/*
+    rm -rf ${VALIDATOR_DATA_DIR}/keystores/*
+    rm -rf ${VALIDATOR_DATA_DIR}/secrets/*
 }
 
 # Main function to handle Charon file import
@@ -103,6 +103,30 @@ function handle_charon_file_import() {
     else
         echo "${INFO} IMPORT_DIR is not set or does not exist. No import process to be performed."
     fi
+}
+
+function enable_restart_on_artifact_upload() {
+    echo "${INFO} Enabling restart on artifact upload in ${IMPORT_DIR}"
+
+    # Monitor the IMPORT_DIR for new files and restart the charon process if a new file is detected
+    (inotifywait -m -q -e close_write --format '%f' "${IMPORT_DIR}" | while read -r filename; do
+        echo "${INFO} Detected new file: ${filename}"
+
+        # Check if the new file matches the expected patterns
+        if [[ "${filename}" =~ \.zip$|\.tar\.gz$|\.tar\.xz$ ]]; then
+            echo "${INFO} Artifact ${filename} uploaded, triggering container restart..."
+            # Forcefully terminate the charon process to trigger a container restart
+            local main_pid=$(pidof charon)
+
+            # If main_pid is empty, container is kept running by sleep command
+            if [ -z "$main_pid" ]; then
+                main_pid=$(pidof sleep)
+            fi
+
+            echo "${INFO} Sending charon process with PID ${charon_pid} signal SIGKILL..."
+            kill -s SIGKILL $main_pid
+        fi
+    done) &
 }
 
 function get_beacon_node_endpoint() {
@@ -141,11 +165,10 @@ function get_ENR() {
         fi
     fi
 
-    # If CREATE_ENR_FILE exists but ENR_FILE does not, create ENR_FILE
-    if [[ -f "$CREATE_ENR_FILE" ]] && [[ ! -f "$ENR_FILE" ]]; then
-        echo "${INFO} ENR file does not exist, creating it..."
-        grep "enr:" ${CREATE_ENR_FILE} | cut -d " " -f 2 >$ENR_FILE
-    fi
+    echo "${INFO} Storing ENR to file..."
+    ENR=$(charon enr --data-dir=${CHARON_ROOT_DIR})
+    echo "[INFO] ENR: ${ENR}"
+    echo "${ENR}" >$ENR_FILE
 
     # If ENR_FILE exists, get ENR from it and publish it to dappmanager
     if [[ -f "$ENR_FILE" ]]; then
@@ -273,6 +296,9 @@ function run_teku() {
 
 echo "${INFO} Checking if there are charon settings to import..."
 handle_charon_file_import
+
+echo "${INFO} Enabling restart on artifact upload..."
+enable_restart_on_artifact_upload
 
 echo "${INFO} Getting the current beacon chain in use..."
 get_beacon_node_endpoint
