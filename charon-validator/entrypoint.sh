@@ -77,9 +77,9 @@ function extract_file_into_charon_dir() {
 # Remove all keys from the validator service
 function empty_lodestar_keys() {
     echo "${INFO} Emptying validator service keys..."
-    rm -rf ${VALIDATOR_KEYS_DIR}/cache/*
-    rm -rf ${VALIDATOR_KEYS_DIR}/keystores/*
-    rm -rf ${VALIDATOR_KEYS_DIR}/secrets/*
+    rm -rf ${VALIDATOR_DATA_DIR}/cache/*
+    rm -rf ${VALIDATOR_DATA_DIR}/keystores/*
+    rm -rf ${VALIDATOR_DATA_DIR}/secrets/*
 }
 
 # Main function to handle Charon file import
@@ -116,7 +116,15 @@ function enable_restart_on_artifact_upload() {
         if [[ "${filename}" =~ \.zip$|\.tar\.gz$|\.tar\.xz$ ]]; then
             echo "${INFO} Artifact ${filename} uploaded, triggering container restart..."
             # Forcefully terminate the charon process to trigger a container restart
-            kill -s SIGKILL $(pidof charon)
+            local main_pid=$(pidof charon)
+
+            # If main_pid is empty, container is kept running by sleep command
+            if [ -z "$main_pid" ]; then
+                main_pid=$(pidof sleep)
+            fi
+
+            echo "${INFO} Sending charon process with PID ${charon_pid} signal SIGKILL..."
+            kill -s SIGKILL $main_pid
         fi
     done) &
 }
@@ -157,11 +165,10 @@ function get_ENR() {
         fi
     fi
 
-    # If CREATE_ENR_FILE exists but ENR_FILE does not, create ENR_FILE
-    if [[ -f "$CREATE_ENR_FILE" ]] && [[ ! -f "$ENR_FILE" ]]; then
-        echo "${INFO} ENR file does not exist, creating it..."
-        grep "enr:" ${CREATE_ENR_FILE} | cut -d " " -f 2 >$ENR_FILE
-    fi
+    echo "${INFO} Storing ENR to file..."
+    ENR=$(charon enr --data-dir=${CHARON_ROOT_DIR})
+    echo "[INFO] ENR: ${ENR}"
+    echo "${ENR}" >$ENR_FILE
 
     # If ENR_FILE exists, get ENR from it and publish it to dappmanager
     if [[ -f "$ENR_FILE" ]]; then
