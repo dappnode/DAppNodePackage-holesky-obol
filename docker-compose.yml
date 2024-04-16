@@ -178,7 +178,7 @@ services:
     environment:
       MONITORING_URL: https://vm.monitoring.gcp.obol.tech/write
       MONITORING_CREDENTIALS: ""
-      ACTIVE_CHARONS_NUMBER: 1
+      CHARONS_TO_MONITOR: 0
     volumes:
       - prometheus-data:/prometheus
     restart: on-failure
