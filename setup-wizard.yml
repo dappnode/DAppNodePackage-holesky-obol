@@ -18,6 +18,18 @@ fields:
       service: cluster-1
     required: false
 
+    - id: prometheus_monitored_charons
+    title: Charons to monitor by Obol
+    description: |
+      Comma separated list of charon services to monitor by Obol team for performance and reliability. The prometheus service will send the metrics to the server defined by the monitoring URL.
+
+      Example: "1,2,3"
+    target:
+      type: environment
+      name: CHARONS_TO_MONITOR
+      service: prometheus
+    required: false
+
   - id: definition-file-url-1
     target:
       type: environment

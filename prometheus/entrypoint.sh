@@ -7,17 +7,29 @@ if [ -z "$MONITORING_URL" ] || [ -z "$MONITORING_CREDENTIALS" ]; then
     exit 0 # To avoid restart
 fi
 
-# If active charons is not a number or is <=0, then exits
-if ! [ "$ACTIVE_CHARONS_NUMBER" -eq "$ACTIVE_CHARONS_NUMBER" ] 2>/dev/null || [ "$ACTIVE_CHARONS_NUMBER" -le 0 ]; then
-    echo "ACTIVE_CHARONS_NUMBER must be a number greater than 0"
+if [ -z "$CHARONS_TO_MONITOR" ]; then
+    echo "CHARONS_TO_MONITOR must be set to a comma-separated array of numbers like: 1,2,3"
     exit 0 # To avoid restart
 fi
 
-# Generate charon and validator targets based on the number of active charons
-# Example: If ACTIVE_CHARONS_NUMBER=3, then <CHARON_TARGETS> will be replaced by ["cluster-1:3620", "cluster-2:3620", "cluster-3:3620"]
-charon_targets=""
-validator_targets=""
-for i in $(seq 1 $ACTIVE_CHARONS_NUMBER); do
+if [ "$CHARONS_TO_MONITOR" = "0" ]; then
+    echo "No charons to monitor, exiting..."
+    exit 0 # To avoid restart
+fi
+
+# Normalize the input by removing spaces around commas and at the ends
+CHARONS_TO_MONITOR=$(echo "$CHARONS_TO_MONITOR" | sed 's/ *, */,/g' | sed 's/^ *//;s/ *$//')
+
+# Check that CHARONS_TO_MONITOR only contains numbers separated by commas
+echo "$CHARONS_TO_MONITOR" | grep -E '^[0-9]+(,[0-9]+)*$' >/dev/null 2>&1
+if [ $? -ne 0 ]; then
+    echo "CHARONS_TO_MONITOR must be a comma-separated list of numbers without spaces"
+    exit 0 # To avoid restart
+fi
+
+# Generate charon and validator targets based on the normalized CHARONS_TO_MONITOR
+IFS=','
+for i in $CHARONS_TO_MONITOR; do
     if [ "$charon_targets" != "" ]; then
         charon_targets="$charon_targets, "
         validator_targets="$validator_targets, "
