@@ -192,13 +192,8 @@ function get_ENR() {
     echo "[INFO] ENR: ${ENR}"
     echo "${ENR}" >$ENR_FILE
 
-    # If ENR_FILE exists, get ENR from it and publish it to dappmanager
-    if [[ -f "$ENR_FILE" ]]; then
-        ENR=$(cat $ENR_FILE)
-        echo "${INFO} ENR: ${ENR}"
-        echo "${INFO} Publishing ENR to dappmanager..."
-        post_ENR_to_dappmanager
-    fi
+    echo "${INFO} Publishing ENR to dappmanager..."
+    post_ENR_to_dappmanager
 }
 
 # function to be post the ENR to dappmanager
@@ -213,7 +208,6 @@ function post_ENR_to_dappmanager() {
         -X POST "http://my.dappnode/data-send?key=ENR%20Cluster%20${CLUSTER_ID}&data=${ENR}" ||
         {
             echo "[ERROR] failed to post ENR to dappmanager"
-            exit 1
         }
 }
 
