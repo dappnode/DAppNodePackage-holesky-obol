@@ -48,10 +48,11 @@ ENV CLUSTER_ID=${CLUSTER_ID} \
     CHARON_VALIDATOR_API_ADDRESS="0.0.0.0:3600" \
     CHARON_MONITORING_ADDRESS="0.0.0.0:3620" \
     IMPORT_DIR=/import/ \
-    VALIDATOR_SERVICE="lodestar"
+    VALIDATOR_CLIENT="lodestar"
 
 RUN mkdir -p /opt/charon/.charon ${VALIDATOR_DATA_DIR} ${IMPORT_DIR} && chown -R charon:charon /opt/charon
 
+# To import here the artifacts from file manager by default
 WORKDIR /import
 
 ENTRYPOINT ["/entrypoint.sh"]

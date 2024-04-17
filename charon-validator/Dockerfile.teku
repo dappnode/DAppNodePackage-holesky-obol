@@ -32,10 +32,11 @@ ENV CLUSTER_ID=${CLUSTER_ID} \
     CHARON_VALIDATOR_API_ADDRESS="0.0.0.0:3600" \
     CHARON_MONITORING_ADDRESS="0.0.0.0:3620" \
     IMPORT_DIR=/import/ \
-    VALIDATOR_SERVICE="teku"
+    VALIDATOR_CLIENT="teku"
 
 RUN mkdir -p ${IMPORT_DIR}
 
+# To import here the artifacts from file manager by default
 WORKDIR /import
 
 ENTRYPOINT ["/entrypoint.sh"]
