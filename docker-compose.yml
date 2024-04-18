@@ -26,6 +26,7 @@ services:
       - GRAFFITI=validating_from_DAppNode
       - JAVA_OPTS=-Xmx5g
       - VALIDATOR_EXTRA_OPTS
+      - CUSTOM_BEACON_NODE_URLS
     ports:
       - 3711:3711/tcp
       - 3731:3731/udp
@@ -59,7 +60,7 @@ services:
       - DEFAULT_FEE_RECIPIENT=0x0000000000000000000000000000000000000000
       - GRAFFITI=validating_from_DAppNode
       - JAVA_OPTS=-Xmx5g
-      - VALIDATOR_EXTRA_OPTS
+      - CUSTOM_BEACON_NODE_URLS
     ports:
       - 3712:3712/tcp
       - 3732:3732/udp
@@ -94,6 +95,7 @@ services:
       - GRAFFITI=validating_from_DAppNode
       - JAVA_OPTS=-Xmx5g
       - VALIDATOR_EXTRA_OPTS
+      - CUSTOM_BEACON_NODE_URLS
     ports:
       - 3713:3713/tcp
       - 3733:3733/udp
@@ -128,6 +130,7 @@ services:
       - GRAFFITI=validating_from_DAppNode
       - JAVA_OPTS=-Xmx5g
       - VALIDATOR_EXTRA_OPTS
+      - CUSTOM_BEACON_NODE_URLS
     ports:
       - 3714:3714/tcp
       - 3734:3734/udp
@@ -162,6 +165,7 @@ services:
       - GRAFFITI=validating_from_DAppNode
       - JAVA_OPTS=-Xmx5g
       - VALIDATOR_EXTRA_OPTS
+      - CUSTOM_BEACON_NODE_URLS
     ports:
       - 3715:3715/tcp
       - 3735:3735/udp

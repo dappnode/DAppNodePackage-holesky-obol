@@ -152,6 +152,13 @@ function enable_restart_on_artifact_upload() {
 }
 
 function get_beacon_node_endpoint() {
+
+    if [ -n "$CUSTOM_BEACON_NODE_URLS" ]; then
+        export CHARON_BEACON_NODE_ENDPOINTS=$CUSTOM_BEACON_NODE_URLS
+        echo "Using external beacon node endpoint: $CUSTOM_BEACON_NODE_URLS"
+        return
+    fi
+
     case "$_DAPPNODE_GLOBAL_CONSENSUS_CLIENT_HOLESKY" in
     "prysm-holesky.dnp.dappnode.eth")
         export CHARON_BEACON_NODE_ENDPOINTS="http://beacon-chain.prysm-holesky.dappnode:3500"
@@ -169,9 +176,8 @@ function get_beacon_node_endpoint() {
         export CHARON_BEACON_NODE_ENDPOINTS="http://beacon-chain.lodestar-holesky.dappnode:3500"
         ;;
     *)
-
-        export CHARON_BEACON_NODE_ENDPOINTS=$EXTERNAL_BEACON_NODE_ENDPOINT
-        echo "Using external beacon node endpoint: $CHARON_BEACON_NODE_ENDPOINTS"
+        echo "${ERROR} Unknown value for _DAPPNODE_GLOBAL_CONSENSUS_CLIENT_HOLESKY: $_DAPPNODE_GLOBAL_CONSENSUS_CLIENT_HOLESKY"
+        echo "${ERROR} Please set a full node for network ${NETWORK} in the Stakers tab or input a custom beacon node URL in this package config."
         ;;
     esac
 }
