@@ -1,4 +1,4 @@
-ARG UPSTREAM_VERSION
+ARG CHARON_VERSION
 
 FROM node:20-bullseye-slim as lodestar-build
 
@@ -17,7 +17,7 @@ RUN cd ./lodestar && \
     yarn build && \
     yarn install --non-interactive --frozen-lockfile --production
 
-FROM obolnetwork/charon:${UPSTREAM_VERSION}
+FROM obolnetwork/charon:${CHARON_VERSION}
 
 USER root
 
