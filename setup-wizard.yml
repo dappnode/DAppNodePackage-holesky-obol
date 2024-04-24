@@ -30,6 +30,26 @@ fields:
       service: prometheus
     required: false
 
+  - id: prometheus_monitoring_url
+    title: Prometheus Monitoring URL
+    description: |
+      URL to send the monitoring metrics to. The server must be able to receive the metrics from the prometheus service.
+    target:
+      type: environment
+      name: MONITORING_URL
+      service: prometheus
+    required: false
+
+  - id: prometheus_monitoring_credentials
+    title: Prometheus Monitoring Credentials
+    description: |
+      Credentials to authenticate the monitoring metrics sending to the server. Leave empty if you don't want to push any metrics.
+    target:
+      type: environment
+      name: MONITORING_CREDENTIALS
+      service: prometheus
+    required: false
+
   - id: definition-file-url-1
     target:
       type: environment
