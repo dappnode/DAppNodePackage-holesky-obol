@@ -49,4 +49,4 @@ sed -e "s|<MONITORING_URL>|$MONITORING_URL|g" \
     -e "s|<VALIDATOR_TARGETS>|$validator_targets|g" \
     $TEMPLATE_CONFIG_FILE >$CONFIG_FILE
 
-exec /bin/prometheus --config.file $CONFIG_FILE_PATH
+exec /bin/prometheus --config.file $CONFIG_FILE
