@@ -45,7 +45,7 @@ fields:
     required: false
 
   - id: prometheus_monitoring_url
-    title: Prometheus Monitoring URL
+    title: Prometheus Monitoring URL (optional)
     description: |
       Leave blank if you haven't been asked to do this.
 
