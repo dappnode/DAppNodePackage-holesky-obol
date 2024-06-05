@@ -60,6 +60,7 @@ services:
       - DEFAULT_FEE_RECIPIENT=0x0000000000000000000000000000000000000000
       - GRAFFITI=validating_from_DAppNode
       - JAVA_OPTS=-Xmx5g
+      - VALIDATOR_EXTRA_OPTS
       - CUSTOM_BEACON_NODE_URLS
     ports:
       - 3712:3712/tcp
