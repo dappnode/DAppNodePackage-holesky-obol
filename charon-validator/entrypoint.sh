@@ -284,7 +284,6 @@ function run_lodestar() {
             --graffiti="${GRAFFITI}" \
             --suggestedFeeRecipient="${DEFAULT_FEE_RECIPIENT}" \
             --distributed \
-            --useProduceBlockV3=false \
             ${VALIDATOR_EXTRA_OPTS}
     ) &
     VALIDATOR_CLIENT_PID=$!
@@ -306,7 +305,7 @@ function run_teku() {
             --network=${NETWORK} \
             --validators-proposer-default-fee-recipient=${DEFAULT_FEE_RECIPIENT} \
             --validators-graffiti=${GRAFFITI} \
-            --Xblock-v3-enabled=false \
+            --Xblock-v3-enabled=true \
             ${VALIDATOR_EXTRA_OPTS}
     ) &
     VALIDATOR_CLIENT_PID=$!
