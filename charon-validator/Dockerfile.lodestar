@@ -31,8 +31,6 @@ ENV CLUSTER_ID=${CLUSTER_ID} \
 
 RUN mkdir -p /opt/charon/.charon ${VALIDATOR_DATA_DIR} ${IMPORT_DIR} && chown -R charon:charon /opt/charon
 
-USER charon
-
 # To import here the artifacts from file manager by default
 WORKDIR /import
 
