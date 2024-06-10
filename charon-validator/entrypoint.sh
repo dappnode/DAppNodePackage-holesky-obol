@@ -262,7 +262,7 @@ function import_keystores_to_lodestar() {
             echo "Importing key ${f}"
 
             # Import keystore with password.
-            node ${VALIDATOR_SERVICE_BIN} \
+            ${VALIDATOR_SERVICE_BIN} \
                 --dataDir="${VALIDATOR_DATA_DIR}" \
                 validator import \
                 --network="${NETWORK}" \
@@ -274,7 +274,7 @@ function import_keystores_to_lodestar() {
 
 function run_lodestar() {
     (
-        exec node ${VALIDATOR_SERVICE_BIN} validator \
+        exec ${VALIDATOR_SERVICE_BIN} validator \
             --network="${NETWORK}" \
             --dataDir="${VALIDATOR_DATA_DIR}" \
             --beaconNodes="http://localhost:3600" \
