@@ -13,7 +13,8 @@ RUN apt-get update && apt-get install -y curl && \
     rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
 RUN mkdir -p /opt/validator/bin && \
-    curl -L https://github.com/ChainSafe/lodestar/releases/download/${VALIDATOR_CLIENT_VERSION}/lodestar-${VALIDATOR_CLIENT_VERSION}-linux-amd64.tar.gz | tar -xz -C /opt/validator/bin
+    curl -L https://github.com/ChainSafe/lodestar/releases/download/${VALIDATOR_CLIENT_VERSION}/lodestar-${VALIDATOR_CLIENT_VERSION}-linux-amd64.tar.gz | tar -xz -C /opt/validator/bin && \
+    chmod +x /opt/validator/bin/lodestar
 
 COPY entrypoint.sh /entrypoint.sh
 
