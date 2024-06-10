@@ -306,6 +306,7 @@ function run_teku() {
             --validators-proposer-default-fee-recipient=${DEFAULT_FEE_RECIPIENT} \
             --validators-graffiti=${GRAFFITI} \
             --Xblock-v3-enabled=true \
+            --Xobol-dvt-integration-enabled=true \
             ${VALIDATOR_EXTRA_OPTS}
     ) &
     VALIDATOR_CLIENT_PID=$!
