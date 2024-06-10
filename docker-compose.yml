@@ -5,8 +5,8 @@ services:
       context: charon-validator
       dockerfile: Dockerfile.lodestar
       args:
-        CHARON_VERSION: v1.0.0-rc2
-        VALIDATOR_CLIENT_VERSION: v1.18.1
+        CHARON_VERSION: v1.0.0-rc3
+        VALIDATOR_CLIENT_VERSION: v1.19.0
         CLUSTER_ID: 1
     restart: on-failure
     volumes:
@@ -34,14 +34,14 @@ services:
       test: wget -qO- http://localhost:3620/readyz
     security_opt:
       - seccomp:unconfined
-    image: cluster-1.holesky-obol.dnp.dappnode.eth:0.1.0
+    image: cluster-1.holesky-obol.dnp.dappnode.eth:0.1.1
   cluster-2:
     build:
       context: charon-validator
       dockerfile: Dockerfile.lodestar
       args:
-        CHARON_VERSION: v1.0.0-rc2
-        VALIDATOR_CLIENT_VERSION: v1.18.1
+        CHARON_VERSION: v1.0.0-rc3
+        VALIDATOR_CLIENT_VERSION: v1.19.0
         CLUSTER_ID: 2
     restart: on-failure
     volumes:
@@ -69,14 +69,14 @@ services:
       test: wget -qO- http://localhost:3620/readyz
     security_opt:
       - seccomp:unconfined
-    image: cluster-2.holesky-obol.dnp.dappnode.eth:0.1.0
+    image: cluster-2.holesky-obol.dnp.dappnode.eth:0.1.1
   cluster-3:
     build:
       context: charon-validator
       dockerfile: Dockerfile.lodestar
       args:
-        CHARON_VERSION: v1.0.0-rc2
-        VALIDATOR_CLIENT_VERSION: v1.18.1
+        CHARON_VERSION: v1.0.0-rc3
+        VALIDATOR_CLIENT_VERSION: v1.19.0
         CLUSTER_ID: 3
     restart: on-failure
     volumes:
@@ -104,14 +104,14 @@ services:
       test: wget -qO- http://localhost:3620/readyz
     security_opt:
       - seccomp:unconfined
-    image: cluster-3.holesky-obol.dnp.dappnode.eth:0.1.0
+    image: cluster-3.holesky-obol.dnp.dappnode.eth:0.1.1
   cluster-4:
     build:
       context: charon-validator
       dockerfile: Dockerfile.lodestar
       args:
-        CHARON_VERSION: v1.0.0-rc2
-        VALIDATOR_CLIENT_VERSION: v1.18.1
+        CHARON_VERSION: v1.0.0-rc3
+        VALIDATOR_CLIENT_VERSION: v1.19.0
         CLUSTER_ID: 4
     restart: on-failure
     volumes:
@@ -139,14 +139,14 @@ services:
       test: wget -qO- http://localhost:3620/readyz
     security_opt:
       - seccomp:unconfined
-    image: cluster-4.holesky-obol.dnp.dappnode.eth:0.1.0
+    image: cluster-4.holesky-obol.dnp.dappnode.eth:0.1.1
   cluster-5:
     build:
       context: charon-validator
       dockerfile: Dockerfile.lodestar
       args:
-        CHARON_VERSION: v1.0.0-rc2
-        VALIDATOR_CLIENT_VERSION: v1.18.1
+        CHARON_VERSION: v1.0.0-rc3
+        VALIDATOR_CLIENT_VERSION: v1.19.0
         CLUSTER_ID: 5
     restart: on-failure
     volumes:
@@ -174,7 +174,7 @@ services:
       test: wget -qO- http://localhost:3620/readyz
     security_opt:
       - seccomp:unconfined
-    image: cluster-5.holesky-obol.dnp.dappnode.eth:0.1.0
+    image: cluster-5.holesky-obol.dnp.dappnode.eth:0.1.1
   prometheus:
     build:
       context: prometheus
@@ -187,7 +187,7 @@ services:
     volumes:
       - prometheus-data:/prometheus
     restart: on-failure
-    image: prometheus.holesky-obol.dnp.dappnode.eth:0.1.0
+    image: prometheus.holesky-obol.dnp.dappnode.eth:0.1.1
 volumes:
   charon-1-data: {}
   charon-2-data: {}
