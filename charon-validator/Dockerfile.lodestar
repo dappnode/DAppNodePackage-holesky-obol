@@ -6,8 +6,8 @@ ARG VALIDATOR_CLIENT_VERSION
 
 USER root
 
-RUN apt-get update && apt-get install -y curl && \
-    apt-get install -y jq zip xz-utils inotify-tools && \
+RUN apt-get update && \
+    apt-get install -y curl jq zip xz-utils inotify-tools && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
