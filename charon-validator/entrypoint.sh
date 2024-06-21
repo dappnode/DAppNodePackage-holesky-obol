@@ -272,21 +272,64 @@ function import_keystores_to_lodestar() {
     done
 }
 
-function run_lodestar() {
-    (
-        exec ${VALIDATOR_SERVICE_BIN} validator \
-            --network="${NETWORK}" \
-            --dataDir="${VALIDATOR_DATA_DIR}" \
-            --beaconNodes="http://localhost:3600" \
-            --metrics="true" \
-            --metrics.address="0.0.0.0" \
-            --metrics.port="${VALIDATOR_METRICS_PORT}" \
-            --graffiti="${GRAFFITI}" \
-            --suggestedFeeRecipient="${DEFAULT_FEE_RECIPIENT}" \
-            --distributed \
-            ${VALIDATOR_EXTRA_OPTS}
-    ) &
-    VALIDATOR_CLIENT_PID=$!
+function sign_exit() {
+
+    # If EXIT_EPOCH is not set, log and return
+    if [ -z "$EXIT_EPOCH" ]; then
+        echo "${INFO} EXIT_EPOCH has not been set"
+        return
+    fi
+
+    # If EXIT_EPOCH is not a number, log and return
+    if ! [[ "$EXIT_EPOCH" =~ ^[0-9]+$ ]]; then
+        echo "${ERROR} EXIT_EPOCH is not a valid number"
+        return
+    fi
+
+    # If EXIT_EPOCH is less than 1, log and return
+    if [ "$EXIT_EPOCH" -lt 1 ]; then
+        echo "${ERROR} EXIT_EPOCH is less than 1"
+        return
+    fi
+
+    if [ "$VALIDATOR_CLIENT" = "teku" ]; then
+        sign_exit_teku
+    else
+        sign_exit_lodestar
+    fi
+}
+
+function sign_exit_lodestar() {
+
+    ${VALIDATOR_SERVICE_BIN} validator \
+        voluntary-exit \
+        --beaconNodes="http://localhost:3600" \
+        --dataDir="${VALIDATOR_DATA_DIR}" \
+        --network="${NETWORK}" \
+        --exitEpoch="${EXIT_EPOCH}" \
+        --yes
+}
+
+function sign_exit_teku() {
+
+    ${VALIDATOR_SERVICE_BIN} voluntary-exit \
+        --beacon-node-api-endpoint=http://localhost:3600 \
+        --validator-keys=${VALIDATOR_KEYS_DIR}:${VALIDATOR_KEYS_DIR} \
+        --network="${NETWORK}" \
+        --epoch="${EXIT_EPOCH}" \
+        --confirmation-enabled=false
+}
+
+function run_validator_client() {
+    if [ "$VALIDATOR_CLIENT" = "teku" ]; then
+        echo "${INFO} Starting teku validator service..."
+        run_teku
+    else
+        echo "${INFO} Importing keystores to lodestar validator service..."
+        import_keystores_to_lodestar
+        echo "${INFO} Starting lodestar validator service..."
+        run_lodestar
+    fi
 }
 
 function run_teku() {
@@ -302,12 +345,29 @@ function run_teku() {
             --validator-api-enabled=false \
             --validators-keystore-locking-enabled=false \
             --validator-keys=${VALIDATOR_KEYS_DIR}:${VALIDATOR_KEYS_DIR} \
-            --network=${NETWORK} \
-            --validators-proposer-default-fee-recipient=${DEFAULT_FEE_RECIPIENT} \
-            --validators-graffiti=${GRAFFITI} \
+            --network="${NETWORK}" \
+            --validators-proposer-default-fee-recipient="${DEFAULT_FEE_RECIPIENT}" \
+            --validators-graffiti="${GRAFFITI}" \
             --Xblock-v3-enabled=true \
             --Xobol-dvt-integration-enabled=true \
-            ${VALIDATOR_EXTRA_OPTS}
+            "${VALIDATOR_EXTRA_OPTS}"
+    ) &
+    VALIDATOR_CLIENT_PID=$!
+}
+
+function run_lodestar() {
+    (
+        exec ${VALIDATOR_SERVICE_BIN} validator \
+            --network="${NETWORK}" \
+            --dataDir="${VALIDATOR_DATA_DIR}" \
+            --beaconNodes="http://localhost:3600" \
+            --metrics="true" \
+            --metrics.address="0.0.0.0" \
+            --metrics.port="${VALIDATOR_METRICS_PORT}" \
+            --graffiti="${GRAFFITI}" \
+            --suggestedFeeRecipient="${DEFAULT_FEE_RECIPIENT}" \
+            --distributed \
+            "${VALIDATOR_EXTRA_OPTS}"
     ) &
     VALIDATOR_CLIENT_PID=$!
 }
@@ -334,15 +394,11 @@ check_DKG
 echo "${INFO} Starting charon..."
 run_charon
 
-if [ "$VALIDATOR_CLIENT" = "teku" ]; then
-    echo "${INFO} Starting teku validator service..."
-    run_teku
-else
-    echo "${INFO} Importing keystores to lodestar validator service..."
-    import_keystores_to_lodestar
-    echo "${INFO} Starting lodestar validator service..."
-    run_lodestar
-fi
+echo "${INFO} Signing exit..."
+sign_exit
+
+echo "${INFO} Starting validator client..."
+run_validator_client
 
 # This wait will exit as soon as any of the background processes exits
 wait -n
