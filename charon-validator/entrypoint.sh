@@ -274,50 +274,64 @@ function import_keystores_to_lodestar() {
 
 function sign_exit() {
 
-    # If EXIT_EPOCH is not set, log and return
-    if [ -z "$EXIT_EPOCH" ]; then
-        echo "${INFO} EXIT_EPOCH has not been set"
+    local exit_epoch=""
+
+    if [ "$SIGN_EXIT" != true ]; then
+        echo "${INFO} Signing exit is disabled. Skipping..."
         return
     fi
 
-    # If EXIT_EPOCH is not a number, log and return
-    if ! [[ "$EXIT_EPOCH" =~ ^[0-9]+$ ]]; then
-        echo "${ERROR} EXIT_EPOCH is not a valid number"
-        return
-    fi
+    # Validate exit epoch
+    if [ -n "$EXIT_EPOCH" ]; then
 
-    # If EXIT_EPOCH is less than 1, log and return
-    if [ "$EXIT_EPOCH" -lt 1 ]; then
-        echo "${ERROR} EXIT_EPOCH is less than 1"
-        return
+        if [[ "$EXIT_EPOCH" =~ ^[0-9]+$ ]] && [ "$EXIT_EPOCH" -ge 1 ]; then
+            exit_epoch=$EXIT_EPOCH
+            echo "${INFO} Signing exit with EXIT_EPOCH=${EXIT_EPOCH}"
+        else
+            echo "${ERROR} EXIT_EPOCH is not valid. It must be a positive integer."
+            return
+        fi
+
+    else
+        echo "${INFO} Signing exit without EXIT_EPOCH"
     fi
 
     if [ "$VALIDATOR_CLIENT" = "teku" ]; then
-        sign_exit_teku
+        sign_exit_teku "$exit_epoch"
     else
-        sign_exit_lodestar
+        sign_exit_lodestar "$exit_epoch"
     fi
 }
 
 function sign_exit_lodestar() {
+    local exit_epoch_flag=""
+
+    if [ -n "$1" ]; then
+        exit_epoch_flag="--exitEpoch=$1"
+    fi
 
     ${VALIDATOR_SERVICE_BIN} validator \
         voluntary-exit \
         --beaconNodes="http://localhost:3600" \
         --dataDir="${VALIDATOR_DATA_DIR}" \
         --network="${NETWORK}" \
-        --exitEpoch="${EXIT_EPOCH}" \
-        --yes
+        --yes \
+        "${exit_epoch_flag}"
 }
 
 function sign_exit_teku() {
+    local epoch_flag=""
+
+    if [ -n "$1" ]; then
+        epoch_flag="--epoch=$1"
+    fi
 
     ${VALIDATOR_SERVICE_BIN} voluntary-exit \
         --beacon-node-api-endpoint=http://localhost:3600 \
         --validator-keys=${VALIDATOR_KEYS_DIR}:${VALIDATOR_KEYS_DIR} \
         --network="${NETWORK}" \
-        --epoch="${EXIT_EPOCH}" \
-        --confirmation-enabled=false
+        --confirmation-enabled=false \
+        "${epoch_flag}"
 }
 
 function run_validator_client() {
