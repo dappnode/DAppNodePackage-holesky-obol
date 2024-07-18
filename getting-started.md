@@ -1,35 +1,54 @@
-# Obol Dappnode Package Guide
+# Obol Dappnode Package QuickStart Guide
 
-The Obol Dappnode Package is designed to help users run a distributed validator setup with specific requirements. This guide explains the key aspects of the package and how to use it effectively.
+For detailed steps and screenshots, please refer to [Obol docs](https://docs.obol.org/docs/start/quickstart_group).
 
-## Cluster Configuration
+### Preparing your Ethereum node (pre-requisite)
+1. Go to [Stakers tab](http://my.dappnode/stakers/ethereum) and select the desired network (Ethereum mainnet, holesky...)
+2. Choose an execution client (e.g. Nethermind) and a consensus client (e.g. Lodestar)
+3. Click "Apply changes" and wait for install and sync processes.
 
-1. **Maximum Clusters**: The package supports a maximum of 5 clusters.
+### Cluster Configuration
 
-2. **Services**: Each cluster requires two dedicated services: Charon and validator client.
+This Obol package supports up to 5 clusters. Each of them requires the Charon DV middleware and an Ethereum validator client, which are already included inside the services provided by the package.
 
-## Getting the ENR
+During the **first installation**, leave all definition file inputs blank to obtain the ENR for each Charon node, necessary for the DKG process.
 
-3. **ENR for Clusters**: You will receive an ENR (Ethereum Name Record) for each cluster in the package. You can find these ENRs in the [Info tab](http://my.dappnode/packages/my/holesky-obol.dnp.dappnode.eth/info). These ENRs are needed to register each cluster as an operator before running the DKG (Distributed Key Generation) ceremony.
+### View Package Info
 
-4. **First Installation**: During the first installation, it's essential to leave all definition file inputs blank in the setup wizard. This allows you to obtain the ENR for each Charon node, which is necessary for the DKG process.
+Under the Info tab, see pre-generated ENRs and validator containers' status.
 
-## Managing Containers
+### Create a DV cluster on Obol launchpad
+1. Use the appropriate launchpad for your network:
+    - [Holesky Launchpad](https://holesky.launchpad.obol.org/)
+    - [Mainnet Launchpad](https://mainnet.launchpad.obol.org/)
+2. Follow instructions to sign with your wallet and provide an ENR from the DappNode info section
+3. Obtain the cluster definition file URL for the DKG ceremony. [More info](https://docs.obol.org/docs/start/quickstart_group#install-the-obol-dappnode-package)
 
-5. **Container State**: It's normal to see stopped containers for clusters that are not currently active. The package is designed to stop containers for clusters that are not in use to save system resources.
+### Running the Distributed Key Generation Ceremony (DKG)
 
-## Backup
+1. Import the definition file:
+    - Go to the Config tab of your Obol package
+    - Select URL from the Dropdown menu
+    - Paste the definition file URL into the cluster number matching the ENR you used for creating the cluster. Example: If you used ENR1 for signing, paste the URL into Cluster-1. This URL must follow the format: `https://api.obol.tech/dv/0xf9632c4333e4d67373b383da56dfb764df47268881d3412a1eef1a0247dc7367`
+    - Click `Update` button at the bottom of the page.
 
-6. **Download a backup**: It's recommended to save a backup of the relevant data of each cluster. You can download it from the [Backup tab](http://my.dappnode/packages/my/holesky-obol.dnp.dappnode.eth/backup) of the package.
+2. Monitor the DKG process via the Logs tab. [More info](https://docs.obol.org/docs/start/quickstart_group#step-3-run-the-distributed-key-generation-dkg-ceremony)
 
-7. **Restore a backup**: If you are setting up or recovering an existing setup, you should provide the `definition-file-url` in the setup wizard or in the [Config tab](http://my.dappnode/packages/my/holesky-obol.dnp.dappnode.eth/config) of the package. Then, restore your backup in the [Backup tab](http://my.dappnode/packages/my/holesky-obol.dnp.dappnode.eth/backup) of the package.
+### Exiting a validator
 
-_Note: The `definition-file-url` in the setup wizard with your cluster's specific URL in the following format:_
+1. Navigate to the package Config tab
+2. Click on `Show advanced editor`
+3. Scroll to the relevant cluster number and type `true` next to `SIGN_EXIT`
+4. Click on `Update` and check logs to confirm the exit process has been successful.
 
-```markdown
-https://api.obol.tech/dv/0xf9632c4333e4d67373b383da56dfb764df47268881d3412a1eef1a0247dc7367
-```
+### Container status
 
-## Upload a Node Artifact
+Stopped containers for inactive clusters are normal. This saves system resources.
+
+### Backup
+
+It's recommended to save a backup of the relevant data of each cluster. You can download it from the Backup tab of the package. There, you can also restore a backup after you have provided the `definition-file-url` in the setup wizard or in the Config of the package. 
+
+### Upload a Node Artifact
 
 If you have been given a Node Artifact (e.g. `node0.zip`) you can either import it on install (by choosing "File upload" mode) or import it later in the [File Manager tab](http://my.dappnode/packages/my/holesky-obol.dnp.dappnode.eth/file-manager) by choosing the service you want to import it to (`cluster-<number>`) and setting `/import/` as the destination path before clicking "Upload".
