@@ -26,8 +26,7 @@ ENV CLUSTER_ID=${CLUSTER_ID} \
     VALIDATOR_METRICS_PORT=8008 \
     CHARON_VALIDATOR_API_ADDRESS="0.0.0.0:3600" \
     CHARON_MONITORING_ADDRESS="0.0.0.0:3620" \
-    IMPORT_DIR=/import/ \
-    VALIDATOR_CLIENT="lodestar"
+    IMPORT_DIR=/import/
 
 RUN mkdir -p /opt/charon/.charon ${VALIDATOR_DATA_DIR} ${IMPORT_DIR} && chown -R charon:charon /opt/charon
 

@@ -22,13 +22,7 @@ fi
 if [ "$ENABLE_MEV_BOOST" = true ]; then
     CHARON_EXTRA_OPTS="--builder-api $CHARON_EXTRA_OPTS"
 
-    # Teku
-    if [ "$VALIDATOR_CLIENT" = "teku" ]; then
-        VALIDATOR_EXTRA_OPTS="--validators-proposer-blinded-blocks-enabled=true --validators-builder-registration-default-enabled=true $VALIDATOR_EXTRA_OPTS"
-    # Lodestar (by default)
-    else
-        VALIDATOR_EXTRA_OPTS="--builder=true --builder.selection=builderonly $VALIDATOR_EXTRA_OPTS"
-    fi
+    VALIDATOR_EXTRA_OPTS="--builder=true --builder.selection=builderonly $VALIDATOR_EXTRA_OPTS"
 fi
 
 export CHARON_P2P_EXTERNAL_HOSTNAME=${_DAPPNODE_GLOBAL_DOMAIN}
@@ -96,9 +90,7 @@ function extract_file_into_charon_dir() {
 # Remove all keys from the validator service
 function empty_lodestar_keys() {
     echo "${INFO} Emptying validator service keys..."
-    rm -rf "${VALIDATOR_DATA_DIR}"/cache/*
-    rm -rf "${VALIDATOR_DATA_DIR}"/keystores/*
-    rm -rf "${VALIDATOR_DATA_DIR}"/secrets/*
+    rm -rf "${VALIDATOR_DATA_DIR}"/cache/* "${VALIDATOR_DATA_DIR}"/keystores/* "${VALIDATOR_DATA_DIR}"/secrets/*
 }
 
 # Main function to handle Charon file import
@@ -292,11 +284,7 @@ function sign_exit() {
         echo "${INFO} Signing exit without EXIT_EPOCH"
     fi
 
-    if [ "$VALIDATOR_CLIENT" = "teku" ]; then
-        sign_exit_teku
-    else
-        sign_exit_lodestar
-    fi
+    sign_exit_lodestar
 }
 
 function sign_exit_lodestar() {
@@ -314,64 +302,6 @@ function sign_exit_lodestar() {
 
     # shellcheck disable=SC2086
     ${VALIDATOR_SERVICE_BIN} ${flags}
-}
-
-function sign_exit_teku() {
-
-    local flags="voluntary-exit \
-        --beacon-node-api-endpoint=http://localhost:3600 \
-        --validator-keys=${VALIDATOR_KEYS_DIR}:${VALIDATOR_KEYS_DIR} \
-        --network=${NETWORK} \
-        --confirmation-enabled=false"
-
-    if [ -n "$EXIT_EPOCH" ]; then
-        flags="${flags} --exitEpoch=${EXIT_EPOCH}"
-    fi
-
-    # shellcheck disable=SC2086
-    ${VALIDATOR_SERVICE_BIN} ${flags}
-}
-
-function run_validator_client() {
-    if [ "$VALIDATOR_CLIENT" = "teku" ]; then
-        echo "${INFO} Starting teku validator service..."
-        run_teku
-    else
-        echo "${INFO} Importing keystores to lodestar validator service..."
-        import_keystores_to_lodestar
-        echo "${INFO} Starting lodestar validator service..."
-        run_lodestar
-    fi
-}
-
-function run_teku() {
-
-    local flags="--log-destination=CONSOLE \
-        validator-client \
-        --beacon-node-api-endpoint=http://localhost:3600 \
-        --data-base-path=${VALIDATOR_DATA_DIR} \
-        --metrics-enabled=true \
-        --metrics-interface 0.0.0.0 \
-        --metrics-port 8008 \
-        --metrics-host-allowlist=* \
-        --validator-api-enabled=false \
-        --validators-keystore-locking-enabled=false \
-        --validator-keys=${VALIDATOR_KEYS_DIR}:${VALIDATOR_KEYS_DIR} \
-        --network=${NETWORK} \
-        --validators-proposer-default-fee-recipient=${DEFAULT_FEE_RECIPIENT} \
-        --validators-graffiti=${GRAFFITI} \
-        --Xblock-v3-enabled=true \
-        --Xobol-dvt-integration-enabled=true"
-
-    if [ -n "$VALIDATOR_EXTRA_OPTS" ]; then
-        flags="${flags} ${VALIDATOR_EXTRA_OPTS}"
-    fi
-
-    (
-        # shellcheck disable=SC2086
-        exec ${VALIDATOR_SERVICE_BIN} ${flags}
-    ) &
-    VALIDATOR_CLIENT_PID=$!
 }
 
 function run_lodestar() {
@@ -420,11 +350,14 @@ check_DKG
 echo "${INFO} Starting charon..."
 run_charon
 
+echo "${INFO} Importing keystores to lodestar validator service..."
+import_keystores_to_lodestar
+
 echo "${INFO} Signing exit..."
 sign_exit
 
-echo "${INFO} Starting validator client..."
-run_validator_client
+echo "${INFO} Starting lodestar validator service..."
+run_lodestar
 
 # This wait will exit as soon as any of the background processes exits
 wait -n
