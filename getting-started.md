@@ -52,3 +52,5 @@ It's recommended to save a backup of the relevant data of each cluster. You can 
 ### Upload a Node Artifact
 
 If you have been given a Node Artifact (e.g. `node0.zip`) you can either import it on install (by choosing "File upload" mode) or import it later in the [File Manager tab](http://my.dappnode/packages/my/holesky-obol.dnp.dappnode.eth/file-manager) by choosing the service you want to import it to (`cluster-<number>`) and setting `/import/` as the destination path before clicking "Upload".
+
+For support, you can join [Obol discord](https://discord.com/invite/n6ebKsX46w)
