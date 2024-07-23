@@ -60,22 +60,26 @@ function extract_file_into_charon_dir() {
     tmp_dir=$(mktemp -d)
 
     # Extract the archive to the temporary directory
-    if [[ "${1}" == *.tar.gz ]]; then
-        tar -xzf "${1}" -C "${tmp_dir}" && echo "${INFO} Extraction to temp directory complete."
-    elif [[ "${1}" == *.tar.xz ]]; then
-        tar -xJf "${1}" -C "${tmp_dir}" && echo "${INFO} Extraction to temp directory complete."
+    if [[ "${1}" == *.tar.gz || "${1}" == *.tar.xz ]]; then
+        tar --exclude='._*' -xvf "${1}" -C "${tmp_dir}" && echo "${INFO} Extraction (.tar.gz or .tar.xz format) to temporary directory complete."
     elif [[ "${1}" == *.zip ]]; then
-        unzip -o "${1}" -d "${tmp_dir}" && echo "${INFO} Extraction to temp directory complete."
+        unzip -o "${1}" -d "${tmp_dir}" && echo "${INFO} Extraction (.zip format) to temporary directory complete."
     fi
 
     # Read contents of the temp directory into an array using mapfile
     mapfile -t contents < <(ls -A "${tmp_dir}")
 
+    echo "${INFO} Moving files from temporary directory to ${CHARON_ROOT_DIR}..."
+
     if [[ ${#contents[@]} == 1 && -d "${tmp_dir}/${contents[0]}" ]]; then
+        echo "${INFO} Found exactly one directory in the archive: ${contents[0]}"
+
         # If there is exactly one directory, move its contents to CHARON_ROOT_DIR
         mv "${tmp_dir}/${contents[0]}"/* "${CHARON_ROOT_DIR}"
         rmdir "${tmp_dir}/${contents[0]}" # Remove the now empty directory
     else
+        echo "${INFO} Moving all files and directories from the temporary directory to ${CHARON_ROOT_DIR}"
+
         # Move all files and directories from the temp directory directly to CHARON_ROOT_DIR
         mv "${tmp_dir}"/* "${CHARON_ROOT_DIR}"
     fi
