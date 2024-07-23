@@ -1,14 +1,7 @@
 #!/bin/bash
 
-#############
-# VARIABLES #
-#############
-ERROR="[ ERROR-file-import-handler ]"
-INFO="[ INFO-file-import-handler ]"
-
-#############
-# FUNCTIONS #
-#############
+ERROR="[ ERROR | file-import-handler ]"
+INFO="[ INFO | file-import-handler ]"
 
 # Main function to handle Charon file import
 function handle_charon_file_import() {

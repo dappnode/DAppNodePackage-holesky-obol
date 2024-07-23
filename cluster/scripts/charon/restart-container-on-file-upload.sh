@@ -1,5 +1,7 @@
 #!/bin/bash
 
+INFO="[ INFO | container-restarter ]"
+
 echo "${INFO} Enabling restart on artifact upload in ${IMPORT_DIR}"
 
 # Monitor the IMPORT_DIR for new files and restart the charon process if a new file is detected
