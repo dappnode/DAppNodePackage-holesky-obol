@@ -2,8 +2,7 @@ version: "3.5"
 services:
   cluster-1:
     build:
-      context: charon-validator
-      dockerfile: Dockerfile.lodestar
+      context: cluster
       args:
         CHARON_VERSION: v1.0.1
         VALIDATOR_CLIENT_VERSION: v1.20.2
@@ -39,8 +38,7 @@ services:
     image: cluster-1.holesky-obol.dnp.dappnode.eth:0.1.1
   cluster-2:
     build:
-      context: charon-validator
-      dockerfile: Dockerfile.lodestar
+      context: cluster
       args:
         CHARON_VERSION: v1.0.1
         VALIDATOR_CLIENT_VERSION: v1.20.2
@@ -76,8 +74,7 @@ services:
     image: cluster-2.holesky-obol.dnp.dappnode.eth:0.1.1
   cluster-3:
     build:
-      context: charon-validator
-      dockerfile: Dockerfile.lodestar
+      context: cluster
       args:
         CHARON_VERSION: v1.0.1
         VALIDATOR_CLIENT_VERSION: v1.20.2
@@ -113,8 +110,7 @@ services:
     image: cluster-3.holesky-obol.dnp.dappnode.eth:0.1.1
   cluster-4:
     build:
-      context: charon-validator
-      dockerfile: Dockerfile.lodestar
+      context: cluster
       args:
         CHARON_VERSION: v1.0.1
         VALIDATOR_CLIENT_VERSION: v1.20.2
@@ -150,8 +146,7 @@ services:
     image: cluster-4.holesky-obol.dnp.dappnode.eth:0.1.1
   cluster-5:
     build:
-      context: charon-validator
-      dockerfile: Dockerfile.lodestar
+      context: cluster
       args:
         CHARON_VERSION: v1.0.1
         VALIDATOR_CLIENT_VERSION: v1.20.2

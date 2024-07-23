@@ -7,7 +7,7 @@ ARG VALIDATOR_CLIENT_VERSION
 USER root
 
 RUN apt-get update && \
-    apt-get install -y curl jq zip xz-utils inotify-tools && \
+    apt-get --yes --no-install-recommends install curl jq zip xz-utils inotify-tools && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
@@ -15,7 +15,7 @@ RUN mkdir -p /opt/validator/bin && \
     curl -L https://github.com/ChainSafe/lodestar/releases/download/${VALIDATOR_CLIENT_VERSION}/lodestar-${VALIDATOR_CLIENT_VERSION}-linux-amd64.tar.gz | tar -xz -C /opt/validator/bin && \
     chmod +x /opt/validator/bin/lodestar
 
-COPY entrypoint.sh /entrypoint.sh
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 
 # To prevent the user from editing the CLUSTER_ID, we set it as an ARG
 ENV CLUSTER_ID=${CLUSTER_ID} \
@@ -26,11 +26,14 @@ ENV CLUSTER_ID=${CLUSTER_ID} \
     VALIDATOR_METRICS_PORT=8008 \
     CHARON_VALIDATOR_API_ADDRESS="0.0.0.0:3600" \
     CHARON_MONITORING_ADDRESS="0.0.0.0:3620" \
-    IMPORT_DIR=/import/
+    CHARON_ROOT_DIR=/opt/charon/.charon \
+    IMPORT_DIR=/import/ \
+    SUPERVISOR_DIR=/supervisor
 
-RUN mkdir -p /opt/charon/.charon ${VALIDATOR_DATA_DIR} ${IMPORT_DIR} && chown -R charon:charon /opt/charon
+RUN mkdir -p ${CHARON_ROOT_DIR} ${VALIDATOR_DATA_DIR} ${IMPORT_DIR} ${SUPERVISOR_DIR} && chown -R charon:charon /opt/charon
 
 # To import here the artifacts from file manager by default
 WORKDIR /import
 
-ENTRYPOINT ["/entrypoint.sh"]
+# Use supervisord to start services
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
