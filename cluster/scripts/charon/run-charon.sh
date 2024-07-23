@@ -3,8 +3,8 @@
 #############
 # VARIABLES #
 #############
-ERROR="[ ERROR-charon-manager ]"
-INFO="[ INFO-charon-manager ]"
+ERROR="[ ERROR | charon-manager ]"
+INFO="[ INFO | charon-manager ]"
 
 CREATE_ENR_FILE=${CHARON_ROOT_DIR}/create_enr.txt
 ENR_PRIVATE_KEY_FILE=${CHARON_ROOT_DIR}/charon-enr-private-key
