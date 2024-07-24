@@ -29,7 +29,7 @@ ENV CLUSTER_ID=${CLUSTER_ID} \
     CHARON_MONITORING_ADDRESS="0.0.0.0:3620" \
     CHARON_ROOT_DIR=/opt/charon/.charon \
     IMPORT_DIR=/import/ \
-    SUPERVISOR_DIR=/supervisor
+    SUPERVISOR_DIR=/opt/supervisor
 
 RUN mkdir -p ${CHARON_ROOT_DIR} ${VALIDATOR_DATA_DIR} ${IMPORT_DIR} ${SUPERVISOR_DIR} && \
     chown -R charon:charon /opt/charon && \

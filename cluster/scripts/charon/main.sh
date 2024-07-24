@@ -1,7 +1,8 @@
 #!/bin/bash
 
-./handle-file-import.sh
+# Get the directory where this script is located
+SCRIPT_DIR=$(dirname "$0")
 
-./restart-container-on-file-upload.sh
-
-./run-charon.sh
+# Execute the scripts with paths relative to the script directory
+"$SCRIPT_DIR/handle-file-import.sh"
+"$SCRIPT_DIR/run-charon.sh"

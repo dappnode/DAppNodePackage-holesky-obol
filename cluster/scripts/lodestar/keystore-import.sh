@@ -1,5 +1,7 @@
 #!/bin/bash
 
+INFO="[ INFO | lodestar-keystore-import ]"
+
 function import_keystores_to_lodestar() {
 
     local charon_keys_dir=${CHARON_ROOT_DIR}/validator_keys
@@ -12,10 +14,10 @@ function import_keystores_to_lodestar() {
 
         # Check if the keystore is already imported
         if [[ -d "${lodestar_keys_dir}/0x${pubkey}" ]]; then
-            echo "Keystore for pubkey ${pubkey} already imported"
+            echo "$INFO Keystore for pubkey ${pubkey} already imported"
 
         else
-            echo "Importing key ${f}"
+            echo "$INFO Importing key ${f}"
 
             # Import keystore with password.
             ${VALIDATOR_SERVICE_BIN} \

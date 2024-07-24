@@ -1,5 +1,8 @@
 #!/bin/bash
 
+INFO="[ INFO | lodestar-sign-exit ]"
+ERROR="[ ERROR | lodestar-sign-exit ]"
+
 function sign_exit() {
 
     if [ "$SIGN_EXIT" != true ]; then

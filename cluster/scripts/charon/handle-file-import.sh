@@ -14,7 +14,7 @@ function handle_charon_file_import() {
         import_file=$(_find_import_file)
 
         if [ -z "${import_file}" ]; then
-            echo "${ERROR} No file found in ${IMPORT_DIR}, or it is empty. No import process to be performed."
+            echo "${INFO} No file found in ${IMPORT_DIR}, or it is empty. No import process to be performed."
             return
         fi
 
