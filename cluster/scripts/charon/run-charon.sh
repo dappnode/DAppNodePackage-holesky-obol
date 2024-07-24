@@ -132,5 +132,8 @@ get_ENR
 echo "${INFO} Checking for DKG ceremony..."
 check_DKG
 
+echo "${INFO} Triggering lodestar start..."
+supervisorctl start lodestar
+
 echo "${INFO} Starting charon..."
 run_charon

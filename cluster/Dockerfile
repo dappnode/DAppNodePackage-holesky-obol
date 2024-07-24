@@ -39,4 +39,4 @@ RUN mkdir -p ${CHARON_ROOT_DIR} ${VALIDATOR_DATA_DIR} ${IMPORT_DIR} ${SUPERVISOR
 WORKDIR /import
 
 # Use supervisord to start services
-CMD ["supervisord"]
+ENTRYPOINT ["supervisord", "-c", "/etc/supervisord.conf"]
