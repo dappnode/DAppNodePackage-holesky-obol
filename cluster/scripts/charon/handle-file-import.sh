@@ -39,7 +39,8 @@ function _find_import_file() {
 
 # Moves existing files in the .charon directory to a timestamped old-charon directory
 function _move_old_charon() {
-    local timestamp, old_charon_dir
+    local timestamp
+    local old_charon_dir
 
     if [ -d "${CHARON_ROOT_DIR}" ] && [ "$(ls -A ${CHARON_ROOT_DIR})" ]; then
 

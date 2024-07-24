@@ -11,12 +11,9 @@ inotifywait -m -q -e close_write --format '%f' "${IMPORT_DIR}" | while read -r f
     # Check if the new file matches the expected patterns
     if [[ "${filename}" =~ \.zip$|\.tar\.gz$|\.tar\.xz$ ]]; then
 
-        supervisor_pid=$(cat /opt/supervisor/supervisord.pid)
-
         echo "${INFO} Artifact ${filename} uploaded, triggering container restart..."
 
-        # Forcefully terminate the charon process to trigger a container restart
-        echo "${INFO} Sending supervisord signal SIGKILL..."
-        kill -s SIGKILL "${supervisor_pid}"
+        echo "${INFO} Restarting all processes..."
+        supervisorctl restart all
     fi
 done
