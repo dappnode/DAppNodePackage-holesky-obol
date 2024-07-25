@@ -15,6 +15,10 @@ function run_lodestar_validator() {
         --suggestedFeeRecipient=${DEFAULT_FEE_RECIPIENT} \
         --distributed"
 
+    if [ "$ENABLE_MEV_BOOST" = true ]; then
+        VALIDATOR_EXTRA_OPTS="--builder=true --builder.selection=builderonly $VALIDATOR_EXTRA_OPTS"
+    fi
+
     if [ -n "$VALIDATOR_EXTRA_OPTS" ]; then
         flags="${flags} ${VALIDATOR_EXTRA_OPTS}"
     fi
