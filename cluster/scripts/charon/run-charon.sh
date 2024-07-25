@@ -17,12 +17,6 @@ if [ -n "$DEFINITION_FILE_URL" ]; then
     echo "$DEFINITION_FILE_URL" >$DEFINITION_FILE_URL_FILE
 fi
 
-if [ "$ENABLE_MEV_BOOST" = true ]; then
-    CHARON_EXTRA_OPTS="--builder-api $CHARON_EXTRA_OPTS"
-
-    VALIDATOR_EXTRA_OPTS="--builder=true --builder.selection=builderonly $VALIDATOR_EXTRA_OPTS"
-fi
-
 export CHARON_P2P_EXTERNAL_HOSTNAME=${_DAPPNODE_GLOBAL_DOMAIN}
 
 #############
@@ -116,6 +110,10 @@ function check_DKG() {
 }
 
 function run_charon() {
+    if [ "$ENABLE_MEV_BOOST" = true ]; then
+        CHARON_EXTRA_OPTS="--builder-api $CHARON_EXTRA_OPTS"
+    fi
+
     exec charon run --private-key-file=$ENR_PRIVATE_KEY_FILE --lock-file=$CHARON_LOCK_FILE ${CHARON_EXTRA_OPTS}
 }
 
