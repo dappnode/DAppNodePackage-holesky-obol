@@ -3,18 +3,18 @@
 # These envs are defined in the compose file: MONITORING_URL, MONITORING_CREDENTIALS, ACTIVE_CHARONS_NUMBER
 
 if [ -z "$MONITORING_URL" ] || [ -z "$MONITORING_CREDENTIALS" ]; then
-    echo "MONITORING_URL and MONITORING_CREDENTIALS must be set in the config to enable monitoring"
-    exit 0 # To avoid restart
+    echo "MONITORING_URL and MONITORING_CREDENTIALS must be set in the config to enable monitoring. Sleeping indefinitely..."
+    sleep infinity # To avoid restart
 fi
 
 if [ -z "$CHARONS_TO_MONITOR" ]; then
-    echo "CHARONS_TO_MONITOR must be set to a comma-separated array of numbers like: 1,2,3"
-    exit 0 # To avoid restart
+    echo "CHARONS_TO_MONITOR must be set to a comma-separated array of numbers like: 1,2,3. Sleeping indefinitely..."
+    sleep infinity # To avoid restart
 fi
 
 if [ "$CHARONS_TO_MONITOR" = "0" ]; then
-    echo "No charons to monitor, exiting..."
-    exit 0 # To avoid restart
+    echo "No charons to monitor, sleeping indefinitely..."
+    sleep infinity # To avoid restart
 fi
 
 # Normalize the input by removing spaces around commas and at the ends
@@ -23,8 +23,8 @@ CHARONS_TO_MONITOR=$(echo "$CHARONS_TO_MONITOR" | sed 's/ *, */,/g' | sed 's/^ *
 # Check that CHARONS_TO_MONITOR only contains numbers separated by commas
 echo "$CHARONS_TO_MONITOR" | grep -E '^[0-9]+(,[0-9]+)*$' >/dev/null 2>&1
 if [ $? -ne 0 ]; then
-    echo "CHARONS_TO_MONITOR must be a comma-separated list of numbers without spaces"
-    exit 0 # To avoid restart
+    echo "CHARONS_TO_MONITOR must be a comma-separated list of numbers without spaces. Sleeping indefinitely..."
+    sleep infinity # To avoid restart
 fi
 
 # Generate charon and validator targets based on the normalized CHARONS_TO_MONITOR

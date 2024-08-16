@@ -7,7 +7,7 @@ services:
         CHARON_VERSION: v1.0.1
         VALIDATOR_CLIENT_VERSION: v1.20.2
         CLUSTER_ID: 1
-    restart: on-failure
+    restart: unless-stopped
     volumes:
       - charon-1-data:/opt/charon/.charon
       - validator-1-data:/opt/validator/data
@@ -43,7 +43,7 @@ services:
         CHARON_VERSION: v1.0.1
         VALIDATOR_CLIENT_VERSION: v1.20.2
         CLUSTER_ID: 2
-    restart: on-failure
+    restart: unless-stopped
     volumes:
       - charon-2-data:/opt/charon/.charon
       - validator-2-data:/opt/validator/data
@@ -79,7 +79,7 @@ services:
         CHARON_VERSION: v1.0.1
         VALIDATOR_CLIENT_VERSION: v1.20.2
         CLUSTER_ID: 3
-    restart: on-failure
+    restart: unless-stopped
     volumes:
       - charon-3-data:/opt/charon/.charon
       - validator-3-data:/opt/validator/data
@@ -115,7 +115,7 @@ services:
         CHARON_VERSION: v1.0.1
         VALIDATOR_CLIENT_VERSION: v1.20.2
         CLUSTER_ID: 4
-    restart: on-failure
+    restart: unless-stopped
     volumes:
       - charon-4-data:/opt/charon/.charon
       - validator-4-data:/opt/validator/data
@@ -151,7 +151,7 @@ services:
         CHARON_VERSION: v1.0.1
         VALIDATOR_CLIENT_VERSION: v1.20.2
         CLUSTER_ID: 5
-    restart: on-failure
+    restart: unless-stopped
     volumes:
       - charon-5-data:/opt/charon/.charon
       - validator-5-data:/opt/validator/data
@@ -191,7 +191,7 @@ services:
       CHARONS_TO_MONITOR: 0
     volumes:
       - prometheus-data:/prometheus
-    restart: on-failure
+    restart: unless-stopped
     image: prometheus.holesky-obol.dnp.dappnode.eth:0.1.1
 volumes:
   charon-1-data: {}
