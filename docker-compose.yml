@@ -4,8 +4,8 @@ services:
     build:
       context: cluster
       args:
-        CHARON_VERSION: v1.0.1
-        VALIDATOR_CLIENT_VERSION: v1.20.2
+        CHARON_VERSION: v1.1.0
+        VALIDATOR_CLIENT_VERSION: v1.21.0
         CLUSTER_ID: 1
     restart: on-failure
     volumes:
@@ -40,8 +40,8 @@ services:
     build:
       context: cluster
       args:
-        CHARON_VERSION: v1.0.1
-        VALIDATOR_CLIENT_VERSION: v1.20.2
+        CHARON_VERSION: v1.1.0
+        VALIDATOR_CLIENT_VERSION: v1.21.0
         CLUSTER_ID: 2
     restart: on-failure
     volumes:
@@ -76,8 +76,8 @@ services:
     build:
       context: cluster
       args:
-        CHARON_VERSION: v1.0.1
-        VALIDATOR_CLIENT_VERSION: v1.20.2
+        CHARON_VERSION: v1.1.0
+        VALIDATOR_CLIENT_VERSION: v1.21.0
         CLUSTER_ID: 3
     restart: on-failure
     volumes:
@@ -112,8 +112,8 @@ services:
     build:
       context: cluster
       args:
-        CHARON_VERSION: v1.0.1
-        VALIDATOR_CLIENT_VERSION: v1.20.2
+        CHARON_VERSION: v1.1.0
+        VALIDATOR_CLIENT_VERSION: v1.21.0
         CLUSTER_ID: 4
     restart: on-failure
     volumes:
@@ -148,8 +148,8 @@ services:
     build:
       context: cluster
       args:
-        CHARON_VERSION: v1.0.1
-        VALIDATOR_CLIENT_VERSION: v1.20.2
+        CHARON_VERSION: v1.1.0
+        VALIDATOR_CLIENT_VERSION: v1.21.0
         CLUSTER_ID: 5
     restart: on-failure
     volumes:
