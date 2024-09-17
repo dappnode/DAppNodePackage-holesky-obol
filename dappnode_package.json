@@ -1,15 +1,15 @@
 {
   "name": "holesky-obol.dnp.dappnode.eth",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "upstream": [
     {
       "repo": "ObolNetwork/charon",
-      "version": "v1.0.1",
+      "version": "v1.1.0",
       "arg": "CHARON_VERSION"
     },
     {
       "repo": "ChainSafe/lodestar",
-      "version": "v1.20.2",
+      "version": "v1.22.0",
       "arg": "VALIDATOR_CLIENT_VERSION"
     }
   ],
